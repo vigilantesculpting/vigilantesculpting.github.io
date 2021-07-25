@@ -58,6 +58,7 @@ https://vigilantesculpting.github.io/blog/2021-01-12-glance.html
 https://vigilantesculpting.github.io/blog/2021-01-11-walker-mech.html
 https://vigilantesculpting.github.io/blog/2020-12-22-moondragon.html
 https://vigilantesculpting.github.io/blog/2020-12-17-land-raider-before-and-after.html
+https://vigilantesculpting.github.io/blog/2020-12-16-midnight.html
 https://vigilantesculpting.github.io/blog/2020-12-08-land-raider-upgrades.html
 https://vigilantesculpting.github.io/blog/2020-12-06-land-raider-upgrades.html
 https://vigilantesculpting.github.io/blog/2020-12-04-tetsuork-done.html
@@ -123,6 +124,7 @@ https://vigilantesculpting.github.io/blog/2020-06-21-swampy-mud-n-water.html
 https://vigilantesculpting.github.io/blog/2020-06-11-hunter-killer.html
 https://vigilantesculpting.github.io/blog/2020-06-08-swamp-night.html
 https://vigilantesculpting.github.io/blog/2020-06-06-swamp-hunter.html
+https://vigilantesculpting.github.io/blog/2020-05-22-yorha-2b.html
 https://vigilantesculpting.github.io/blog/2020-05-16-attack-of-the-clones.html
 https://vigilantesculpting.github.io/blog/2020-05-14-sabre-strike-done.html
 https://vigilantesculpting.github.io/blog/2020-05-12-power-armor.html
@@ -131,6 +133,8 @@ https://vigilantesculpting.github.io/blog/2020-05-07-swirl.html
 https://vigilantesculpting.github.io/blog/2020-05-04-assassin.html
 https://vigilantesculpting.github.io/blog/2020-04-27-aquagirl.html
 https://vigilantesculpting.github.io/blog/2020-04-22-excuse-me-sir.html
+https://vigilantesculpting.github.io/blog/2020-04-16-earring.html
+https://vigilantesculpting.github.io/blog/2020-04-10-duty.html
 https://vigilantesculpting.github.io/blog/2020-04-08-recharge.html
 https://vigilantesculpting.github.io/blog/2020-04-07-smile.html
 https://vigilantesculpting.github.io/blog/2020-04-06-goodbye-saturn.html
