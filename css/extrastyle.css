@@ -70,7 +70,7 @@ main > section {
 
 .thumbnail-container {
 	position: relative;
-	max-height: 20em;
+	aspect-ratio: 1/1;
 	overflow: hidden;
 }
 
