@@ -1,5 +1,5 @@
 
-.slides > div {
+.slides > div, .slides > img {
 	width: 32%;
 }
 

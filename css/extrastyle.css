@@ -42,13 +42,19 @@ div.item {
 }
 
 .slides {
-	clear: both;
+	/*clear: both;*/
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
 }
-.slides > div {
-	display: inline-block;
+.slides > div, .slides > img {
 	/*width: 30%;*/
+	/*display: inline-block;
 	vertical-align: top;
+	*/
+
 	font-size: 0.8em;
+	margin: 5px;
 }
 
 main > section {
