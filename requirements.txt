@@ -1,0 +1,7 @@
+Markdown==3.1.1
+pytz==2013.7
+lxml==4.6.3
+slimit==0.8.1
+bbcode==1.1.0
+PyYAML==5.3.1
+python-dateutil==1.5
