@@ -1,0 +1,29 @@
+/* Single column centered layout, with stretchy body, containing a main and a (possibly sticky) footer */
+
+* {
+    box-sizing: border-box;
+}
+html {
+    display: flex;
+    flex-direction: row;
+    background-color: #fff;
+    justify-content: space-around; /* the body has one child (body), and it sits in the middle of the screen */
+    margin: 0em; /* tight fit */
+}
+body {
+    min-height: 100vh; /* make the body grow as tall as the screen, if it isn't taller already */
+    display: flex;
+    flex-direction: column;
+    /* option 1: this makes a sticky footer at the bottom */
+    justify-content: space-between;
+    width: 60em; /* the width of the body */
+    margin: 0; /* tight fit */
+    padding: 1em; /* leave a border for small screens */
+}
+footer {
+    /*flex-grow: 100;*/
+    text-align: center;
+    min-height: 10em; /* makes the footer not shrink beyond a certain size, useful for if the content grows beyond the viewport */
+    max-height:  10em; /* this makes the footer not grow beyond a certain height, useful for gradients that won't streeeetch */
+}
+

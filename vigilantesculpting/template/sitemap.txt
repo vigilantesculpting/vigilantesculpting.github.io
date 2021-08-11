@@ -1,0 +1,10 @@
+%----------------------------------------------------------------------
+%- Create the sitemap
+%----------------------------------------------------------------------
+
+%output 'sitemap.txt'
+	%for filepath: output None paths unpack sortpaths
+{{ config/site_url config/tgtsubdir filepath //+ }}
+	%end
+%end
+

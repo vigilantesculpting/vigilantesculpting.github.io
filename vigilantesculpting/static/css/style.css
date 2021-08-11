@@ -1,0 +1,296 @@
+/* The rest is styling */
+
+@import url('https://fonts.googleapis.com/css2?family=Sarpanch:wght@500&display=swap');
+
+/* General */
+body {
+    background-color: #fff;
+    line-height: 1.5em;
+    color: #555555;
+    font-family: helvetica, arial, sans-serif;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+h1 {
+    font-family: 'Sarpanch', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 0;
+    line-height: 1.2em;
+    margin-top: 1em;
+}
+
+h1 {
+    font-size: 2.0em;
+}
+
+a:link, a:visited {
+    text-decoration: none;
+}
+
+a:link {
+    color: #999999;
+}
+a:visited {
+    color: #aaaaaa;
+}
+a:hover, a:active {
+    color: #888888;
+    text-decoration: underline;
+}
+
+nav {
+    line-height: 2.5em;
+}
+nav a {
+    margin-right: 1em;
+}
+
+/* Footer */
+footer {
+    background: #d2d2d1;
+    background: linear-gradient(0deg, #fff 0%, #fff 30%, #d2d2d1 100%);
+    /*background: #f0f0f0;*/
+    border-top: thin solid #e0e0e0;
+	/*    
+	margin-top: 2em;
+    padding: 1em 0;
+    box-shadow: 0 100vh 0 100vh #f0f0f0;
+	*/
+    text-align: center;
+}
+
+footer section p {
+    font-size: 0.8em;
+}
+
+footer a {
+    margin-right: 1em;
+}
+
+footer a:last-child {
+    margin-right: 0;
+}
+
+
+.mainsection {
+    clear: both;
+    padding-bottom: 1em;
+}
+
+/* Posts */
+article {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+article h2 a:link, article h2 a:visited,
+article h1 a:link, article h1 a:visited,
+.more:link, .more:visited {
+    color: #333333;
+}
+
+article h2 a:hover, article h2 a:active,
+article h1 a:hover, article h1 a:active,
+.more:hover, .more:active {
+    color: #777777;
+}
+
+p.meta {
+    margin-top: 0;
+    font-size: 0.8em;
+    color: #777777;
+    font-style: italic;
+}
+
+p.summary {
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+}
+
+div .more {
+    margin-top: 0;
+    font-weight: bold;
+}
+
+
+/* RSS */
+.rss {
+    padding: 0.3em 0.35em;
+    border-radius: 0.25em;
+    font-size: 0.75em;
+    font-weight: bold;
+}
+
+.rss:link, .rss:visited, .rss:hover, .rss:active {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.rss:link, .rss:visited {
+    background: #ff6600;
+}
+
+.rss:hover, .rss:active {
+    background: #ff8822;
+}
+
+
+/* This used to be extrastyle */
+
+.readmore {
+    clear: both;
+}
+
+span.navigation {
+    display: flex;
+    justify-content: space-between
+}
+ul.navigation {
+    padding: 0;
+    display: inline;
+}
+ul.navigation li {
+    display: inline;
+}
+
+main {
+    clear: both;
+}
+
+div.titleimage {
+    text-align: center;
+}
+
+div.item {
+    margin-top: 2em;
+}
+
+.slides {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+.slides > div, .slides > img {
+    font-size: 0.8em;
+    margin: 5px;
+}
+
+main > section {
+    border-bottom: thin solid #888888;
+}
+main > section:last-child {
+    border-bottom: none;
+}
+main > section:only-child {
+    border-top: thin solid #888888;
+}
+
+
+.gallerycell {
+    vertical-align: top;
+    padding: 5px;
+}
+
+.post {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 0.8em;
+}
+
+.thumbnail-container {
+    position: relative;
+    /*aspect-ratio: 1/1;*/
+    overflow: hidden;
+    text-align: center;
+    max-height: 25em;
+}
+.thumbnail {
+    /*aspect-ratio: 1/1;*/
+    object-fit: cover;
+    /*max-height: 30em;*/
+}
+
+.nsfw-warning {
+    color: #ffffff;
+    background-color: #884444;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-weight: bold;
+    border-radius: 1em;
+    padding: 0.5em;
+}
+
+ul.posttags > li {
+    display: inline-block;
+    padding: 0.5em;
+    margin-bottom: 0.5em;
+    color: #ffffff;
+    background-color: #777777;
+    border-radius: 0.5em;
+}
+
+.rsslink {
+    /*background-color: #9c5e23;*/
+    background-color: #222244;
+    border-radius: 0.5em;
+    padding: 0.5em;
+}
+.rsslink > a {
+    color: #ffffff;
+}
+.listcontent {
+    clear: both;
+}
+
+.vertspacer {
+    /* hackiest hack, should probably have a bottompostnav class or something */
+    margin: 4em;
+}
+
+.postnav {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    /*margin: 2em 0 2em 0;*/
+}
+.postnav-left, .postnav-right {
+    display: flex;
+    flex-direction: row;
+}
+
+.prevpost, .nextpost, .prevpage, .nextpage {
+    display: inline-block;
+    font-size: 0.8em;
+    border-radius: 0.5em;
+    border-width: 1px;
+    border-style: solid;
+    padding: 0 1em 0 1em;
+}
+
+/* right hand buttons */
+.prevpost, .nextpage {
+    margin: 0.2em 0 0.2em 0.2em;
+}
+/* left hand buttons */
+.nextpost, .prevpage {
+    margin: 0.2em 0.2em 0.2em 0;
+}
+
+.prevpost, .nextpost {
+    border-color: #999999;
+}
+.prevpage, .nextpage {
+    background-color:#999999;
+    color:#fff;
+}
+
+

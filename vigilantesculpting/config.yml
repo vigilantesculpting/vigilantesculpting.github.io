@@ -1,0 +1,8 @@
+config/timezone         : America/Los_Angeles
+config/title            : 'Vigilante Sculpting'
+config/site_url         : 'https://www.vigilantesculpting.com'
+config/tgtsubdir        : ''
+config/staticdir        : 'static'
+config/contentdir       : 'content'
+config/templatedir      : 'template'
+config/paginatecount    : 45
