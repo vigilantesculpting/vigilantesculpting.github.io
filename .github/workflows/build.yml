@@ -36,7 +36,7 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Build site
         run: |
-          git checkout test
+          git checkout master
           ./main.py -c vigilantesculpting/config.yml 
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
@@ -44,4 +44,4 @@ jobs:
           mv _http docs
           git add docs
           git commit -m "github actions: rebuild site"
-          git push origin test
+          git push origin master
