@@ -13,6 +13,7 @@ import getopt
 import subprocess
 import random
 import errno    
+import hashlib
 
 # requirements
 import datetime
@@ -34,9 +35,6 @@ import solon
 
 # Internal debugging / tracing
 LOG = False
-if LOG:
-	import pdb
-	import traceback
 def log(*args, **kwargs):
 	if LOG:
 		for arg in args:
@@ -206,46 +204,42 @@ class Rezyn:
 			if depth is not None and level == depth:
 				break
 
-	def generatecsskeyfiles(self, usedebugchecksum, sourcedir, targetdir):
-		# grab the keys for each file in the static dir
-		csskeys = {}
-		for dirName, subdirList, fileList in os.walk(sourcedir):
-			for fileName in fileList:
-				base, ext = os.path.splitext(fileName)
-				if ext.lower() == ".css":
-					fullsourcepath = os.path.join(dirName, fileName)
-					log("generatecsskeyfiles on [%s]" % fullsourcepath)
-					# generate a unique key for the file
-					if usedebugchecksum:
-						# debug build: we want to generate a new key each build, so that the browser will be forced to reload these files
-						key = hex(random.getrandbits(32))
-					else:
-						# deploy: we want the keys to remain stable between edits, so we use part of the commit hashes
-						status = subprocess.check_output(["git", "status", "--short", fullsourcepath])
-						if len(status) > 0:
-							if status.startswith("??"):
-								print "css file [%s] is not under git control" % fullsourcepath
-							else:
-								print "css file [%s] has local modifications" % fullsourcepath
-							sys.exit(-1)
-						key = subprocess.check_output(["git", "log", "-n", "1", "--pretty=format:%H", "--", fullsourcepath])
-						log("found key [%s]" % key)
-						if len(key) == 0:
-							print "css file [%s] has no git checksum" % fullsourcepath
-							sys.exit(-1)
-						assert(len(key) == 40)
-						assert(all(k in "0123456789abcdef" for k in key)) # check that this looks like a hex hash
-						key = key[:16]
-					log("key is [%s]" % key)
-					# add the key as csskeys.basename for each file, so that the page.html can find it.
-					csskeys[base] = key
-					# rename the target file
-					subdirName = dirName[len(sourcedir) + 1:]
-					fulltargetpath = os.path.join(targetdir, subdirName, fileName)
-					renamepath = os.path.join(targetdir, subdirName, base + "-" + key + ext)
-					log("renaming [%s] to [%s]" % (fulltargetpath, renamepath))
-					shutil.move(fulltargetpath, renamepath)
-		return csskeys
+	########################
+	## checksums ###########
+
+	def renamefileswithchecksums(self, targetdir):
+		# split a path into its component parts
+		def splitpath(path):
+			parts = []
+			a = path
+			while a:
+				a, b = os.path.split(a)
+				if b:
+					parts.append(b)
+			parts.reverse()
+			return parts
+		log("renamefileswithchecksums in [%s]" % targetdir)
+		targetparts = splitpath(targetdir)
+		filekeys = {}
+		for dirname, subdirs, filenames in os.walk(targetdir):
+			for filename in filenames:
+				filepath = os.path.join(dirname, filename)
+				base, ext = os.path.splitext(filename)
+				if ext.lower() in ('.css', '.js'):
+					checksum = hashlib.md5(open(filepath,'rb').read()).hexdigest()
+					newbase = base + '-' + checksum
+					newfilename = newbase + ext
+					# create the key out of the filepath, but without the leading components of the targetdir
+					key = os.path.join(*splitpath(filepath)[len(targetparts):])
+					# the key translates into the renamed filename
+					filekeys[key] = newfilename
+					newfilepath = os.path.join(dirname, newfilename)
+					shutil.move(filepath, newfilepath)
+					log("renaming file [%s] to [%s], key [%s]" % (filepath, newfilepath, key))
+		return filekeys
+
+	########################
+	## minify ##############
 
 	def minifydir(self, path):
 
@@ -263,6 +257,9 @@ class Rezyn:
 					minjs = slimit.minify(readfile(filename))
 					log("minifying js [%s]" % filename)
 					writefile(filename, minjs)
+
+	########################
+	## output ##############
 
 	def writeoutput(self):
 		for filename, content in self.solon.context.output.dict().iteritems():
@@ -303,11 +300,10 @@ class Rezyn:
 			log("minify web in targtdir [%s]" % targetdir)
 			self.minifydir(targetdir)
 
-		# rename css files with keys
-		# TODO this needs to be an option, but the templates can hardcode access to 'csskeys' now so this needs thought.
-		csskeys = self.generatecsskeyfiles(self.solon.context["config/debug"], staticdir, targetdir)
-		# make the keys available to the template(s)
-		self.solon.context['csskeys'] = csskeys
+		# rename each css/js file with its checksum key
+		filekeys = self.renamefileswithchecksums(targetdir)
+		# make the renamed files available to the template(s)
+		self.solon.context['filekeys'] = filekeys
 
 	def process(self):
 
