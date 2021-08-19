@@ -1,0 +1,62 @@
+#radiant-lightbox {
+    box-sizing: border-box;
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000c;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    font-size: 1em;
+    padding: 2em;
+}
+
+#radiant-lightbox-container1, #radiant-lightbox-slot {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+#radiant-lightbox-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+}
+
+#radiant-lightbox-prev, #radiant-lightbox-next {
+    font-size: 2em;
+    margin: 1em;
+    opacity: 0;
+}
+#radiant-lightbox-close {
+    position: absolute;
+    width: 100%;
+    top: 0.5em;
+    right: 2em;
+    text-align: right;
+    opacity: 0;
+}
+
+#radiant-lightbox-current-img {
+    max-height:100%;
+    max-width:100%;
+    object-fit: scale-down;
+}
+
+#radiant-lightbox-text {
+    position: absolute;
+    width: 100%;
+    bottom: 0.5em;
+    text-align: center;
+    opacity: 0;
+}
+

@@ -31,18 +31,14 @@
         <link rel="stylesheet" type="text/css" href="{{ '/' config/tgtsubdir 'css' filekeys/css/structure.css   //+ }}">
         <link rel="stylesheet" type="text/css" href="{{ '/' config/tgtsubdir 'css' filekeys/css/style.css       //+ }}">
         <link rel="stylesheet" type="text/css" href="{{ '/' config/tgtsubdir 'css' filekeys/css/widescreen.css  //+ }}" media="screen and (min-width: 601px)" >
-        %- fontawesome stuff, for lightbox
-        <link rel="stylesheet" type="text/css" href="{{ '/' config/tgtsubdir 'css' filekeys/css/fontawesome.css //+ }}" >
-        <link rel="stylesheet" type="text/css" href="{{ '/' config/tgtsubdir 'css' filekeys/css/solid.css       //+ }}" >
-        <link rel="stylesheet" type="text/css" href="{{ '/' config/tgtsubdir 'css' filekeys/css/lightbox.css    //+ }}">
         %- RSS links
         <link rel="alternate"  type="application/rss+xml" href="{{ '/' config/tgtsubdir 'blog'      'rss.xml' //+  }}" title="Blog RSS Feed">
         <link rel="alternate"  type="application/rss+xml" href="{{ '/' config/tgtsubdir 'projects'  'rss.xml' //+  }}" title="Projects RSS Feed">
         <link rel="alternate"  type="application/rss+xml" href="{{ '/' config/tgtsubdir 'articles'  'rss.xml' //+  }}" title="Articles RSS Feed">
         <link rel="alternate"  type="application/rss+xml" href="{{ '/' config/tgtsubdir 'sketches'  'rss.xml' //+  }}" title="Sketches RSS Feed">
-        %- jquery for lightbox, from https://simonpadbury.github.io/Really-Simple-Lightbox/
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="{{ '/' config/tgtsubdir 'js' filekeys/js/lightbox.js //+ }}"></script>
+        %- Radiant lightobox
+        <link rel="stylesheet" type="text/css" href="{{ '/' config/tgtsubdir 'css' filekeys/css/radiant.css    //+ }}">
+        <script src="{{ '/' config/tgtsubdir 'js' filekeys/js/radiant.js //+ }}"></script>
 </head>
 
 <body>
@@ -86,6 +82,9 @@
 </p>
 </section>
 </footer>
+
+%- lightbox
+%import template/radiant.tpl
 
 </body>
 </html>

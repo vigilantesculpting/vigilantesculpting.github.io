@@ -112,34 +112,15 @@ class Processor(rezyn.Rezyn):
 			datasrc = img.attrib['data-src'] if 'data-src' in img.attrib else img.attrib['src']
 			# if the image is part of a gallery, resize it to medium, otherwise large
 			parent = img.getparent()
-			if parent is not None and "class" in parent.attrib and "gallery" in img.getparent().attrib["class"]:
+			if parent is not None and "class" in parent.attrib and "gallery" in parent.attrib["class"]:
 				imgsrc = self.imgurmodifier(img.attrib['src'], "m") # make a Large Thumbnail, if possible
 			else:
 				imgsrc = self.imgurmodifier(img.attrib['src'], "l") # make a Large Thumbnail, if possible
 
-			#### FOR LIGHTBOX
-			if len(imgs) > 1:
-				datalightbox = "lightbox-group-1"
-			else:
-				datalightbox = "lightbox"
-			# wrap each image in a link tag
-			tgtimg = img
-			del tgtimg.attrib["src"]
-			if 'data-src' in tgtimg.attrib:
-				del tgtimg.attrib["data-src"]
-			tgtimg.tag = "a"
-			tgtimg.attrib["href"] = datasrc # link to the original full-size image
-			tgtimg.attrib["data-lightbox"] = datalightbox
-			# add a sub element to the link, to represent the original image:
-			subimg = lxml.etree.SubElement(tgtimg, "img")
-			subimg.attrib["src"] = imgsrc # use the modified image
-			subimg.attrib["class"] = "lightbox-thumbnail"
-			subimg.attrib["loading"] = "lazy" # add lazy loading
-			#### FOR LIGHTBOX
-			# TODO:
-			# the above should go away and be replaced by simple
-			# <img data-src='{{ datasrc }}' src='{{ imgsrc }}' />
-			# tag, once we have our own javascript lightbox going.
+			# For the radiant lightbox
+			img.attrib["class"] = "radiant-lightbox-slide"
+			img.attrib["data-src"] = datasrc
+			img.attrib["src"] = imgsrc
 
 		text = lxml.html.tostring(root)
 		# finally add the text
