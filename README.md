@@ -21,6 +21,9 @@ All of this code in on github in separate repos, so you can pick and choose what
 - [solon](https://github.com/vigilantesculpting/solon) is the control flow template language, for composing pieces of text and data, and finally
 - [rezyn](https://github.com/vigilantesculpting/rezyn) is the framework that binds it all together, and takes my blog posts to actual webpages.
 
+I am also using a very simple custom lightbox implementation, called [radiant](https://github.com/vigilantesculpting/radiant).
+It is lightweight, and doesn't drag in extra fonts, javascript libraries, or other cruft.
+
 I decided to keep copies of the individual project sources in each repo that needs them.
 So for example, rezyn contains copies of nsdict.py, tokenyzer.py, pretzyl.py and solon.py
 
