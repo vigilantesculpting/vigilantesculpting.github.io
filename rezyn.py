@@ -23,11 +23,11 @@ import lxml.etree
 import yaml
 import markdown
 import bbcode
-import slimit
 import pytz
 
 # local copy
 import minifycss
+import rjsmin
 
 # library code
 import nsdict
@@ -254,7 +254,7 @@ class Rezyn:
 					log("minifying css [%s]" % filename)
 					writefile(filename, mincss)
 				elif ext.lower() == ".js":
-					minjs = slimit.minify(readfile(filename))
+					minjs = rjsmin._make_jsmin(python_only = True)(readfile(filename))
 					log("minifying js [%s]" % filename)
 					writefile(filename, minjs)
 
