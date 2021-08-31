@@ -410,7 +410,8 @@ def usage(exitcode, program, message):
 	# add a --verbose option, think about logging different aspects of the situation
 	# remove all mention of traceback and pdb, we can do this with python -m pdb
 	# at some point, think about breaking up the actions (removing the source tree, copying the static files, making a render list, etc.)
-
+	if message:
+		print message
 	print """\
 Usage: %s [-d|--debug] [-c|--config=<CONF>] [-t|--targetsubdir=<DIR>] [-T|--targetdir=<DIR>] [-p|--publish-all] [-v|--verbose] [--help]
 Where:
