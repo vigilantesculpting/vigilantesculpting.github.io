@@ -51,7 +51,10 @@ class Processor(rezyn.Rezyn):
 		return src
 
 	def parsebb(self, text):
+		# split the text into chunks, where chunks are separated by \n\n
 		chunks = [chunk for chunk in [chunk.strip() for chunk in re.split("(\n\n+)", text)] if len(chunk) > 0]
+		# replace all newlines with spaces, otherwise the rest of this code will paste words together weirdly
+		chunks = [chunk.replace("\n", " ") for chunk in chunks]
 		parsed = [self.bbparser.format(chunk) for chunk in chunks]
 		joins = [lxml.html.tostring(lxml.html.fromstring(chunk)) for chunk in parsed]
 		html = "\n".join(joins)

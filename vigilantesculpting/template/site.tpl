@@ -1,4 +1,5 @@
 %import template/page.tpl
+%import template/redirect.tpl
 
 %----------------------------------------------------------------------
 %- Functions for the main site
@@ -119,7 +120,8 @@
 		%if postid 0 >
 			%set 'firstpost': posts 0 at
 			%-<a href="{{ firstpost/slug '.html' + //+ }}"><div class="nextpost">&#x300A; Latest {{ name }}</div></a>
-			<a href="{{ firstpost/slug '.html' + //+ }}"><div class="nextpost">&#x300A;</div></a>
+			%-<a href="{{ firstpost/slug '.html' + //+ }}"><div class="nextpost">&#x300A;</div></a>
+			<a href="latestpost.html"><div class="nextpost">&#x300A;</div></a>
 			%-if postid 1 > 
 				%set 'nextpost': posts (postid 1 -) at
 				%-<a href="{{ nextpost/slug '.html' + //+ }}"><div class="nextpost">&#x2329; Next {{ name }}</div></a>
@@ -257,6 +259,19 @@
 %call makeindex: 'Projects'            'projects' content/sortedprojects  ''        content/projects.html/content
 %call makeindex: 'Sketches & Drawings' 'sketches' content/sortedsketches  '../blog' content/sketches.html/content
 %call makeindex: 'Articles'            'articles' content/sortedarticles  '../blog' content/articles.html/content
+
+%output 'blog/latestpost.html'
+	%call redirect: content/sortedblogposts 0 at
+%end
+%output 'projects/latestpost.html'
+	%call redirect: content/sortedprojects 0 at
+%end
+%output 'sketches/latestpost.html'
+	%call redirect: content/sortedsketches 0 at
+%end
+%output 'articles/latestpost.html'
+	%call redirect: content/sortedarticles 0 at
+%end
 
 %----------------------------------------------------------------------
 %- Create the individual project pages
