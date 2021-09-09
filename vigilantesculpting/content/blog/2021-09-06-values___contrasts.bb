@@ -9,6 +9,7 @@ tags:
 - modelmaking
 - sculpting
 - osl
+- project:aliens
 title: Values & contrasts
 ---
 Checking my usage of values and contrasts on the Aliens diorama. Right now the 
