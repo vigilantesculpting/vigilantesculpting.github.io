@@ -2,6 +2,7 @@
 author: vigilante sculpting
 date: 2022-01-03T14:13:18 -0800
 tags:
+- project:qrau
 - queadluunrau
 - robotech
 - macross
