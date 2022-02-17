@@ -53,20 +53,26 @@ nav a {
 
 /* Footer */
 footer {
-    background: #d2d2d1;
-    background: linear-gradient(0deg, #fff 0%, #fff 30%, #d2d2d1 100%);
-    /*background: #f0f0f0;*/
+    color: #ffffff;
+    background: #42617d;
+    background: linear-gradient(0deg, #fff 0%, #fff 30%, #42617d 100%);
     border-top: thin solid #e0e0e0;
-	/*    
-	margin-top: 2em;
-    padding: 1em 0;
-    box-shadow: 0 100vh 0 100vh #f0f0f0;
-	*/
     text-align: center;
 }
 
 footer section p {
     font-size: 0.8em;
+}
+
+footer a:link {
+    color: #555555;
+}
+footer a:visited {
+    color: #555555;
+}
+footer a:hover, a:active {
+    color: #777777;
+    text-decoration: underline;
 }
 
 footer a {
@@ -240,7 +246,7 @@ ul.posttags > li {
 
 .rsslink {
     /*background-color: #9c5e23;*/
-    background-color: #222244;
+    background-color: #42617d;
     border-radius: 0.5em;
     padding: 0.5em;
 }
@@ -294,3 +300,96 @@ ul.posttags > li {
 }
 
 
+
+.commentsection {
+    margin-bottom: 20px;
+}
+
+.commentheader {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.commentlist0 {
+    list-style-type: none;
+    /* padding-left: 0px;*/
+}
+.commentlist1 {
+    list-style-type: none;
+}
+.commentitem {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.commentitem0 {
+    border-top: 1px solid lightgrey;
+}
+.commentitem0:first-child {
+    border-top: 0px;
+}
+.comment > h4 {
+    margin-bottom: 1em;
+}
+
+
+
+.commentform {
+    padding: 20px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    grid-template-rows: repeat(4, min-content); 
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+}
+
+.commentform .div1 { grid-area: 1 / 1 / 2 / 2; }
+.commentform .div2 { grid-area: 1 / 2 / 2 / 3; }
+.commentform .div3 { grid-area: 2 / 1 / 3 / 2; }
+.commentform .div4 { grid-area: 2 / 2 / 3 / 3; }
+.commentform .div5 { grid-area: 3 / 1 / 4 / 2; }
+.commentform .div6 { grid-area: 3 / 2 / 4 / 3; }
+.commentform .div7 { grid-area: 4 / 1 / 5 / 3; } 
+
+.commentform textarea {
+    max-width: 100%;
+    resize: vertical;
+}
+.commentlabel {
+    white-space: nowrap;
+    text-align: right;
+    vertical-align: top;
+}
+.commentform .div7 {
+    text-align: right;
+}
+.commentform button {
+    margin-left: 10px;
+}
+
+.replycomment {
+    display: none;
+}
+
+.commentdate {
+    font-style: italic;
+    font-size: 70%;
+}
+
+.authorcomment {
+    color: #ffffff;
+    background-color: #333333;
+    border-radius: 0.5em;
+    padding: 5px;
+}
+
+.highlight {
+    border-radius: 1em;
+    padding: 1em;
+    text-align: center;
+    font-size: 110%;
+    font-style: italic;
+    color:  #ffffff;
+    background-color: #42617d;
+}

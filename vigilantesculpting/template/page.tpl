@@ -3,7 +3,7 @@
 %- All pages on the site will wrap this around them
 %----------------------------------------------------------------------
 
-%func page: title base_path
+%func pagehead: title base_path
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,8 +39,12 @@
         %- Radiant lightobox
         <link rel="stylesheet" type="text/css" href="{{ '/' config/tgtsubdir 'css' filekeys/css/radiant.css    //+ }}">
         <script src="{{ '/' config/tgtsubdir 'js' filekeys/js/radiant.js //+ }}"></script>
+        %- Extra links/scripts/etc, that are not body-ok
+        %embed
 </head>
+%end
 
+%func pagebody:
 <body>
 <main>
 
@@ -76,6 +80,7 @@
 <p>
     <a href="https://www.artstation.com/g0rb">ArtStation</a>
     <a href="https://www.deviantart.com/gorb">DeviantArt</a>
+    <a href="https://www.reddit.com/user/gorb314">Reddit</a>
     <a href="https://instagram.com/gorb314">Instagram</a>
     <a href="https://www.puttyandpaint.com/g0rb">Putty&Paint</a>
     <a href="http://www.coolminiornot.com/artist/gorb">CMON</a>

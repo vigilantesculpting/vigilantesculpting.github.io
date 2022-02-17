@@ -1,5 +1,6 @@
 %import template/page.tpl
 %import template/redirect.tpl
+%import template/comment.tpl
 
 %----------------------------------------------------------------------
 %- Functions for the main site
@@ -7,19 +8,19 @@
 
 %func originalpost: post
 	<section>
-		%if post/puttyandpaint_url exists
+		%if 'post/puttyandpaint_url' exists
 			<i><a href='{{ post/puttyandpaint_url }}'>Putty&Paint link</a></i><br />
 		%end
-		%if post/artstation_url exists
+		%if 'post/artstation_url' exists
 			<i><a href='{{ post/artstation_url }}'>Artstation link</a></i><br />
 		%end
-		%if post/blogger_orig_url exists
+		%if 'post/blogger_orig_url' exists
 			<i>Originally posted on <a href="{{ post/blogger_orig_url }}">vigilantesculpting.blogspot.com</a></i><br />
 		%end
-		%if post/cmon_post_url exists
+		%if 'post/cmon_post_url' exists
 			<i>Originally posted on <a href="{{ post/cmon_post_url }}">coolminiornot.com</a></i><br />
 		%end
-		%if post/papermodellers_post_url exists
+		%if 'post/papermodellers_post_url' exists
 			<i>Originally posted on <a href="{{ post/papermodellers_post_url }}">papermodelers.com</a></i><br />
 		%end
 	</section>
@@ -30,7 +31,7 @@
 	<h2><a href="{{ postlink }}">{{ post/title }}</a></h2>
 	<p class="meta">Published on {{ post/date '%%Y/%%m/%%d @%%H:%%M:%%S' strftime }} by <b>{{ post/author }}</b></p>
 	<div class="thumbnail-container">
-		%if post/thumbnail exists
+		%if 'post/thumbnail' exists
 			<a class="more" href="{{ postlink }}">{{ post/thumbnail }}</a>
 		%end
 		%if post/tags 'nsfw' contains
@@ -58,7 +59,9 @@
 %----------------------------------------------------------------------
 
 %output 'index.html'
-	%wrap page: 'Home' ''
+	%wrap pagehead: 'Home' ''
+	%end
+	%wrap pagebody:
 		<section class="mainsection">
 		<p>
 		Welcome to Vigilante Sculpting. This is where I post my sculpting, scratchbuilding, drawing and painting work.
@@ -98,16 +101,20 @@
 %----------------------------------------------------------------------
 
 %output 'about.html'
-	%wrap page: 'About me' ''
-	{{ content/about.html/content }}
-	<div class="vertspacer"></div>
+	%wrap pagehead: 'About me' ''
+	%end
+	%wrap pagebody:
+		{{ content/about.index/content }}
+		<div class="vertspacer"></div>
 	%end
 %end
 
 %output 'contact.html'
-	%wrap page: 'Contact me' ''
-	{{ content/contact.html/content }}
-	<div class="vertspacer"></div>
+	%wrap pagehead: 'Contact me' ''
+	%end
+	%wrap pagebody:
+		{{ content/contact.index/content }}
+		<div class="vertspacer"></div>
 	%end
 %end
 
@@ -125,7 +132,7 @@
 			%-if postid 1 > 
 				%set 'nextpost': posts (postid 1 -) at
 				%-<a href="{{ nextpost/slug '.html' + //+ }}"><div class="nextpost">&#x2329; Next {{ name }}</div></a>
-				<a href="{{ nextpost/slug '.html' + //+ }}"><div class="nextpost">&#x2329;</div></a>
+				<a href="{{ nextpost/slug '.html' + //+ }}" rel="next"><div class="nextpost">&#x2329;</div></a>
 			%-end
 		%else
 			&nbsp;
@@ -135,7 +142,7 @@
 		%if postid (posts length 1 -) < 
 			%-if postid (posts length 2 - ) <
 				%set 'prevpost': posts (postid 1 +) at
-				<a href="{{ prevpost/slug '.html' + //+ }}"><div class="prevpost">&#x232a;</div></a>
+				<a href="{{ prevpost/slug '.html' + //+ }}" rel="prev"><div class="prevpost">&#x232a;</div></a>
 				%-<a href="{{ prevpost/slug '.html' + //+ }}"><div class="prevpost">Previous {{ name }} &#x232a;</div></a>
 			%-end
 			%set 'lastpost': posts (posts length 1 -) at
@@ -154,8 +161,13 @@
 
 %# outputs a blog page for each blog post in the blog/ subdirectory
 %for postid post: content/sortedblogposts enumerate
-	%output 'blog' post/slug '.html' + //+
-		%wrap page: post/title '..'
+	%set 'path': 'blog' post/slug '.html' + //+
+	%set 'commentpath': config/site_url config/tgtsubdir 'blog' post/slug '.xml'+ //+
+	%output path
+		%wrap pagehead: post/title '..'
+			<link rel="alternate" type="application/rss+xml" title="Comments on '{{ post/title }} - {{ config/title }}'" href="{{ commentpath }}">
+		%end
+		%wrap pagebody:
 			<article>
 				%write 'postnav'
 					%call postnavigation: postid content/sortedblogposts 'post'
@@ -176,6 +188,7 @@
 				%embed postnav
 				%-%call postnavigation: postid content/sortedblogposts 'post'
 			</article>
+			%call commentsection: post path
 		%end
 	%end
 %end
@@ -194,7 +207,7 @@
 				%set 'prevpageid': pageid 1 -
 				%set 'prevpage': basename prevpageid str '' prevpageid 0 > ? '.html' sum
 				%-<a href="{{ prevpage }}"><div class="prevpage">&#x2329; Previous page</div></a>
-				<a href="{{ prevpage }}"><div class="prevpage">&#x2329;</div></a>
+				<a href="{{ prevpage }}" rel="prev"><div class="prevpage">&#x2329;</div></a>
 			%-end
 		%else
 			&nbsp;
@@ -206,7 +219,7 @@
 				%set 'nextpageid': pageid 1 + 
 				%set 'nextpage': basename nextpageid str '.html' sum
 				%-<a href="{{ nextpage }}"><div class="nextpage">Next page &#x232a;</div></a>
-				<a href="{{ nextpage }}"><div class="nextpage">&#x232a;</div></a>
+				<a href="{{ nextpage }}" rel="next"><div class="nextpage">&#x232a;</div></a>
 			%-end
 			%set 'lastpage': basename pagecount 1 - str '.html' sum
 			%-<a href="{{ lastpage }}"><div class="nextpage">Last page &#x300B;</div></a>
@@ -224,7 +237,9 @@
 	%set 'pagecount': posts length config/paginatecount /^ int
 	%for pageid postgroup: postgroups enumerate
 		%output targetdir ( 'index' ( pageid str '' pageid 0 > ? ) '.html' sum ) //+
-			%wrap page: title '..'
+			%wrap pagehead: title '..'
+			%end
+			%wrap pagebody:
 				<article>
 					%write 'pagination'
 						%call paginatenavigation: pageid pagecount 'index'
@@ -255,10 +270,10 @@
 %- Create the blog/ projects/ sketches & articles index pages
 %----------------------------------------------------------------------
 
-%call makeindex: 'Blog'                'blog'     content/sortedblogposts ''        content/blog.html/content
-%call makeindex: 'Projects'            'projects' content/sortedprojects  ''        content/projects.html/content
-%call makeindex: 'Sketches & Drawings' 'sketches' content/sortedsketches  '../blog' content/sketches.html/content
-%call makeindex: 'Articles'            'articles' content/sortedarticles  '../blog' content/articles.html/content
+%call makeindex: 'Blog'                'blog'     content/sortedblogposts ''        content/blog.index/content
+%call makeindex: 'Projects'            'projects' content/sortedprojects  ''        content/projects.index/content
+%call makeindex: 'Sketches & Drawings' 'sketches' content/sortedsketches  '../blog' content/sketches.index/content
+%call makeindex: 'Articles'            'articles' content/sortedarticles  '../blog' content/articles.index/content
 
 %output 'blog/latestpost.html'
 	%call redirect: content/sortedblogposts 0 at
@@ -282,9 +297,15 @@
 	%set 'postgroups': project/posts config/paginatecount groupby
 	%set 'pagecount': project/posts length config/paginatecount /^ int
 
+	%set 'path': 'projects' project/slug '.html' + //+
+	%set 'commentpath': config/site_url config/tgtsubdir 'projects' project/slug '.xml'+ //+
+
 	%for postgroupid postgroup: postgroups enumerate
 		%output 'projects' (project/slug (postgroupid str '' postgroupid 0 > ?) '.html' sum) //+
-			%wrap page: project/title '..'
+			%wrap pagehead: project/title '..'
+				<link rel="alternate" type="application/rss+xml" title="Comments on '{{ project/title }} - {{ config/title }}'" href="{{ commentpath }}">
+			%end
+			%wrap pagebody:
 				<article>
 					%write 'projectsnavigate'
 						%call postnavigation: projectid content/sortedprojects 'project'
@@ -318,6 +339,7 @@
 
 					%embed projectsnavigate
 				</article>
+				%call commentsection: project path
 			%end
 		%end
 	%end

@@ -307,7 +307,6 @@ def methodcaller(name):
 		return op(obj)
 	return methodcaller_
 
-
 # A handy dictionary of the default operators.
 # Note: Some of the operators will return generators, which may result in a 
 # 		"TypeError: object of type 'generator' has no len()"
@@ -456,9 +455,13 @@ class Pretzyl:
 			return self.env[self.operatorpath]
 
 	def validref(self, token):
-		"""Checks whether a token is a valid reference in the environment
+		"""Checks whether a bare token is a valid reference in the environment.
+		If the token is a literal, check whether it is the name of a valid reference
 		"""
-		return isinstance(token, Reference) and token.name in self.env
+		if isinstance(token, Reference):
+			return token.name in self.env and self.env[token.name] in self.env
+		else:
+			return token in self.env
 
 	def lookup(self, token):
 		"""Resolves the value of a token.

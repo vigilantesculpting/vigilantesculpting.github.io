@@ -180,8 +180,8 @@ class Rezyn:
 				if fileName == ".DS_Store":
 					continue
 				fullpath = os.path.join(dirName, fileName)
-				if 0:
-					base, ext = os.path.split(fileName)
+				if 1:
+					base, ext = os.path.splitext(fileName)
 					var = os.path.join("content", root, base)
 				else:
 					var = os.path.join("content", root, fileName)

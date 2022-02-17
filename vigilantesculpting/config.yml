@@ -5,4 +5,5 @@ config/tgtsubdir        : ''
 config/staticdir        : 'static'
 config/contentdir       : 'content'
 config/templatedir      : 'template'
+config/commentsdir      : 'comments'
 config/paginatecount    : 45

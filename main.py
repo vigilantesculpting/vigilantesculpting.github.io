@@ -85,12 +85,12 @@ class Processor(rezyn.Rezyn):
 		if 'date' in content:
 			content['date'] = dateutil.parser.parse(content['date'])
 
-		# convert the body text into an html snippet, if it not an html file
+		# convert the body text into an html snippet, if it is not an html file
 		text = self.texttohtml(ext.lower(), filebody)
 
 		# create an xml representation of the document
 		# we have to add a root element!
-		root = lxml.html.fromstring("<div class='filecontent'>" + text + "</div>")
+		root = lxml.html.fromstring(text)
 
 		# find all images, and prepare them for lightbox
 		imgs = root.findall(".//img")
@@ -129,7 +129,102 @@ class Processor(rezyn.Rezyn):
 		# finally add the text
 		content['content'] = text
 
+		# and add a comments section:
+		content['comments'] = []
+
 		return content
+
+	def readcomment(self, filename):
+		content = nsdict.NSDict()
+
+		# Read file content.
+		filecontent = unicode(readfile(filename), encoding='utf-8')
+
+		# split the yaml frontmatter and body text
+		fileheader, filebody = rezyn.splitheader(filecontent)
+		fm = yaml.safe_load(fileheader)
+		if fm is not None:
+			# it is not an error if no yaml is present, the file simply has no metadata
+			content.update(fm)
+
+		# convert the body text into an html snippet, if it not an html file
+		text = self.texttohtml(ext.lower(), filebody)
+
+		# create an xml representation of the document
+		# we have to add a root element, since the text may or may not have one
+		root = lxml.html.fromstring(text) #"<div class='filecontent'>" + text + "</div>")
+
+		# convert the html tree back to text
+		text = lxml.html.tostring(root)
+		content['content'] = text
+
+		# convert the string date into a raw datetime we can work with
+		if 'date' in content:
+			datestr = content['date']
+			content['date'] = dateutil.parser.parse(datestr)
+
+		# add a list for replies to this comment:
+		content['comments'] = []
+
+		return content
+
+	def readcomments(self, commentspath):
+		# read comment files from the directory
+		commentspath = os.path.join(self.solon.context.config.srcdir, commentspath)
+		log("loading comments from [%s]" % commentspath)
+
+		# load every comment into a lookup table
+		comments = []
+		commentlookup = {}
+		for dirName, subdirList, fileList in os.walk(commentspath):
+			root = dirName[len(commentspath)+1:]
+			for fileName in fileList:
+				if fileName == ".DS_Store":
+					continue
+				fullpath = os.path.join(dirName, fileName)
+				if 0:
+					base, ext = os.path.split(fileName)
+					var = os.path.join("content", root, base)
+				else:
+					var = os.path.join("content", root, fileName)
+				log("adding comment ", var)
+				comment = self.readfile(fullpath)
+				commenturi = comment.pageuri + "#comment" + str(comment.commentid)
+				commentlookup[commenturi] = comment
+				comments.append(comment)
+
+		# sort the comments by their date
+		# this means that they will appear in order on the page, no matter when they were added
+		comments = sorted(comments, key=lambda comment: comment.date)
+
+		# use the lookup table to create the trees of comments, attaching the root
+		# of each tree to its page
+		for comment in comments:
+			commenturi = comment.pageuri + "#comment" + str(comment.commentid)
+			if comment.replytoid is not None:
+				# this is a reply
+				replytouri = comment.pageuri + "#comment" + str(comment.replytoid)
+				try:
+					# add this comment to that comment's reply list:
+					parent = commentlookup[replytouri]
+				except KeyError:
+					log("orphan reply comment:", comment.commentid)
+					continue
+				parent['comments'].append(comment)
+				# add the replyingto field (this is used by RSS)
+				comment['replyingto'] = parent.displayname
+			else:
+				# this must be a root comment.
+				# is there a comment with the same pageid/replyto?
+				pageuri, ext = os.path.splitext(comment.pageuri)
+				var = os.path.join("content", pageuri)
+				try:
+					page = self.solon.context[var]
+				except KeyError:
+					log("orphan comment:", comment.commentid)
+					continue
+				page.comments.append(comment)
+
 
 	def gettagsfromposts(self, posts):
 		tags = {}
@@ -154,6 +249,7 @@ class Processor(rezyn.Rezyn):
 
 		self.readcontent(self.solon.context["config/contentdir"])
 		self.readtemplates(self.solon.context["config/templatedir"])
+		self.readcomments(self.solon.context["config/commentsdir"])
 
 		# post process the data
 
