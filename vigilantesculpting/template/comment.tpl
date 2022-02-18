@@ -4,15 +4,18 @@
 
 %func commentsection: post path
 	<section class="commentsection">
-		<section class="commentheader">
-			%set 'commentcount': post/comments ||
-			%if commentcount 0 >
-				<h1>Comments ({{commentcount}})</h1>
-				%call commentlist: 0 post/comments
-			%else
-				<h1>No comments</h1>
-			%end
-			<p class="rsslink"><a href="{{ commentpath }}">Comment RSS Feed</a></p>
+		<section>
+			<section class="commentheader">
+				%set 'commentcount': post/comments ||
+				%if commentcount 0 >
+					<h1>Comments ({{commentcount}})</h1>
+				%else
+					<h1>No comments</h1>
+				%end
+				<p class="rsslink"><a href="{{ commentpath }}">Comment RSS Feed</a></p>
+			</section>
+			%# this renders the nested list of comments
+			%call commentlist: 0 post/comments
 		</section>
 		<section>
 			%call commentblurb: path
