@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+	xmlns="http://backend.userland.com/rss2"
+	xmlns:tags="https://vigilantesculpting.github.io/tagsModule/"
+	xmlns:conversation="https://vigilantesculpting.github.io/conversationModule/"
+	>
+<channel>
+		<title>Comment feed for 'Tetsuork, done! - Vigilante Sculpting'</title>
+		<link>blog/2020-12-04-tetsuork-done.html</link>
+</channel>
+</rss>

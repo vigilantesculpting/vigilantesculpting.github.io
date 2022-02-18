@@ -16,7 +16,7 @@
         <meta name="viewport" content="width=device-width">
         <link href="/favicon.ico" rel="icon" type="image/x-icon">
         <link rel="stylesheet" type="text/css" href="/css/structure-f48d0f0d91ef0b3f22a2235261c20ee0.css">
-        <link rel="stylesheet" type="text/css" href="/css/style-34bf6a99e21e3f502dd952a7c4d85ee4.css">
+        <link rel="stylesheet" type="text/css" href="/css/style-9125f5b7e3a9a87ee22ec45925dd7a64.css">
         <link rel="stylesheet" type="text/css" href="/css/widescreen-0e7c6a6e92e520bae658d363111fd6d7.css" media="screen and (min-width: 601px)" >
         <link rel="alternate"  type="application/rss+xml" href="/blog/rss.xml" title="Blog RSS Feed">
         <link rel="alternate"  type="application/rss+xml" href="/projects/rss.xml" title="Projects RSS Feed">
@@ -24,6 +24,7 @@
         <link rel="alternate"  type="application/rss+xml" href="/sketches/rss.xml" title="Sketches RSS Feed">
         <link rel="stylesheet" type="text/css" href="/css/radiant-59ec70c4c60ba51ec1395d68bc148959.css">
         <script src="/js/radiant-48b3e49c0361f32f8dcf22d8d79fc544.js"></script>
+			<link rel="alternate" type="application/rss+xml" title="Comments on 'Laying on the basecoat - Vigilante Sculpting'" href="https://www.vigilantesculpting.com/blog/2021-06-14-laying-on-the-basecoat.xml">
 </head>
 <body>
 <main>
@@ -49,17 +50,17 @@
 		<section class="postnav">
 		<div class="postnav-left">
 			<a href="latestpost.html"><div class="nextpost">&#x300A;</div></a>
-				<a href="2021-06-17-disintegrat.html"><div class="nextpost">&#x2329;</div></a>
+				<a href="2021-06-17-disintegrat.html" rel="next"><div class="nextpost">&#x2329;</div></a>
 		</div>
 		<div class="postnav-right">
-				<a href="2021-06-14-nude-studies.html"><div class="prevpost">&#x232a;</div></a>
+				<a href="2021-06-14-nude-studies.html" rel="prev"><div class="prevpost">&#x232a;</div></a>
 			<a href="2018-07-10-scratchbuilding-a-land-raider.html"><div class="prevpost">&#x300B;</div></a>
 		</div>
 		</section>
 				<h1>Laying on the basecoat</h1>
 				<p class="meta">Published on 14/06/2021 @17:32:00 by <b>vigilante sculpting</b></p>
 				<section class="mainsection">
-				<div class="filecontent"><p>Started laying on some base colors. Aiming for a blue/gray gradient, which should go well with a red rust and a light brown dust mix later. I am using mainly Golden high flow acrylic Phthalo Blue, mixed with FW White and Black (to get the right value) and a bit of FW Payne's gray to make it a bit colder. The mix of the paint + ink makes it easy enough to airbursh, although I do add a bit of medium + flow improver especially with the lighter shade to knock down the coverage a bit.</p>
+				<div><p>Started laying on some base colors. Aiming for a blue/gray gradient, which should go well with a red rust and a light brown dust mix later. I am using mainly Golden high flow acrylic Phthalo Blue, mixed with FW White and Black (to get the right value) and a bit of FW Payne's gray to make it a bit colder. The mix of the paint + ink makes it easy enough to airbursh, although I do add a bit of medium + flow improver especially with the lighter shade to knock down the coverage a bit.</p>
 <img src="https://i.imgur.com/xelU8cwl.jpg" loading="lazy" class="radiant-lightbox-slide" data-src="https://i.imgur.com/xelU8cw.jpg">
 <p>I've been experimenting with the colorscheme I've started on. First up is just the general weathering. To test out what works and what won't, I built a little Cube of Learning:</p>
 <img src="https://i.imgur.com/o8VOn15l.jpg" loading="lazy" class="radiant-lightbox-slide" data-src="https://i.imgur.com/o8VOn15.jpg">
@@ -81,14 +82,86 @@
 		<section class="postnav">
 		<div class="postnav-left">
 			<a href="latestpost.html"><div class="nextpost">&#x300A;</div></a>
-				<a href="2021-06-17-disintegrat.html"><div class="nextpost">&#x2329;</div></a>
+				<a href="2021-06-17-disintegrat.html" rel="next"><div class="nextpost">&#x2329;</div></a>
 		</div>
 		<div class="postnav-right">
-				<a href="2021-06-14-nude-studies.html"><div class="prevpost">&#x232a;</div></a>
+				<a href="2021-06-14-nude-studies.html" rel="prev"><div class="prevpost">&#x232a;</div></a>
 			<a href="2018-07-10-scratchbuilding-a-land-raider.html"><div class="prevpost">&#x300B;</div></a>
 		</div>
 		</section>
 			</article>
+	<section class="commentsection">
+		<section class="commentheader">
+				<h1>No comments</h1>
+			<p class="rsslink"><a href="https://www.vigilantesculpting.com/blog/2021-06-14-laying-on-the-basecoat.xml">Comment RSS Feed</a></p>
+		</section>
+		<section>
+<script>
+	function showReplyForm(replytoid)
+	{
+		var form = document.getElementById("commentform" + replytoid);
+		var hideshowbutton = document.getElementById("hideshow" + replytoid);
+		if (form.style.display != "grid")
+		{
+			form.style.display = "grid";
+			hideshowbutton.innerHTML = "Cancel";
+		}
+		else
+		{
+			form.style.display = "none";
+			hideshowbutton.innerHTML = "Reply";
+		}
+		return false;
+	}
+	function newComment(pageid, replytoid)
+	{
+		var replytouri = window.location.pathname.substr(1);
+		if (replytoid > 0)
+			replytouri += "#comment" + replytoid;
+		var displayname = document.getElementById("displayname" + replytoid).value;
+		if (displayname == "")
+			displayname = "Anonymous"
+		var displayurl = document.getElementById("displayurl" + replytoid).value;
+		if (displayurl != "")
+			displayurl = "(" + displayurl + ")";
+		var comment = document.getElementById("commenttext" + replytoid).value;
+		var body = displayname + displayurl + " says:\n" + comment;
+		var fragment = "?subject=RE:" + encodeURIComponent(replytouri) + "&body=" + encodeURIComponent(body);
+		mydecode = function(x) { return atob(x); };
+		var address = mydecode('bWFpbHRvOnZpZ2lsYW50ZXNjdWxwdGluZytjb21tZW50c0BnbWFpbC5jb20=') + fragment;
+		window.open(address, '_blank');
+		return false;
+	}
+	function resetComment(replytoid)
+	{
+		document.getElementById("displayname" + replytoid).value = "";
+		document.getElementById("displayurl" + replytoid).value = "";
+		document.getElementById("commenttext" + replytoid).value = "";
+		return false;
+	}
+</script>
+		<form name='comment0'>
+				<h1>Add a comment</h1>
+				<div>To make a comment, please send an e-mail using the form below. Comments are hand-moderated and may take a while to appear, please be patient!</div>
+				<div>For general rules and site policies regarding comments, and how this works, please see
+					<a href="https://www.vigilantesculpting.com/blog/2022-02-15-comments_are_now_live.html">this post</a>
+				</div>
+				<div><b>Your e-mail address will never be shared.</b></div>
+				<section class="commentform">
+			<label class="div1 commentlabel" for="displayname0">Display name:</label>
+				<input type="text" id="displayname0" placeholder="Your chosen display name" class="div2"></input>
+			<label class="div3 commentlabel" for="displayurl0">Display URL:</label>
+				<input type="url" id="displayurl0" placeholder="Your chosen display url" class="div4"></input>
+			<label class="div5 commentlabel" for="commenttext0">Comment:</label>
+				<textarea class="div6" id="commenttext0" placeholder="Your comment"></textarea>
+			<div class="div7">
+				<button onclick="return newComment('blog/2021-06-14-laying-on-the-basecoat.html', 0);">Submit comment (via email)</button>
+				<button onclick="return resetComment(0);">Reset</button>
+			</div>
+		</section>
+	</form>
+		</section>
+	</section>
 </main>
 <footer>
 <section>
@@ -96,6 +169,7 @@
 <p>
     <a href="https://www.artstation.com/g0rb">ArtStation</a>
     <a href="https://www.deviantart.com/gorb">DeviantArt</a>
+    <a href="https://www.reddit.com/user/gorb314">Reddit</a>
     <a href="https://instagram.com/gorb314">Instagram</a>
     <a href="https://www.puttyandpaint.com/g0rb">Putty&Paint</a>
     <a href="http://www.coolminiornot.com/artist/gorb">CMON</a>

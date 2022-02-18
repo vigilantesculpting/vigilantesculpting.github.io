@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0"
 	xmlns="http://backend.userland.com/rss2"
-	xmlns:tags="https://vigilantesculpting.github.io/tagsModule/">
+	xmlns:tags="https://vigilantesculpting.github.io/tagsModule/"
+	xmlns:conversation="https://vigilantesculpting.github.io/conversationModule/"
+	>
 <channel>
-<title>Vigilante Sculpting - Blog</title>
-<link>https://www.vigilantesculpting.com/blog</link>
-<description>Latest posts about sculpting, painting, drawing and model making</description>
+		<title>Vigilante Sculpting - Blog</title>
+		<link>https://www.vigilantesculpting.com/blog</link>
+		<description>Latest posts about sculpting, painting, drawing and model making</description>
+<item>
+	<title>Comments are now live</title>
+	<link>https://www.vigilantesculpting.com/blog/2022-02-15-comments_are_now_live.html</link>
+	<description>
+		<![CDATA[
+		<p>
+			<a class="more" href="https://www.vigilantesculpting.com/blog/2022-02-15-comments_are_now_live.html"><img src="https://i.imgur.com/3q7dbRum.jpeg" class="thumbnail" loading="lazy"></a>
+		Zarjazz! Posts and projects now have a button where you can leave a comment. All comments are sent to me via email, so you don't&nbsp;<a href="https://www.vigilantesculpting.com/blog/2022-02-15-comments_are_now_live.html">[...Read More]</a>
+		</p>
+	]]>
+	</description>
+	<tags:taglist>
+		<tags:tag>site</tags:tag>
+		<tags:tag>admin</tags:tag>
+		<tags:tag>programming</tags:tag>
+	</tags:taglist>
+	<pubDate>Tue, 15 Feb 2022 17:37:29 -0800</pubDate>
+</item>
 <item>
 	<title>Q'Rau</title>
 	<link>https://www.vigilantesculpting.com/blog/2022-02-07-q_rau.html</link>
@@ -1534,7 +1554,6 @@
 	<description>
 		<![CDATA[
 		<p>
-			<a class="more" href="https://www.vigilantesculpting.com/blog/2021-02-02-queen-of-bones.html"><img src="https://cdna.artstation.com/p/assets/images/images/034/443/398/small/chris-g0rb-bonequeen.jpg" class="thumbnail" loading="lazy"></a>
 		&nbsp;<a href="https://www.vigilantesculpting.com/blog/2021-02-02-queen-of-bones.html">[...Read More]</a>
 		</p>
 	]]>

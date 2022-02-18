@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0"
 	xmlns="http://backend.userland.com/rss2"
-	xmlns:tags="https://vigilantesculpting.github.io/tagsModule/">
+	xmlns:tags="https://vigilantesculpting.github.io/tagsModule/"
+	xmlns:conversation="https://vigilantesculpting.github.io/conversationModule/"
+	>
 <channel>
-<title>Vigilante Sculpting - Articles</title>
-<link>https://www.vigilantesculpting.com/articles</link>
-<description>Latest articles about scratchbuilding, painting, and the hobby in general</description>
+		<title>Vigilante Sculpting - Articles</title>
+		<link>https://www.vigilantesculpting.com/articles</link>
+		<description>Latest articles about scratchbuilding, painting, and the hobby in general</description>
 <item>
 	<title>DIY Tentacle roller, take 2</title>
 	<link>https://www.vigilantesculpting.com/blog/2020-10-29-diy-tentacle-roller-take-2.html</link>

@@ -16,7 +16,7 @@
         <meta name="viewport" content="width=device-width">
         <link href="/favicon.ico" rel="icon" type="image/x-icon">
         <link rel="stylesheet" type="text/css" href="/css/structure-f48d0f0d91ef0b3f22a2235261c20ee0.css">
-        <link rel="stylesheet" type="text/css" href="/css/style-34bf6a99e21e3f502dd952a7c4d85ee4.css">
+        <link rel="stylesheet" type="text/css" href="/css/style-9125f5b7e3a9a87ee22ec45925dd7a64.css">
         <link rel="stylesheet" type="text/css" href="/css/widescreen-0e7c6a6e92e520bae658d363111fd6d7.css" media="screen and (min-width: 601px)" >
         <link rel="alternate"  type="application/rss+xml" href="/blog/rss.xml" title="Blog RSS Feed">
         <link rel="alternate"  type="application/rss+xml" href="/projects/rss.xml" title="Projects RSS Feed">
@@ -24,6 +24,7 @@
         <link rel="alternate"  type="application/rss+xml" href="/sketches/rss.xml" title="Sketches RSS Feed">
         <link rel="stylesheet" type="text/css" href="/css/radiant-59ec70c4c60ba51ec1395d68bc148959.css">
         <script src="/js/radiant-48b3e49c0361f32f8dcf22d8d79fc544.js"></script>
+
 </head>
 <body>
 <main>
@@ -45,16 +46,64 @@
     </div>
 </section>
 </nav>
-	<div class="filecontent"><h1>Contact me</h1>
+		<div><h1>Contact me</h1>
 <p>
 You can reach me via any of these social medias:
 </p><ul>
 <li><a href="https://www.artstation.com/g0rb">ArtStation</a></li>
 <li><a href="https://www.deviantart.com/gorb">DeviantArt</a></li>
+<li><a href="https://www.reddit.com/user/gorb314">Reddit</a></li>
 <li><a href="https://www.instagram.com/gorb314">Instagram</a></li>
 </ul>
+
+<p>
+Alternatively, please send me an email:
+</p>
+<script>
+	function newContact()
+	{
+		var subject = document.getElementById("contactsubject").value;
+		var body = document.getElementById("contacttext").value;
+		var fragment = "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+		mydecode = function(x) { return atob(x); };
+		var address = mydecode('bWFpbHRvOnZpZ2lsYW50ZXNjdWxwdGluZ0BnbWFpbC5jb20=') + fragment;
+		window.open(address, '_blank');
+		return false;
+	}
+</script>
+<style>
+.contactform {
+	display: grid;
+	grid-template-columns: min-content 1fr;
+    grid-template-rows: repeat(4, min-content); 
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+}
+
+.contactform .div1 { grid-area: 1 / 1 / 2 / 2; }
+.contactform .div2 { grid-area: 1 / 2 / 2 / 3; }
+.contactform .div3 { grid-area: 2 / 1 / 3 / 2; }
+.contactform .div4 { grid-area: 2 / 2 / 3 / 3; }
+.contactform .div5 { 
+	grid-area: 3 / 1 / 4 / 3; 
+	text-align: right;
+} 
+
+#contacttext {
+	height: 10em;
+}
+</style>
+<form class="contactform">
+	<label class="div1 commentlabel" for="contactsubject">Subject:</label>
+		<input class="div2" type="text" id="contactsubject" placeholder="">
+	<label class="div3 commentlabel" for="contacttext">Body:</label>
+		<textarea class="div4" id="contacttext" placeholder=""></textarea>
+	<div class="div5">
+		<button onclick="return newContact();">Submit (via email)</button>
+	</div>
+</form>
 </div>
-	<div class="vertspacer"></div>
+		<div class="vertspacer"></div>
 </main>
 <footer>
 <section>
@@ -62,6 +111,7 @@ You can reach me via any of these social medias:
 <p>
     <a href="https://www.artstation.com/g0rb">ArtStation</a>
     <a href="https://www.deviantart.com/gorb">DeviantArt</a>
+    <a href="https://www.reddit.com/user/gorb314">Reddit</a>
     <a href="https://instagram.com/gorb314">Instagram</a>
     <a href="https://www.puttyandpaint.com/g0rb">Putty&Paint</a>
     <a href="http://www.coolminiornot.com/artist/gorb">CMON</a>

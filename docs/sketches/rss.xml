@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0"
 	xmlns="http://backend.userland.com/rss2"
-	xmlns:tags="https://vigilantesculpting.github.io/tagsModule/">
+	xmlns:tags="https://vigilantesculpting.github.io/tagsModule/"
+	xmlns:conversation="https://vigilantesculpting.github.io/conversationModule/"
+	>
 <channel>
-<title>Vigilante Sculpting - Sketches &amp; Drawings</title>
-<link>https://www.vigilantesculpting.com/sketches</link>
-<description>Latest sketches and drawings</description>
+		<title>Vigilante Sculpting - Sketches &amp; Drawings</title>
+		<link>https://www.vigilantesculpting.com/sketches</link>
+		<description>Latest sketches and drawings</description>
 <item>
 	<title>d.i.S.i.n.t.e.g.r.a.t</title>
 	<link>https://www.vigilantesculpting.com/blog/2021-06-17-disintegrat.html</link>
@@ -212,7 +214,6 @@
 	<description>
 		<![CDATA[
 		<p>
-			<a class="more" href="https://www.vigilantesculpting.com/blog/2021-02-02-queen-of-bones.html"><img src="https://cdna.artstation.com/p/assets/images/images/034/443/398/small/chris-g0rb-bonequeen.jpg" class="thumbnail" loading="lazy"></a>
 		&nbsp;<a href="https://www.vigilantesculpting.com/blog/2021-02-02-queen-of-bones.html">[...Read More]</a>
 		</p>
 	]]>

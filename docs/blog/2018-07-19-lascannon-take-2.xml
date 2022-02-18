@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+	xmlns="http://backend.userland.com/rss2"
+	xmlns:tags="https://vigilantesculpting.github.io/tagsModule/"
+	xmlns:conversation="https://vigilantesculpting.github.io/conversationModule/"
+	>
+<channel>
+		<title>Comment feed for 'Lascannon, Take 2 - Vigilante Sculpting'</title>
+		<link>blog/2018-07-19-lascannon-take-2.html</link>
+</channel>
+</rss>
