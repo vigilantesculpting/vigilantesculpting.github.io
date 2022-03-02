@@ -288,6 +288,13 @@ class Processor(rezyn.Rezyn):
 			sortedarticles = []
 		self.solon.context['content/sortedarticles'] = sortedarticles
 
+		if 'shop' in tags:
+			wares = [self.solon.context['content/blog'][post] for post in tags['shop']]
+			sortedwares = sorted(wares, key=lambda values: values['date'], reverse=True)
+		else:
+			sortedwares = []
+		self.solon.context['content/sortedwares'] = sortedwares
+
 		# render the templates
 
 		log(">>> render")

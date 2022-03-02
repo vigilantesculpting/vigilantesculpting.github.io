@@ -393,3 +393,9 @@ ul.posttags > li {
     color:  #ffffff;
     background-color: #42617d;
 }
+
+a.highlightnav {
+    font-weight: bold;
+    color: #42617d;
+}
+

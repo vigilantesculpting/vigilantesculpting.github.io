@@ -61,10 +61,10 @@
         <a href="{{ '/' config/tgtsubdir 'projects'        //+ }}">Projects</a>
         <a href="{{ '/' config/tgtsubdir 'sketches'        //+ }}">Sketches</a>
 %#      <a href="{{ '/' config/tgtsubdir 'wip'             //+ }}">WIP</a>
-%#      <a href="{{ '/' config/tgtsubdir 'shop'            //+ }}">Shop</a>
         <a href="{{ '/' config/tgtsubdir 'articles'        //+ }}">Articles</a>
         <a href="{{ '/' config/tgtsubdir 'contact.html'    //+ }}">Contact</a>
         <a href="{{ '/' config/tgtsubdir 'about.html'      //+ }}">About</a>
+        <a class='highlightnav' href="{{ '/' config/tgtsubdir 'shop'             //+ }}">Shop</a>
     </span>
     </div>
 </section>

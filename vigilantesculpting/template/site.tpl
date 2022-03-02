@@ -275,6 +275,10 @@
 %call makeindex: 'Sketches & Drawings' 'sketches' content/sortedsketches  '../blog' content/sketches.index/content
 %call makeindex: 'Articles'            'articles' content/sortedarticles  '../blog' content/articles.index/content
 
+%call makeindex: 'Shop'                'shop'     content/sortedwares     '../blog' content/shop.index/content
+
+%- create the redirect pages, so we don't have to keep modiying older pages to get to the latest page
+
 %output 'blog/latestpost.html'
 	%call redirect: content/sortedblogposts 0 at
 %end
@@ -286,6 +290,9 @@
 %end
 %output 'articles/latestpost.html'
 	%call redirect: content/sortedarticles 0 at
+%end
+%output 'articles/latestshop.html'
+	%call redirect: content/sortedwares 0 at
 %end
 
 %----------------------------------------------------------------------
@@ -345,3 +352,4 @@
 	%end
 
 %end
+
