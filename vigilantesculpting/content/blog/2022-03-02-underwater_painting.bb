@@ -31,7 +31,7 @@ Some closeups of the scene:
 Not only is the colorscheme an experiment, but the colors themselves are too. I took apart a friend's broken
 inkjet printer, and it came with tanks of ink, which I dutifully siphoned out into dropper bottles:
 
-[img]https://i.imgur.com/kl0y3fp.jpeg[/img] IMG_20220217_225525735.jpg
+[img]https://i.imgur.com/kl0y3fp.jpeg[/img]
 
 These inks are super potent yet pretty translucent (that's how they function, after all). They seems to blend pretty well too, and they are super saturated.
 I don't think they dry entirely waterproof, but that is why we have varnish after all.
