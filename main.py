@@ -11,6 +11,7 @@ import lxml.html
 import lxml.etree
 import datetime
 import dateutil.parser
+import xml.sax.saxutils
 
 import rezyn
 import nsdict
@@ -80,6 +81,10 @@ class Processor(rezyn.Rezyn):
 		metadata = yaml.safe_load(fileheader)
 		if metadata is not None:
 			content.update(metadata)
+
+		# escape any characters that need to be escaped in the title
+		if 'title' in content:
+			content['title'] = xml.sax.saxutils.escape(content['title'])
 
 		# convert the date string in the metadata into a raw datetime we can work with
 		if 'date' in content:
