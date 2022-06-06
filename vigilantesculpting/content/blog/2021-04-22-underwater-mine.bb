@@ -3,7 +3,8 @@ author: vigilante sculpting
 date: '2021-04-22T11:54:00.000-07:00'
 tags:
 - scratchbuilt
-- project:underwater
+- project:mermaid
+- underwater
 - diy
 - wip
 - mine

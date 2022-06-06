@@ -10,6 +10,7 @@ tags:
 - sculpey
 - greenstuff
 - 55mm
+- project:mermaid
 thumbnail: https://i.imgur.com/1ooYddx.jpeg
 title: Diver & mermaid update
 ---
