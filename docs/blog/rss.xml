@@ -395,6 +395,7 @@
 		<tags:tag>sculpey</tags:tag>
 		<tags:tag>greenstuff</tags:tag>
 		<tags:tag>55mm</tags:tag>
+		<tags:tag>project:mermaid</tags:tag>
 	</tags:taglist>
 	<pubDate>Wed, 26 Jan 2022 13:16:36 -0800</pubDate>
 </item>
@@ -1287,7 +1288,8 @@
 	</description>
 	<tags:taglist>
 		<tags:tag>scratchbuilt</tags:tag>
-		<tags:tag>project:underwater</tags:tag>
+		<tags:tag>project:mermaid</tags:tag>
+		<tags:tag>underwater</tags:tag>
 		<tags:tag>diy</tags:tag>
 		<tags:tag>wip</tags:tag>
 		<tags:tag>mine</tags:tag>
