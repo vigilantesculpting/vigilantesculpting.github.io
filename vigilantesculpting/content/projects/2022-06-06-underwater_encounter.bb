@@ -20,8 +20,14 @@ Everything is about contrasts here, from the mermaid who can swim freely to the 
 
 It is meant to be wall-mounted, but I have made a small stand for it too.
 
+[i]Edit: Added some more photos with a white background, showing the structure of the diorama[/i]
 
 [gallery]
+[img]https://i.imgur.com/WJ8iEVt.jpg[/img]
+[img]https://i.imgur.com/5kLIBi4.jpg[/img]
+[img]https://i.imgur.com/QlAjhCG.jpg[/img]
+[img]https://i.imgur.com/2QIu7Vg.jpg[/img]
+[img]https://i.imgur.com/iyRS7Y8.jpg[/img]
 [img]https://i.imgur.com/ABq4PWr.jpeg[/img]
 [img]https://i.imgur.com/k4e7a9M.jpeg[/img]
 [img]https://i.imgur.com/VEXlu73.jpeg[/img]
