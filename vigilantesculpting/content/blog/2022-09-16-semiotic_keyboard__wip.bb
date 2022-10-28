@@ -8,6 +8,7 @@ tags:
 - macrokeyboard
 - alien
 - weylanyutani
+- project:semiotickeypad
 thumbnail: https://i.imgur.com/6y2ksgE.jpeg
 title: Semiotic keyboard, wip
 ---
