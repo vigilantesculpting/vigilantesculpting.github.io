@@ -13,6 +13,7 @@ tags:
 - eyes
 - helmet
 - headgear
+- sketch
 thumbnail: https://i.imgur.com/NsEvTG4.jpeg
 title: Medusa
 ---
