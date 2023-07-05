@@ -1,46 +1,101 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys
 import os
-
+import os.path
 import re
-import getopt
-import bbcode
+
 import yaml
-import lxml.html
-import lxml.etree
 import datetime
 import dateutil.parser
-import xml.sax.saxutils
+import shutil
+import hashlib
 
-import rezyn
 import nsdict
 
-# Internal debugging / tracing
-LOG = False
+import xml.sax.saxutils
+import lxml.html
+import lxml.etree
+import bbcode
+import markdown
+
+import template.site
+import template.rss
+import template.sitemap
+import template.robots
+
+import pdb
+
+
+""" 
+So the idea is to read in the entries in the blog, and output the pages
+via airium.
+
+We read in structured data, ie. our blog posts are read into a Blog class,
+project posts into a Project class, etc.
+
+We can then use functions such as 
+	for blog in blogs:
+		makeblog(blog)
+which will output each blog post into a file using makeblog.
+Let's do this top down, ie start at the main output method
+
+"""
+
 def log(*args, **kwargs):
-	if LOG:
-		for arg in args:
-			sys.stderr.write(str(arg))
-		sys.stderr.write("\n")
+	print(*args, **kwargs)
+	pass
 
-def setlog(level):
-	if level > 0:
-		global LOG
-		LOG = True
-		rezyn.setlog(level - 1)
+class Generator:
 
-class Processor(rezyn.Rezyn):
+	def __init__(self, argv):
 
-	def __init__(self, config):
-		rezyn.Rezyn.__init__(self, config)
+		self.configfile = "config.yml" # the default file
+
+		# read the config.yml file
+		with open(self.configfile) as f:
+			self.config = nsdict.NSDict(yaml.safe_load(f))
+
+		self.config["current_year"] = datetime.datetime.now().year
+		print(str(self.config))
 
 		self.bbparser = bbcode.Parser(replace_links=False, newline="")
 		self.bbparser.add_simple_formatter('img', '<img src="%(value)s" loading="lazy" />')
 		self.bbparser.add_simple_formatter('gallery', '<div class="gallery slides">%(value)s</div>')
 		self.bbparser.add_simple_formatter('youtube', '<iframe width="640" height="390" src="https://www.youtube.com/embed/%(value)s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="True">_</iframe>')
 
+	def splitheader(self, text):
+		header, body = "", text # default is no header
+		parts = re.split("---\n", text)
+		if len(parts) > 1:
+			if len(parts[0]) == 0 and len(parts) == 3:
+				header, body = parts[1:]
+		return header, body
+
+	def texttohtml(self, ext, text):
+		# convert the body text into an html snippet, if it not an html file
+		html = text # default
+		if ext == '.md':
+			html = markdown.markdown(text)
+		elif ext == ".bb":
+			# split the text into chunks, where chunks are separated by \n\n
+			chunks = [chunk for chunk in [chunk.strip() for chunk in re.split("(\n\n+)", text)] if len(chunk) > 0]
+			# replace all newlines with spaces, otherwise the rest of this code will paste words together weirdly
+			chunks = [chunk.replace("\n", " ") for chunk in chunks]
+			parsed = [self.bbparser.format(chunk) for chunk in chunks]
+			joins = [lxml.html.tostring(lxml.html.fromstring(chunk), encoding="unicode") for chunk in parsed]
+			html = "\n".join(joins)
+		return html
+
 	def imgurmodifier(self, src, modifier):
+		"""
+			s =   90×  90 = Small Square (as seen in the example above)
+			b =  160× 160 = Big Square 
+			t =  160× 160 = Small Thumbnail 
+			m =  320× 320 = Medium Thumbnail 
+			l =  640× 640 = Large Thumbnail
+			h = 1024×1024 = Huge Thumbnail
+		"""
 		imgururl = "https://i.imgur.com"
 		extra = "/TFJEC0j" # example extra junk on imgur urls
 		if src[:len(imgururl)] == imgururl:
@@ -51,19 +106,9 @@ class Processor(rezyn.Rezyn):
 				src = base + modifier + ext
 		return src
 
-	def parsebb(self, text):
-		# split the text into chunks, where chunks are separated by \n\n
-		chunks = [chunk for chunk in [chunk.strip() for chunk in re.split("(\n\n+)", text)] if len(chunk) > 0]
-		# replace all newlines with spaces, otherwise the rest of this code will paste words together weirdly
-		chunks = [chunk.replace("\n", " ") for chunk in chunks]
-		parsed = [self.bbparser.format(chunk) for chunk in chunks]
-		joins = [lxml.html.tostring(lxml.html.fromstring(chunk)) for chunk in parsed]
-		html = "\n".join(joins)
-		return html
-
 	def readfile(self, filename):
 		"""Read content and metadata from file into a dictionary."""
-		#log("readfile:", filename)
+		log("readfile:", filename)
 
 		# Read default metadata and save it in the content dictionary.
 		path, ext = os.path.splitext(filename)
@@ -74,10 +119,11 @@ class Processor(rezyn.Rezyn):
 		})
 
 		# Read file content.
-		filecontent = unicode(rezyn.readfile(filename), encoding='utf-8')
-
+		with open(filename, "r") as f:
+			#filecontent = unicode(f.read(), encoding="utf-8")
+			filecontent = f.read()
 		# split the yaml frontmatter and body text
-		fileheader, filebody = rezyn.splitheader(filecontent)
+		fileheader, filebody = self.splitheader(filecontent)
 		metadata = yaml.safe_load(fileheader)
 		if metadata is not None:
 			content.update(metadata)
@@ -107,14 +153,16 @@ class Processor(rezyn.Rezyn):
 			try:
 				content['thumbnail'] = self.imgurmodifier(content['thumbnail'], "m") # <-- modify it if possible.
 			except AssertionError as e:
-				print "filename [%s] has an illegal (plain) imgur file: [%s]" % (filename, content['thumbnail'])
+				print(f"filename [{filename}] has an illegal (plain) imgur file: [{content.thumbnail}]")
 				raise
 			thumbnail = lxml.etree.Element("img")
 			thumbnail.attrib["src"] = content['thumbnail']
 			thumbnail.attrib["class"] = "thumbnail"
 			thumbnail.attrib["loading"] = "lazy" # add lazy loading attribute
-			content['thumbnail'] = lxml.html.tostring(thumbnail)
+			content['thumbnail'] = lxml.html.tostring(thumbnail, encoding="unicode")
 
+		# TODO: we want to replace images with linked images.
+		# Ie. for an <img data-src="..."/>, we want an <a href="..."><img src="src" /></a>
 		for img in imgs:
 			# if the image has no data-src, then grab the src, modify it (if possible), and add the original to data-src:
 			datasrc = img.attrib['data-src'] if 'data-src' in img.attrib else img.attrib['src']
@@ -130,7 +178,15 @@ class Processor(rezyn.Rezyn):
 			img.attrib["data-src"] = datasrc
 			img.attrib["src"] = imgsrc
 
-		text = lxml.html.tostring(root)
+			if 0:
+				# reparent the image to a new hyperlink:
+				parent = img.getparent()
+				newlink = lxml.html.fromstring("<a />")
+				newlink.attrib["href"] = datasrc #self.imgurmodifier(datasrc, "h") # make a Huge Thumbnail, if possible
+				newlink.append(img)
+				parent.append(newlink)
+
+		text = lxml.html.tostring(root, encoding="unicode")
 		# finally add the text
 		content['content'] = text
 
@@ -139,43 +195,40 @@ class Processor(rezyn.Rezyn):
 
 		return content
 
-	def readcomment(self, filename):
-		content = nsdict.NSDict()
+	def readcontent(self, contentpath):
+		self.content = nsdict.NSDict()
+		log(f"loading content from [{contentpath}]")
+		for dirName, subdirList, fileList in os.walk(contentpath):
+			root = dirName[len(contentpath)+1:]
+			for fileName in fileList:
+				if fileName == ".DS_Store":
+					continue
+				fullpath = os.path.join(dirName, fileName)
+				filecontent = self.readfile(fullpath)
+				if self.config.get("publish_all", False) or "nopublish" not in filecontent:
+					base, ext = os.path.splitext(fileName)
+					var = os.path.join(root, base)
+					log(f"readcontent: adding content [{var}]")
+					self.content[var] = filecontent
 
-		# Read file content.
-		filecontent = unicode(readfile(filename), encoding='utf-8')
-
-		# split the yaml frontmatter and body text
-		fileheader, filebody = rezyn.splitheader(filecontent)
-		fm = yaml.safe_load(fileheader)
-		if fm is not None:
-			# it is not an error if no yaml is present, the file simply has no metadata
-			content.update(fm)
-
-		# convert the body text into an html snippet, if it not an html file
-		text = self.texttohtml(ext.lower(), filebody)
-
-		# create an xml representation of the document
-		# we have to add a root element, since the text may or may not have one
-		root = lxml.html.fromstring(text) #"<div class='filecontent'>" + text + "</div>")
-
-		# convert the html tree back to text
-		text = lxml.html.tostring(root)
-		content['content'] = text
-
-		# convert the string date into a raw datetime we can work with
-		if 'date' in content:
-			datestr = content['date']
-			content['date'] = dateutil.parser.parse(datestr)
-
-		# add a list for replies to this comment:
-		content['comments'] = []
-
-		return content
+	def minifydir(self, path):
+		for dirName, subdirList, fileList in os.walk(path):
+			for fileName in fileList:
+				if fileName == ".DS_Store":
+					continue
+				base, ext = os.path.splitext(fileName)
+				filename = os.path.join(dirName, fileName)
+				if ext.lower() == ".css":
+					mincss = minifycss.minify(readfile(filename))
+					log("minifying css [%s]" % filename)
+					writefile(filename, mincss)
+				elif ext.lower() == ".js":
+					minjs = rjsmin._make_jsmin(python_only = True)(readfile(filename))
+					log("minifying js [%s]" % filename)
+					writefile(filename, minjs)
 
 	def readcomments(self, commentspath):
 		# read comment files from the directory
-		commentspath = os.path.join(self.solon.context.config.srcdir, commentspath)
 		log("loading comments from [%s]" % commentspath)
 
 		# load every comment into a lookup table
@@ -187,11 +240,7 @@ class Processor(rezyn.Rezyn):
 				if fileName == ".DS_Store":
 					continue
 				fullpath = os.path.join(dirName, fileName)
-				if 0:
-					base, ext = os.path.split(fileName)
-					var = os.path.join("content", root, base)
-				else:
-					var = os.path.join("content", root, fileName)
+				var = os.path.join("content", root, fileName)
 				log("adding comment ", var)
 				comment = self.readfile(fullpath)
 				commenturi = comment.pageuri + "#comment" + str(comment.commentid)
@@ -222,105 +271,108 @@ class Processor(rezyn.Rezyn):
 				# this must be a root comment.
 				# is there a comment with the same pageid/replyto?
 				pageuri, ext = os.path.splitext(comment.pageuri)
-				var = os.path.join("content", pageuri)
 				try:
-					page = self.solon.context[var]
+					page = self.content[pageuri]
 				except KeyError:
 					log("orphan comment:", comment.commentid)
 					continue
 				page.comments.append(comment)
 
+	def renamefileswithchecksums(self):
+		filepaths = [
+			"css/structure.css",
+			"css/style.css",
+			"css/widescreen.css",
+			"css/radiant.css",
+			"js/radiant.js",
+		]
+		for filepath in filepaths:
+			oldfilepath = os.path.join(self.config.outputdir, self.config.tgtsubdir, filepath)
+			checksum = hashlib.md5(open(oldfilepath,'rb').read()).hexdigest()
+			base, ext = os.path.splitext(filepath)
+			newfilename = f"{base}-{checksum}{ext}"
+			newfilepath = os.path.join(self.config.outputdir, self.config.tgtsubdir, newfilename)
+			shutil.move(oldfilepath, newfilepath)
+			self.content[os.path.join("filekeys", filepath)] = os.path.join("/", newfilename)
 
-	def gettagsfromposts(self, posts):
+	def run(self):
+
+		# read all markdown blog posts, project posts, etc.
+		self.readcontent(self.config.contentdir)
+		# read all the comment posts
+		self.readcomments(self.config.commentsdir)
+
 		tags = {}
-		for post, values in posts.iteritems():
+		for post, values in self.content.blog.items():
 			if 'tags' in values and values['tags'] is not None:
 				for tag in values['tags']:
 					tags.setdefault(tag, [])
 					tags[tag].append(post)
-		return tags
 
-	def process(self):
-
-		setlog(self.solon.context['config/verbose'])
-
-		log(">>> setup")
-
-		self.setup()
-
-		#### Read in website content + templates
-
-		log(">>> read")
-
-		self.readcontent(self.solon.context["config/contentdir"])
-		self.readtemplates(self.solon.context["config/templatedir"])
-		self.readcomments(self.solon.context["config/commentsdir"])
-
-		# post process the data
-
-		log(">>> process")
-
-		tags = self.gettagsfromposts(self.solon.context["content/blog"])
-		#log("found tags:", " ".join(tags.keys()))
-
-		blogposts = [self.solon.context['content/blog'][post] for post in self.solon.context['content/blog'].keys()]
+		blogposts = [self.content.blog[post] for post in self.content.blog.keys()]
 		sortedblogposts = sorted(blogposts, key=lambda values: values['date'], reverse=True)
-		self.solon.context['content/sortedblogposts'] = sortedblogposts
+		self.content["sortedblogposts"] = sortedblogposts
 
-		projects = [self.solon.context['content/projects'][project] for project in self.solon.context['content/projects'].keys()]
+		projects = [self.content.projects[project] for project in self.content.projects.keys()]
 		sortedprojects = sorted(projects, key=lambda values: values['date'], reverse=True)
 		for project in sortedprojects:
 			projecttag = "project:" + project['project']
 			if projecttag in tags:
-				posts = [self.solon.context['content/blog'][post] for post in tags[projecttag]]
+				posts = [self.content.blog[post] for post in tags[projecttag]]
 				sortedposts = sorted(posts, key=lambda values: values['date'], reverse=False)
 				project['posts'] = sortedposts
 			else:
 				project['posts'] = []
-		self.solon.context['content/sortedprojects'] = sortedprojects
+		self.content["sortedprojects"] = sortedprojects
 
 		if 'sketch' in tags:
-			sketches = [self.solon.context['content/blog'][post] for post in tags['sketch']]
+			sketches = [self.content.blog[post] for post in tags['sketch']]
 			sortedsketches = sorted(sketches, key=lambda values: values['date'], reverse=True)
 		else:
 			sortedsketches = []
-		self.solon.context['content/sortedsketches'] = sortedsketches
+		self.content["sortedsketches"] = sortedsketches
 
 		if 'article' in tags:
-			articles = [self.solon.context['content/blog'][post] for post in tags['article']]
+			articles = [self.content.blog[post] for post in tags['article']]
 			sortedarticles = sorted(articles, key=lambda values: values['date'], reverse=True)
 		else:
 			sortedarticles = []
-		self.solon.context['content/sortedarticles'] = sortedarticles
+		self.content["sortedarticles"] = sortedarticles
 
 		if 'shop' in tags:
-			wares = [self.solon.context['content/blog'][post] for post in tags['shop']]
+			wares = [self.content.blog[post] for post in tags['shop']]
 			sortedwares = sorted(wares, key=lambda values: values['date'], reverse=True)
 		else:
 			sortedwares = []
-		self.solon.context['content/sortedwares'] = sortedwares
+		self.content["sortedwares"] = sortedwares
 
-		# render the templates
+		targetdir = os.path.join(self.config.outputdir, self.config.tgtsubdir)
+		# remove the target directory
+		log("removing targetdir [%s]" % targetdir)
+		try:
+			shutil.rmtree(targetdir)
+		except Exception as e:
+			print("Exception:", e)
+			pass
+		# copy the static files
+		shutil.copytree(self.config.staticdir, targetdir)
+		#if self.config.get("debug", False):
+		#	# web minify (css and js)
+		#	log("minify web in targtdir [%s]" % targetdir)
+		#	self.minifydir(targetdir)
 
-		log(">>> render")
+		# # rename each css/js file with its checksum key
+		self.renamefileswithchecksums()
 
-		self.solon.rendertemplate("template/site.tpl")
-		self.solon.rendertemplate("template/sitemap.txt")
-		self.solon.rendertemplate("template/rss.tpl")
-		self.solon.rendertemplate("template/robots.txt", keepWhitespace=True)
+		template.site.create(self.config, self.content)
+		template.rss.create(self.config, self.content)
+		template.sitemap.create(self.config, self.content)
+		template.robots.create(self.config, self.content)
 
-		log(">>> write")
-
-		self.writeoutput()
-
-
-def run(argv):
-	config = rezyn.processargs(argv)
-
-	processor = Processor(config)
-	processor.process()
 
 
 if __name__=="__main__":
-	run(sys.argv)
+	generator = Generator(sys.argv)
+	generator.run()
+
 

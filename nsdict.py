@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """NSDict is a namespaced dictionary-like container class for Python
 
@@ -64,8 +64,8 @@ Example usage:
 
 	# Since NSDict claims to be a dict-like container, let's iterate over the key/value pairs in the
 	# root namespace:
-	>>> for key, value in D["root"].iteritems():
-	...     print "[%s] -> [%s]" % (key, value)
+	>>> for key, value in D["root"].items():
+	...     print("[%s] -> [%s]" % (key, value))
 	... 
 	[branch2] -> [leaf3: value3]
 	[branch1] -> [leaf1: value1
@@ -76,7 +76,7 @@ Example usage:
 	# NSDicts can return a dict of their contents. This will assemble the namespaced keys as single individual
 	# keys in a dict, with their corresponding values:
 	>>> for key in D.dict().keys():
-	...     print "[%s] -> [%s]" % (key, D[key])
+	...     print("[%s] -> [%s]" % (key, D[key]))
 	... 
 	[root.branch1.leaf2] -> [value2]
 	[root.branch1.leaf1] -> [value1]
@@ -106,7 +106,7 @@ Why in the ever loving f...?
 
 """
 
-import collections
+import collections.abc
 import sys
 
 # For internal debugging use
@@ -125,7 +125,7 @@ def setlog(level):
 		global LOG
 		LOG = True
 
-class NSDict(collections.MutableMapping):
+class NSDict(collections.abc.MutableMapping):
 	"""The NSDict container class
 
 	Stores data in a recursive dictionary structure, where all keys
@@ -146,7 +146,7 @@ class NSDict(collections.MutableMapping):
 		self._store = {}
 		log("initialising with ", *args, **kwargs)
 		for arg in args:
-			for key, value in arg.iteritems():
+			for key, value in arg.items():
 				log("adding ", key)#, " -> ", value)
 				self.__setitem__(key, value)
 		for key, value in kwargs:
@@ -162,7 +162,7 @@ class NSDict(collections.MutableMapping):
 		formatted to represent the layout of the container and its namespaced data
 		"""
 		entries = []
-		for key, value in self._store.iteritems():
+		for key, value in self._store.items():
 			if isinstance(value, NSDict):
 				for entry in value._flatten():
 					entry = key + self.DELIMITER + entry
@@ -178,9 +178,9 @@ class NSDict(collections.MutableMapping):
 		namespaced-key/value pairs as a dict.
 		"""
 		d = {}
-		for key, value in self._store.iteritems():
+		for key, value in self._store.items():
 			if isinstance(value, NSDict):
-				for k, v in value.dict().iteritems():
+				for k, v in value.dict().items():
 					entry = key + self.DELIMITER + k
 					d[entry] = v
 			else:
@@ -226,6 +226,7 @@ class NSDict(collections.MutableMapping):
 		"""
 		if name in self._store:
 			return self._store[name]
+		#return NSDict()
 		raise AttributeError("NSDict has no attribute '%s'" % name)
 
 	def __setitem__(self, name, value):
@@ -379,17 +380,17 @@ def test():
 
 		b = NSDict(d)
 
-		print "d.keys()                :", d.keys()
-		print "d['hello'].keys()       :", d['hello'].keys()
-		print "d['hello']              :", d['hello']
-		print "d['hello.world']        :", d['hello.world']
-		print "items in d['hello']:"
-		for key, value in d['hello'].iteritems():
-			print key, '->', value
-		print "d['hello.jack.dolt'] :", d['hello.jack.dolt']
-		print "d: ", d
-		print "d.flatten(): "
-		print "\n".join(d.flatten())
+		print("d.keys()                :", d.keys())
+		print("d['hello'].keys()       :", d['hello'].keys())
+		print("d['hello']              :", d['hello'])
+		print("d['hello.world']        :", d['hello.world'])
+		print("items in d['hello']:")
+		for key, value in d['hello'].items():
+			print(key, '->', value)
+		print("d['hello.jack.dolt'] :", d['hello.jack.dolt'])
+		print("d: ", d)
+		print("d.flatten(): ")
+		print("\n".join(d.flatten()))
 	except:
 		traceback.print_exc()
 		pdb.post_mortem()

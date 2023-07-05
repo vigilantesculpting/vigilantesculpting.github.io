@@ -1,0 +1,13 @@
+timezone         : America/Los_Angeles
+title            : 'Vigilante Sculpting'
+site_url         : 'https://www.vigilantesculpting.com'
+tgtsubdir        : ''
+staticdir        : 'static'
+contentdir       : 'content'
+templatedir      : 'template'
+commentsdir      : 'comments'
+outputdir        : 'docs'
+paginatecount    : 45
+airium/source_minify: False
+debug: True
+#googletag: 'G-RX7VS9VBWV'

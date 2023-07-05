@@ -11,8 +11,10 @@ body {
 }
 
 img {
-  max-width: 100%;
-  height: auto;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
 }
 
 h1 {
@@ -210,16 +212,15 @@ main > section:only-child {
 }
 
 .thumbnail-container {
+    display: flex;
     position: relative;
-    /*aspect-ratio: 1/1;*/
     overflow: hidden;
     text-align: center;
-    max-height: 25em;
+    align-items: center; /* vertical center align */
+    justify-content: center; /* horizontal center align */
 }
 .thumbnail {
-    /*aspect-ratio: 1/1;*/
     object-fit: cover;
-    /*max-height: 30em;*/
 }
 
 .nsfw-warning {
