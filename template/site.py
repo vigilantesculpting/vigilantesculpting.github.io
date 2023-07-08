@@ -9,17 +9,23 @@ import airium2 as airium
 
 import pdb
 
-# ---------------------------------------------------------------------
-#  This is the main page template
-#  All pages on the site will wrap this around them
-# ---------------------------------------------------------------------
+## helpers
 
 def truncate(text):
 	"""Truncates a piece of html text at the required number of words
 	"""
 	words = 25
 	textwords = re.sub('(?s)<.*?>', ' ', text).split()[:words]
-	return ' '.join(textwords)
+	shorttext = ' '.join(textwords)
+	try:
+		if len(shorttext) == 0:
+			return shorttext
+		if shorttext[-1] == ".":
+			return shorttext + ".."
+		return shorttext + " ..."
+	except Exception as e:
+		print(f"exception: {e}, shorttext: '{shorttext}'")
+		raise
 
 def radiant(doc):
 	with doc.div(id = "radiant-lightbox"):
@@ -44,6 +50,8 @@ def redirect(config, content, post):
 		with doc.head():
 			doc(f"<meta http-equiv='Refresh' content='0; URL='{post.slug}.html'>")
 			doc("<meta charset='UTF-8'>")
+
+## page function
 
 def page(config, content, title, body, base_path = "", meta = None):
 	doc = airium.Airium(source_minify = config.airium.source_minify)
@@ -70,14 +78,15 @@ def page(config, content, title, body, base_path = "", meta = None):
 			doc.link(rel="stylesheet", type="text/css", href=f"{content.filekeys.css['structure.css']}")
 			doc.link(rel="stylesheet", type="text/css", href=f"{content.filekeys.css['style.css']}")
 			doc.link(rel="stylesheet", type="text/css", href=f"{content.filekeys.css['widescreen.css']}", media="screen and (min-width: 601px)")
+			doc.link(rel="stylesheet", type="text/css", href=f"{content.filekeys.css['smallscreen.css']}", media="screen and (max-width: 600px)")
 			# RSS links
-			doc.link(rel="alternate", type="application/rss+xml", href=os.path.join("/", config.tgtsubdir, "blog",	 "rss.xml"), title="Blog RSS Feed")
+			doc.link(rel="alternate", type="application/rss+xml", href=os.path.join("/", config.tgtsubdir, "blog",	   "rss.xml"), title="Blog RSS Feed")
 			doc.link(rel="alternate", type="application/rss+xml", href=os.path.join("/", config.tgtsubdir, "projects", "rss.xml"), title="Projects RSS Feed")
 			doc.link(rel="alternate", type="application/rss+xml", href=os.path.join("/", config.tgtsubdir, "articles", "rss.xml"), title="Articles RSS Feed")
 			doc.link(rel="alternate", type="application/rss+xml", href=os.path.join("/", config.tgtsubdir, "sketches", "rss.xml"), title="Sketches RSS Feed")
 			# Radiant lightobox
-			doc.link(rel="stylesheet", type="text/css", href=os.path.join("/", config.tgtsubdir, "css", content.filekeys.css["radiant.css"]))
-			doc.script(href=f"{content.filekeys.js['radiant.js']}")
+			#doc.link(rel="stylesheet", type="text/css", href=os.path.join("/", config.tgtsubdir, "css", content.filekeys.css["radiant.css"]))
+			#doc.script(href=f"{content.filekeys.js['radiant.js']}")
 			# evaluate any extra head tags that the caller wants to embed here
 			if meta is not None:
 				meta(doc)
@@ -90,41 +99,43 @@ def page(config, content, title, body, base_path = "", meta = None):
 						with doc.div(klass = "sitenavigation"):
 							#with doc.span("home").a(os.path.join("/", config.tgtsubdir)):
 							#	doc("Home")
-							with doc.span("links"):
-								doc.a(href = os.path.join("/", config.tgtsubdir, ""), 								_t = "Home")
-								doc.a(href = os.path.join("/", config.tgtsubdir, "blog"), 							_t = "Blog")
-								doc.a(href = os.path.join("/", config.tgtsubdir, "gallery"), 						_t = "Gallery")
-								doc.a(href = os.path.join("/", config.tgtsubdir, "projects"), 						_t = "Projects")
-								doc.a(href = os.path.join("/", config.tgtsubdir, "sketches"), 						_t = "Sketches")
-								doc.a(href = os.path.join("/", config.tgtsubdir, "wip"), 							_t = "WIP")
-								doc.a(href = os.path.join("/", config.tgtsubdir, "articles"), 						_t = "Articles")
-								doc.a(href = os.path.join("/", config.tgtsubdir, "contact.html"), 					_t = "Contact")
-								doc.a(href = os.path.join("/", config.tgtsubdir, "about.html"), 					_t = "About")
-								doc.a(klass = 'highlightnav', href = os.path.join("/", config.tgtsubdir, "shop"),	_t = "Shop")
+							with doc.ul(klass = "links"):
+								doc.li().a(href = os.path.join("/", config.tgtsubdir, ""), 								_t = "Home")
+								doc.li().a(href = os.path.join("/", config.tgtsubdir, "blog"), 							_t = "Blog")
+								#doc.li().a(href = os.path.join("/", config.tgtsubdir, "gallery"), 						_t = "Gallery")
+								doc.li().a(href = os.path.join("/", config.tgtsubdir, "projects"), 						_t = "Projects")
+								doc.li().a(href = os.path.join("/", config.tgtsubdir, "sketches"), 						_t = "Sketches")
+								#doc.li().a(href = os.path.join("/", config.tgtsubdir, "wip"), 							_t = "WIP")
+								doc.li().a(href = os.path.join("/", config.tgtsubdir, "articles"), 						_t = "Articles")
+								doc.li().a(href = os.path.join("/", config.tgtsubdir, "contact.html"), 					_t = "Contact")
+								doc.li().a(href = os.path.join("/", config.tgtsubdir, "about.html"), 					_t = "About")
+								doc.li().a(klass = 'highlightnav', href = os.path.join("/", config.tgtsubdir, "shop"),	_t = "Shop")
 				# embed the body of the document here
 				body(doc)
 
 			# spacer to force the footer down
-			doc.div(klass = "vertspacer")
+			#doc.div(klass = "vertspacer")
 
 			with doc.footer():
 				doc.section().p(_t = f"Content &copy; {config.current_year} Vigilante Sculpting")
-				with doc.p():
-					doc.a(href="https://www.artstation.com/g0rb", 			_t = "ArtStation")
-					doc.a(href="https://www.deviantart.com/gorb", 			_t = "DeviantArt")
-					doc.a(href="https://www.reddit.com/user/gorb314", 		_t = "Reddit")
-					doc.a(href="https://instagram.com/gorb314", 			_t = "Instagram")
-					doc.a(href="https://www.puttyandpaint.com/g0rb",	 	_t = "Putty & Paint")
-					doc.a(href="http://www.coolminiornot.com/artist/gorb", 	_t = "CMON")
+				with doc.ul(klass = "links"):
+					doc.li().a(href="https://www.artstation.com/g0rb", 			_t = "ArtStation")
+					doc.li().a(href="https://www.deviantart.com/gorb", 			_t = "DeviantArt")
+					doc.li().a(href="https://www.reddit.com/user/gorb314", 		_t = "Reddit")
+					doc.li().a(href="https://instagram.com/gorb314", 			_t = "Instagram")
+					doc.li().a(href="https://www.puttyandpaint.com/g0rb",	 	_t = "Putty & Paint")
+					doc.li().a(href="http://www.coolminiornot.com/artist/gorb", _t = "CMON")
+				#with doc.p():
+				#	doc.a(href="https://www.artstation.com/g0rb", 			_t = "ArtStation")
+				#	doc.a(href="https://www.deviantart.com/gorb", 			_t = "DeviantArt")
+				#	doc.a(href="https://www.reddit.com/user/gorb314", 		_t = "Reddit")
+				#	doc.a(href="https://instagram.com/gorb314", 			_t = "Instagram")
+				#	doc.a(href="https://www.puttyandpaint.com/g0rb",	 	_t = "Putty & Paint")
+				#	doc.a(href="http://www.coolminiornot.com/artist/gorb", 	_t = "CMON")
 
-			radiant(doc)
+			#radiant(doc)
 
 	return doc
-
-
-# ---------------------------------------------------------------------
-#  Functions for the main site
-# ---------------------------------------------------------------------
 
 def originalpost(doc, post):
 	sources = {
@@ -157,9 +168,8 @@ def postsummary(doc, postpath, post):
 				doc(post.thumbnail)
 	with doc.p(klass = "summary"):
 		doc(f"{truncate(post.content)}&nbsp;")
-		#with doc.a(klass = "more", hred = postlink):
-		#	doc("[...Read More]")
-	#originalpost(doc, post)
+	with doc.p(klass = "more").a(klass = "more", href = postlink):
+		doc("Read more")
 	return doc
 
 def makeslides(doc, postpath, posts):
@@ -172,13 +182,7 @@ def makeslides(doc, postpath, posts):
 #  Create the main index.html
 # ---------------------------------------------------------------------
 
-# def page(title, base_path, body, meta = None)...
-# 	at some point calls 
-# 	meta(doc) if defined, and
-# 	body(doc)
-
-
-def index(config, content):
+def mainindex(config, content):
 	def body(doc):
 		with doc.section(klass = "mainsection"):
 			with doc.p():
@@ -189,13 +193,15 @@ def index(config, content):
 				with doc.div(klass = "postnav"):
 					with doc.a(href = path).h1():
 						doc(title)
+					with doc.a(href = os.path.join("/", config.tgtsubdir, postpath, "rss.xml")):
+						doc.div(klass = "postnav-right").img(src = os.path.join("/", config.tgtsubdir, "images/rss.png"), width = "32px", height = "32px", alt = rsstitle)
 				makeslides(doc, postpath, posts)
 				with doc.p().a(href = path):
 					doc(f"{readmoretext} &#x300B;")
-		mainslidesection('blog',	 'blog',	 'Latest News',					'News RSS Feed',	 content.sortedblogposts[:3], 'Read latest news on the blog')
-		mainslidesection('projects', 'projects', 'Latest Projects',				'Projects RSS Feed', content.sortedprojects[:3],  'See more finished projects')
-		mainslidesection('sketches', 'blog',	 'Latest Sketches &amp; Drawings', 'Sketches RSS Feed', content.sortedsketches[:3],  'See more sketches &amp; drawings')
-		mainslidesection('articles', 'blog',	 'Latest Articles',				'Articles RSS Feed', content.sortedarticles[:3],  'Read more articles')
+		mainslidesection('blog',	 'blog',	 'Latest News',						'News RSS Feed',	 content.sortedblogposts[:3], 'Read latest news on the blog')
+		mainslidesection('projects', 'projects', 'Latest Projects',					'Projects RSS Feed', content.sortedprojects[:3],  'See more finished projects')
+		mainslidesection('sketches', 'sketches', 'Latest Sketches &amp; Drawings', 	'Sketches RSS Feed', content.sortedsketches[:3],  'See more sketches &amp; drawings')
+		mainslidesection('articles', 'articles', 'Latest Articles',					'Articles RSS Feed', content.sortedarticles[:3],  'Read more articles')
 
 		def maintextsection(path, title, subtitle):
 			with doc.section(klass = "mainsection"):
@@ -250,7 +256,7 @@ def postnavigation(doc, postid, posts, name):
 #  Create blog post pages
 # ---------------------------------------------------------------------
 
-def blogpost(config, content, postid, post):
+def blogpost(config, content, postid, post, posts):
 	path = os.path.join("blog", f"{post.slug}.html")
 	commentpath = os.path.join(config.site_url, config.tgtsubdir, 'blog', f"{post.slug}.xml")
 	def meta(doc):
@@ -258,7 +264,7 @@ def blogpost(config, content, postid, post):
 		pass
 	def body(doc):
 		with doc.article():
-			postnavigation(doc, postid, content.sortedblogposts, 'post')
+			postnavigation(doc, postid, posts, 'post')
 			doc.h1(_t=post.title)
 			with doc.p(klass = "meta"):
 				doc(f"Published on {datetime.datetime.strftime(post.date, '%d/%m/%Y @%H:%M:%S')} by <b>{post.author}</b>")
@@ -269,7 +275,7 @@ def blogpost(config, content, postid, post):
 				for tag in post.tags:
 					doc.li(_t=tag)
 			#doc.div(klass="vertspacer")
-			postnavigation(doc, postid, content.sortedblogposts, 'post')
+			postnavigation(doc, postid, posts, 'post')
 		#??? commentsection(post, path)
 	return page(config, content, title = post.title, meta = meta, body = body)
 
@@ -309,10 +315,13 @@ def indexpage(config, content, pageid, postgroup, pagecount, title, targetdir, p
 	def body(doc):
 		with doc.article():
 			paginatenavigation(doc, pageid, pagecount, "index")
-			with doc.div(klass = "postnav").div():
-				doc.h1(_t = title)
-				if pagecount > 1:
-					doc.h3(_t = f"Page {pageid + 1}/{pagecount}")
+			with doc.div(klass = "postnav"):
+				with doc.div():
+					doc.h1(_t = title)
+					if pagecount > 1:
+						doc.h3(_t = f"Page {pageid + 1}/{pagecount}")
+				with doc.a(href = os.path.join("/", config.tgtsubdir, targetdir, "rss.xml")):
+					doc.div(klass = "postnav-right").img(src = os.path.join("/", config.tgtsubdir, "images/rss.png"), width = "32px", height = "32px", alt = f"{title} RSS Feed")
 			doc.p(_t = description)
 			makeslides(doc, postsdir, postgroup)
 			#doc.div(klass = "vertspacer")
@@ -322,7 +331,7 @@ def indexpage(config, content, pageid, postgroup, pagecount, title, targetdir, p
 
 def projectpost(config, content, projectid, pagecount, project, postgroupid, postgroup):
 	def meta(doc):
-		#??? doc.link(rel="alternate", type="application/rss+xml", title=f"Comments on '{project.title} - {config.title}'", href=commentpath)
+		# doc.link(rel="alternate", type="application/rss+xml", title=f"Comments on '{project.title} - {config.title}'", href=commentpath)
 		pass
 	def body(doc):
 		with doc.article():
@@ -337,15 +346,17 @@ def projectpost(config, content, projectid, pagecount, project, postgroupid, pos
 					for tag in project.tags:
 						doc.li(_t = tag)
 
-			with doc.section(klass = "stepxstep"):
-				doc.h2(_t = f"Step by step (Steps {postgroupid*config.paginatecount + 1} thru {postgroupid*config.paginatecount + 1 + len(postgroup)} of {len(project.posts)}")
-				doc.p(_t = "These are the posts I made during the making of this project, in chronological order")
-				paginatenavigation(doc, postgroupid, pagecount, project.slug)
-				makeslides(doc, "../blog", postgroup)
-				paginatenavigation(doc, postgroupid, pagecount, project.slug)
+			if len(postgroup) > 0:
+				with doc.section(klass = "stepxstep"):
+					if len(postgroup) > 1:
+						doc.h2(_t = f"Step by step (Steps {postgroupid*config.paginatecount + 1} thru {postgroupid*config.paginatecount + len(postgroup)} of {len(project.posts)})")
+					doc.p(_t = "These are the posts I made during the making of this project, in chronological order")
+					paginatenavigation(doc, postgroupid, pagecount, project.slug)
+					makeslides(doc, "../blog", postgroup)
+					paginatenavigation(doc, postgroupid, pagecount, project.slug)
 
 			postnavigation(doc, projectid, content.sortedprojects, "project")
-		# ????commentsection(project, path)
+		# commentsection(project, path)
 	return page(config, content, title = project.title, meta = meta, body = body)
 
 # used for blog/index[].html, articles/index[].html, projects/index[].html and sketches/index[].html
@@ -364,7 +375,6 @@ def makeindex(config, content, title, targetdir, posts, postsdir, description):
 
 def output(config, doc, filename):
 	filepath = os.path.join(config.outputdir, config.tgtsubdir, filename)
-	#print(f"writing to filename [{filepath}]")
 	dname, fname = os.path.split(filepath)
 	pathlib.Path(dname).mkdir(parents=True, exist_ok=True)
 	with open(filepath, 'w') as f:
@@ -373,26 +383,35 @@ def output(config, doc, filename):
 def create(config, content):
 	print("creating site content")
 
-	output(config, index(config, content), "index.html")
+	output(config, mainindex(config, content), "index.html")
 
 	output(config, about(config, content), "about.html")
 	output(config, contact(config, content), "contact.html")
+
 	for postid, post in enumerate(content.sortedblogposts):
 		filename = os.path.join("blog", f"{post.slug}.html")
-		output(config, blogpost(config, content, postid, post), filename)
+		output(config, blogpost(config, content, postid, post, content.sortedblogposts), filename)
 
-	makeindex(config, content, "Blog", 					"blog", 	content.sortedblogposts, 	"", 		content.blog_content)
-	makeindex(config, content, "Projects", 				"projects", content.sortedprojects, 	"", 		content.projects_content)
-	makeindex(config, content, "Sketches & Drawings", 	"sketches", content.sortedsketches, 	"../blog", 	content.sketches_content)
-	makeindex(config, content, "Articles",				"articles", content.sortedarticles, 	"../blog", 	content.articles_content)
-	makeindex(config, content, "Shop", 					"shop", 	content.sortedwares, 		"../blog", 	content.shop_content)
+	for postid, post in enumerate(content.sortedsketches):
+		filename = os.path.join("sketches", f"{post.slug}.html")
+		output(config, blogpost(config, content, postid, post, content.sortedsketches), filename)
+
+	for postid, post in enumerate(content.sortedarticles):
+		filename = os.path.join("articles", f"{post.slug}.html")
+		output(config, blogpost(config, content, postid, post, content.sortedarticles), filename)
+
+	makeindex(config, content, "Blog", 					"blog", 	content.sortedblogposts, 	"", 	content.blog_content)
+	makeindex(config, content, "Projects", 				"projects", content.sortedprojects, 	"", 	content.projects_content)
+	makeindex(config, content, "Sketches & Drawings", 	"sketches", content.sortedsketches, 	"", 	content.sketches_content)
+	makeindex(config, content, "Articles",				"articles", content.sortedarticles, 	"", 	content.articles_content)
+	makeindex(config, content, "Shop", 					"shop", 	content.sortedwares, 		"", 	content.shop_content)
 
 	# create the redirect pages, so we don't have to keep modiying older pages to get to the latest page
 
-	output(config, redirect(config, content, content.sortedblogposts[0]), "blog/latestposts.html")
-	output(config, redirect(config, content, content.sortedsketches[0]), "projects/latestposts.html")
-	output(config, redirect(config, content, content.sortedarticles[0]), "sketches/latestposts.html")
-	output(config, redirect(config, content, content.sortedwares[0]), "articles/latestposts.html")
+	#output(config, redirect(config, content, content.sortedblogposts[0]), 	"blog/latestposts.html")
+	#output(config, redirect(config, content, content.sortedsketches[0]), 	"projects/latestposts.html")
+	#output(config, redirect(config, content, content.sortedarticles[0]), 	"sketches/latestposts.html")
+	#output(config, redirect(config, content, content.sortedwares[0]), 		"articles/latestposts.html")
 
 	# ---------------------------------------------------------------------
 	#  Create the individual project pages

@@ -1,5 +1,10 @@
 
+/*
 .slides > div, .slides > img {
+	width: 32%;
+}
+*/
+.slide {
 	width: 32%;
 }
 
@@ -13,4 +18,6 @@
 
 .thumbnail-container {
     aspect-ratio: 1 / 1;
+    height: 100%;
 }
+

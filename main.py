@@ -59,7 +59,7 @@ class Generator:
 		self.config["current_year"] = datetime.datetime.now().year
 		print(str(self.config))
 
-		self.bbparser = bbcode.Parser(replace_links=False, newline="")
+		self.bbparser = bbcode.Parser(replace_links=False, replace_cosmetic=False, newline="")
 		self.bbparser.add_simple_formatter('img', '<img src="%(value)s" loading="lazy" />')
 		self.bbparser.add_simple_formatter('gallery', '<div class="gallery slides">%(value)s</div>')
 		self.bbparser.add_simple_formatter('youtube', '<iframe width="640" height="390" src="https://www.youtube.com/embed/%(value)s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="True">_</iframe>')
@@ -73,18 +73,25 @@ class Generator:
 		return header, body
 
 	def texttohtml(self, ext, text):
-		# convert the body text into an html snippet, if it not an html file
+		# convert the body text into an html snippet, if it is not an html file
 		html = text # default
 		if ext == '.md':
 			html = markdown.markdown(text)
 		elif ext == ".bb":
-			# split the text into chunks, where chunks are separated by \n\n
-			chunks = [chunk for chunk in [chunk.strip() for chunk in re.split("(\n\n+)", text)] if len(chunk) > 0]
-			# replace all newlines with spaces, otherwise the rest of this code will paste words together weirdly
-			chunks = [chunk.replace("\n", " ") for chunk in chunks]
-			parsed = [self.bbparser.format(chunk) for chunk in chunks]
-			joins = [lxml.html.tostring(lxml.html.fromstring(chunk), encoding="unicode") for chunk in parsed]
-			html = "\n".join(joins)
+			if 0:
+				# split the text into chunks, where chunks are separated by \n\n
+				chunks = [chunk for chunk in [chunk.strip() for chunk in re.split("(\n\n+)", text)] if len(chunk) > 0]
+				# replace all newlines with spaces, otherwise the rest of this code will paste words together weirdly
+				chunks = [chunk.replace("\n", " ") for chunk in chunks]
+				parsed = [self.bbparser.format(chunk) for chunk in chunks]
+				joins = [lxml.html.tostring(lxml.html.fromstring(chunk), encoding="unicode") for chunk in parsed]
+				html = "\n".join(joins)
+			# split the text into groups at double-newline delimiters
+			texts = [line.strip() for line in re.split(r"\n\n+", text)]
+			# format each chunk independently
+			parsed = [self.bbparser.format(line) for line in texts if line != '']
+			# join all the chunks together, wrapping non-element chunks into paragraphs
+			html = "\n".join(["<p>" + chunk + "</p>" if chunk[0] != "<" else chunk for chunk in parsed])
 		return html
 
 	def imgurmodifier(self, src, modifier):
@@ -108,7 +115,7 @@ class Generator:
 
 	def readfile(self, filename):
 		"""Read content and metadata from file into a dictionary."""
-		log("readfile:", filename)
+		#log("readfile:", filename)
 
 		# Read default metadata and save it in the content dictionary.
 		path, ext = os.path.splitext(filename)
@@ -155,11 +162,13 @@ class Generator:
 			except AssertionError as e:
 				print(f"filename [{filename}] has an illegal (plain) imgur file: [{content.thumbnail}]")
 				raise
-			thumbnail = lxml.etree.Element("img")
-			thumbnail.attrib["src"] = content['thumbnail']
-			thumbnail.attrib["class"] = "thumbnail"
-			thumbnail.attrib["loading"] = "lazy" # add lazy loading attribute
-			content['thumbnail'] = lxml.html.tostring(thumbnail, encoding="unicode")
+		else:
+			content['thumbnail'] = "https://i.imgur.com/sa6Wtvs.png"
+		thumbnail = lxml.etree.Element("img")
+		thumbnail.attrib["src"] = content['thumbnail']
+		thumbnail.attrib["class"] = "thumbnail"
+		thumbnail.attrib["loading"] = "lazy" # add lazy loading attribute
+		content['thumbnail'] = lxml.html.tostring(thumbnail, encoding="unicode")
 
 		# TODO: we want to replace images with linked images.
 		# Ie. for an <img data-src="..."/>, we want an <a href="..."><img src="src" /></a>
@@ -197,7 +206,7 @@ class Generator:
 
 	def readcontent(self, contentpath):
 		self.content = nsdict.NSDict()
-		log(f"loading content from [{contentpath}]")
+		#log(f"loading content from [{contentpath}]")
 		for dirName, subdirList, fileList in os.walk(contentpath):
 			root = dirName[len(contentpath)+1:]
 			for fileName in fileList:
@@ -208,7 +217,7 @@ class Generator:
 				if self.config.get("publish_all", False) or "nopublish" not in filecontent:
 					base, ext = os.path.splitext(fileName)
 					var = os.path.join(root, base)
-					log(f"readcontent: adding content [{var}]")
+					#log(f"readcontent: adding content [{var}]")
 					self.content[var] = filecontent
 
 	def minifydir(self, path):
@@ -283,6 +292,7 @@ class Generator:
 			"css/structure.css",
 			"css/style.css",
 			"css/widescreen.css",
+			"css/smallscreen.css",
 			"css/radiant.css",
 			"js/radiant.js",
 		]
@@ -302,48 +312,45 @@ class Generator:
 		# read all the comment posts
 		self.readcomments(self.config.commentsdir)
 
+		# gather all the tags across all the blog posts, and reference the posts that use each tag
 		tags = {}
 		for post, values in self.content.blog.items():
 			if 'tags' in values and values['tags'] is not None:
 				for tag in values['tags']:
 					tags.setdefault(tag, [])
+					# what if we instead append the values here? As in, we don't have to look the post up again, we can just use
+					# the values... Or heck, both.
 					tags[tag].append(post)
 
-		blogposts = [self.content.blog[post] for post in self.content.blog.keys()]
+		blogposts = self.content.blog.values()
+		sketches = self.content.sketches.values()
+		articles = self.content.articles.values()
+		projects = self.content.projects.values()
+
 		sortedblogposts = sorted(blogposts, key=lambda values: values['date'], reverse=True)
 		self.content["sortedblogposts"] = sortedblogposts
 
-		projects = [self.content.projects[project] for project in self.content.projects.keys()]
 		sortedprojects = sorted(projects, key=lambda values: values['date'], reverse=True)
 		for project in sortedprojects:
 			projecttag = "project:" + project['project']
+			project['posts'] = []
 			if projecttag in tags:
 				posts = [self.content.blog[post] for post in tags[projecttag]]
 				sortedposts = sorted(posts, key=lambda values: values['date'], reverse=False)
 				project['posts'] = sortedposts
-			else:
-				project['posts'] = []
 		self.content["sortedprojects"] = sortedprojects
 
-		if 'sketch' in tags:
-			sketches = [self.content.blog[post] for post in tags['sketch']]
-			sortedsketches = sorted(sketches, key=lambda values: values['date'], reverse=True)
-		else:
-			sortedsketches = []
+		sortedsketches = sorted(sketches, key=lambda values: values['date'], reverse=True)
 		self.content["sortedsketches"] = sortedsketches
 
-		if 'article' in tags:
-			articles = [self.content.blog[post] for post in tags['article']]
-			sortedarticles = sorted(articles, key=lambda values: values['date'], reverse=True)
-		else:
-			sortedarticles = []
+		sortedarticles = sorted(articles, key=lambda values: values['date'], reverse=True)
 		self.content["sortedarticles"] = sortedarticles
 
+		# the shop tag is handled differently, since we may want to add blog announcements, articles, projects and / or drawings to the shop
+		sortedwares = []
 		if 'shop' in tags:
-			wares = [self.content.blog[post] for post in tags['shop']]
+			wares = [self.content.blog[post] for post in tags['shop'] if post in self.content.blog]
 			sortedwares = sorted(wares, key=lambda values: values['date'], reverse=True)
-		else:
-			sortedwares = []
 		self.content["sortedwares"] = sortedwares
 
 		targetdir = os.path.join(self.config.outputdir, self.config.tgtsubdir)

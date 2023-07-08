@@ -39,6 +39,6 @@ I started from a paper template by Eli Patoroch, and experimented with plaster c
 [img]https://i.imgur.com/1491yDI.jpg[/img]
 [/gallery]
 
-It has since gotten a make-over, adding a space marine gunner and all sorts of other (finer) detail, as well as a better paintjob.
+It has since gotten [url='/projects/2020-12-08-land-raider-update.html']a make-over[/url], adding a space marine gunner and all sorts of other (finer) detail, as well as a better paintjob.
 
 

@@ -308,6 +308,9 @@ class NSDict(collections.abc.MutableMapping):
 			except KeyError as e:
 				return False
 
+	def __or__(self, other):
+		return NSDict({**self, **other})
+
 	# TODO, might be useful...
 	#def walk(self, depth, depthfirst):
 	#	# creates a generator that will walk the structure of the tree,

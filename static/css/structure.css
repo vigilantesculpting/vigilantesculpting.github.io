@@ -23,7 +23,6 @@ body {
 footer {
     /*flex-grow: 100;*/
     text-align: center;
-    min-height: 10em; /* makes the footer not shrink beyond a certain size, useful for if the content grows beyond the viewport */
-    max-height:  10em; /* this makes the footer not grow beyond a certain height, useful for gradients that won't streeeetch */
+    height: 8em;
 }
 
