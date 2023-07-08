@@ -78,14 +78,6 @@ class Generator:
 		if ext == '.md':
 			html = markdown.markdown(text)
 		elif ext == ".bb":
-			if 0:
-				# split the text into chunks, where chunks are separated by \n\n
-				chunks = [chunk for chunk in [chunk.strip() for chunk in re.split("(\n\n+)", text)] if len(chunk) > 0]
-				# replace all newlines with spaces, otherwise the rest of this code will paste words together weirdly
-				chunks = [chunk.replace("\n", " ") for chunk in chunks]
-				parsed = [self.bbparser.format(chunk) for chunk in chunks]
-				joins = [lxml.html.tostring(lxml.html.fromstring(chunk), encoding="unicode") for chunk in parsed]
-				html = "\n".join(joins)
 			# split the text into groups at double-newline delimiters
 			texts = [line.strip() for line in re.split(r"\n\n+", text)]
 			# format each chunk independently
@@ -314,12 +306,10 @@ class Generator:
 
 		# gather all the tags across all the blog posts, and reference the posts that use each tag
 		tags = {}
-		for post, values in self.content.blog.items():
-			if 'tags' in values and values['tags'] is not None:
-				for tag in values['tags']:
+		for postid, post in (self.content.blog | self.content.articles | self.content.sketches).items():
+			if 'tags' in post and post['tags'] is not None:
+				for tag in post['tags']:
 					tags.setdefault(tag, [])
-					# what if we instead append the values here? As in, we don't have to look the post up again, we can just use
-					# the values... Or heck, both.
 					tags[tag].append(post)
 
 		blogposts = self.content.blog.values()
@@ -335,7 +325,7 @@ class Generator:
 			projecttag = "project:" + project['project']
 			project['posts'] = []
 			if projecttag in tags:
-				posts = [self.content.blog[post] for post in tags[projecttag]]
+				posts = tags[projecttag]
 				sortedposts = sorted(posts, key=lambda values: values['date'], reverse=False)
 				project['posts'] = sortedposts
 		self.content["sortedprojects"] = sortedprojects
@@ -349,7 +339,7 @@ class Generator:
 		# the shop tag is handled differently, since we may want to add blog announcements, articles, projects and / or drawings to the shop
 		sortedwares = []
 		if 'shop' in tags:
-			wares = [self.content.blog[post] for post in tags['shop'] if post in self.content.blog]
+			wares = tags['shop']
 			sortedwares = sorted(wares, key=lambda values: values['date'], reverse=True)
 		self.content["sortedwares"] = sortedwares
 

@@ -263,8 +263,8 @@ def blogpost(config, content, postid, post, posts):
 		#doc.link(rel="alternate", type="application/rss+xml", title=f"Comments on '{post.title} - {config.title}", href=commentpath)
 		pass
 	def body(doc):
+		postnavigation(doc, postid, posts, 'post')
 		with doc.article():
-			postnavigation(doc, postid, posts, 'post')
 			doc.h1(_t=post.title)
 			with doc.p(klass = "meta"):
 				doc(f"Published on {datetime.datetime.strftime(post.date, '%d/%m/%Y @%H:%M:%S')} by <b>{post.author}</b>")
@@ -275,7 +275,7 @@ def blogpost(config, content, postid, post, posts):
 				for tag in post.tags:
 					doc.li(_t=tag)
 			#doc.div(klass="vertspacer")
-			postnavigation(doc, postid, posts, 'post')
+		postnavigation(doc, postid, posts, 'post')
 		#??? commentsection(post, path)
 	return page(config, content, title = post.title, meta = meta, body = body)
 
@@ -313,19 +313,19 @@ def makegroups(items, groupsize):
 
 def indexpage(config, content, pageid, postgroup, pagecount, title, targetdir, postsdir, description):
 	def body(doc):
+		with doc.div(klass = "postnav"):
+			with doc.div():
+				doc.h1(_t = title)
+				if pagecount > 1:
+					doc.h3(_t = f"Page {pageid + 1}/{pagecount}")
+			with doc.a(href = os.path.join("/", config.tgtsubdir, targetdir, "rss.xml")):
+				doc.div(klass = "postnav-right").img(src = os.path.join("/", config.tgtsubdir, "images/rss.png"), width = "32px", height = "32px", alt = f"{title} RSS Feed")
+		paginatenavigation(doc, pageid, pagecount, "index")
 		with doc.article():
-			paginatenavigation(doc, pageid, pagecount, "index")
-			with doc.div(klass = "postnav"):
-				with doc.div():
-					doc.h1(_t = title)
-					if pagecount > 1:
-						doc.h3(_t = f"Page {pageid + 1}/{pagecount}")
-				with doc.a(href = os.path.join("/", config.tgtsubdir, targetdir, "rss.xml")):
-					doc.div(klass = "postnav-right").img(src = os.path.join("/", config.tgtsubdir, "images/rss.png"), width = "32px", height = "32px", alt = f"{title} RSS Feed")
 			doc.p(_t = description)
 			makeslides(doc, postsdir, postgroup)
 			#doc.div(klass = "vertspacer")
-			paginatenavigation(doc, pageid, pagecount, "index")
+		paginatenavigation(doc, pageid, pagecount, "index")
 	return page(config, content, title = title, body = body)
 
 
