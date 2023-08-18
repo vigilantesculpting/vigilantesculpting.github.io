@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version='2.0' xmlns='http://backend.userland.com/rss2' xmlns:tags='https://vigilantesculpting.github.io/tagsModule/' xmlns:conversation='https://vigilantesculpting.github.io/conversationModule/'>
+  <channel>
+    <title>Vigilante Sculpting - Shop</title>
+    <link>https://www.vigilantesculpting.com/shop</link>
+    <description>Latest stuff in the shop</description>
+    <item>
+      <title>Queadluun Rau casts for sale</title>
+      <link>https://www.vigilantesculpting.com/shop/blog/2022-03-02-queadluun_rau_casts_for_sale.html</link>
+      <description>
+<![CDATA[
+        <a klass='more' href='https://www.vigilantesculpting.com/shop/blog/2022-03-02-queadluun_rau_casts_for_sale.html'><img src="https://i.imgur.com/PYMlsRym.jpeg" class="thumbnail" loading="lazy"></a>
+I've put a couple of resin casts of my Queadluun Rau model up for sale on etsy .There is a limited number of casts available,&nbsp;
+        <a href='https://www.vigilantesculpting.com/shop/blog/2022-03-02-queadluun_rau_casts_for_sale.html'>[...Read More]</a>
+]]>
+      </description>
+      <tags:taglist>
+        <tags:tag>shop</tags:tag>
+        <tags:tag>sculpey</tags:tag>
+        <tags:tag>aves</tags:tag>
+        <tags:tag>greenstuff</tags:tag>
+        <tags:tag>queadluunrau</tags:tag>
+        <tags:tag>robotech</tags:tag>
+        <tags:tag>macross</tags:tag>
+        <tags:tag>mecha</tags:tag>
+        <tags:tag>battelsuit</tags:tag>
+        <tags:tag>sculpting</tags:tag>
+        <tags:tag>modelmaking</tags:tag>
+      </tags:taglist>
+      <pubDate>%a, %d %b %Y %H:%M:%S %z</pubDate>
+    </item>
+    <item>
+      <title>augment</title>
+      <link>https://www.vigilantesculpting.com/shop/sketches/2021-05-04-augment.html</link>
+      <description>
+<![CDATA[
+        <a klass='more' href='https://www.vigilantesculpting.com/shop/sketches/2021-05-04-augment.html'><img src="https://cdna.artstation.com/p/assets/images/images/037/359/260/small/chris-g0rb-augment.jpg" class="thumbnail" loading="lazy"></a>
+As an experiment, you can buy T-shirts and stickers of this image at Teepublic *wink*&nbsp;
+        <a href='https://www.vigilantesculpting.com/shop/sketches/2021-05-04-augment.html'>[...Read More]</a>
+]]>
+      </description>
+      <tags:taglist>
+        <tags:tag>sketch</tags:tag>
+        <tags:tag>cyborg</tags:tag>
+        <tags:tag>implant</tags:tag>
+        <tags:tag>interface</tags:tag>
+        <tags:tag>grimdark</tags:tag>
+        <tags:tag>scifi</tags:tag>
+        <tags:tag>shop</tags:tag>
+        <tags:tag>digital</tags:tag>
+        <tags:tag>krita</tags:tag>
+      </tags:taglist>
+      <pubDate>%a, %d %b %Y %H:%M:%S %z</pubDate>
+    </item>
+  </channel>
+</rss>

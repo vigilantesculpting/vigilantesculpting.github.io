@@ -1,53 +1,59 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html lang='en'>
+  <head>
     <title>Vigilante Sculpting - About me</title>
-    <meta charset="UTF-8">
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <!-- Note: I am only sending anonymized IP address pageviews to Google. No other information is collected! -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RX7VS9VBWV"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-RX7VS9VBWV', {'anonymize_ip': true});
-    </script>
-    <!-- End Google Analytics -->
-        <meta name="viewport" content="width=device-width">
-        <link href="/favicon.ico" rel="icon" type="image/x-icon">
-        <link rel="stylesheet" type="text/css" href="/css/structure-f48d0f0d91ef0b3f22a2235261c20ee0.css">
-        <link rel="stylesheet" type="text/css" href="/css/style-5980c8c89948b0bdcfd61f8911ad2fd6.css">
-        <link rel="stylesheet" type="text/css" href="/css/widescreen-0e7c6a6e92e520bae658d363111fd6d7.css" media="screen and (min-width: 601px)" >
-        <link rel="alternate"  type="application/rss+xml" href="/blog/rss.xml" title="Blog RSS Feed">
-        <link rel="alternate"  type="application/rss+xml" href="/projects/rss.xml" title="Projects RSS Feed">
-        <link rel="alternate"  type="application/rss+xml" href="/articles/rss.xml" title="Articles RSS Feed">
-        <link rel="alternate"  type="application/rss+xml" href="/sketches/rss.xml" title="Sketches RSS Feed">
-        <link rel="stylesheet" type="text/css" href="/css/radiant-59ec70c4c60ba51ec1395d68bc148959.css">
-        <script src="/js/radiant-48b3e49c0361f32f8dcf22d8d79fc544.js"></script>
-
-</head>
-<body>
-<main>
-<nav>
-<section class="titlesection">
-    <a href="/"><div class="titleimage"><img id="titleimage" src="/images/title.png" /></div></a>
-    <div class="sitenavigation">
-    <span class="home">
-        <a href="/">Home</a>
-    </span>
-    <span class="links">
-        <a href="/blog">Blog</a>
-        <a href="/projects">Projects</a>
-        <a href="/sketches">Sketches</a>
-        <a href="/articles">Articles</a>
-        <a href="/contact.html">Contact</a>
-        <a href="/about.html">About</a>
-        <a class='highlightnav' href="/shop">Shop</a>
-    </span>
-    </div>
-</section>
-</nav>
-		<div><h1>About</h1>
+    <meta name='viewport' content='width=device-width' />
+    <link href='/favicon.ico' rel='icon' type='image/x-icon' />
+    <link rel='stylesheet' type='text/css' href='/css/structure-9a7d30748ad79af4498126d4f9af913a.css' />
+    <link rel='stylesheet' type='text/css' href='/css/style-569a6f11700cd29b1b8c6fba00ac411b.css' />
+    <link rel='stylesheet' type='text/css' href='/css/widescreen-3d626857362d185ef16fb6d74ac22035.css' media='screen and (min-width: 601px)' />
+    <link rel='stylesheet' type='text/css' href='/css/smallscreen-6d7e4b03702b1953b4cc3edd3d09484d.css' media='screen and (max-width: 600px)' />
+    <link rel='alternate' type='application/rss+xml' href='/blog/rss.xml' title='Blog RSS Feed' />
+    <link rel='alternate' type='application/rss+xml' href='/projects/rss.xml' title='Projects RSS Feed' />
+    <link rel='alternate' type='application/rss+xml' href='/articles/rss.xml' title='Articles RSS Feed' />
+    <link rel='alternate' type='application/rss+xml' href='/sketches/rss.xml' title='Sketches RSS Feed' />
+    <script type='text/javascript' src='/js/purify-2b2d544d36a8a8bf969d19c6a5dcc8c5.js'></script>
+    <link rel='stylesheet' type='text/css' href='/css/comments-8e549a84949f341221e67e505bbc4ec4.css' />
+  </head>
+  <body>
+    <nav>
+      <section class='titlesection'>
+        <a href='/'>
+          <div class='titleimage'>
+            <img id='titleimage' src='/images/title.png' />
+          </div>
+        </a>
+        <div class='sitenavigation'>
+          <ul class='links'>
+            <li>
+              <a href='/'>Home</a>
+            </li>
+            <li>
+              <a href='/blog'>Blog</a>
+            </li>
+            <li>
+              <a href='/projects'>Projects</a>
+            </li>
+            <li>
+              <a href='/sketches'>Sketches</a>
+            </li>
+            <li>
+              <a href='/articles'>Articles</a>
+            </li>
+            <li>
+              <a href='/contact.html'>Contact</a>
+            </li>
+            <li>
+              <a href='/about.html'>About</a>
+            </li>
+            <li>
+              <a class='highlightnav' href='/shop'>Shop</a>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </nav>
+    <main><div><h1>About</h1>
 <p>
 Hi, my name is Chris. I've been drawing from a young age, always as a hobby, and got into scratchbuilding and sculpting in 2018.
 </p>
@@ -67,12 +73,12 @@ Some of the posts will be marked <b>NSFW/Mature Content</b>. These will be clear
 
 <h1>About the site</h1>
 <p>
-This site is statically built from source, using a modified version of <a href="https://gitlab.com/kamichal/airium">airium</a>, a "Bidirectional PYTHON - HTML translator".
-Using airium is amazing: airium uses python "with"-clauses to make writing html templates very pythonic. It (re)generates the site very quickly, since there is no
-extra templating language required. I have the full power of python available on demand.
+This site is statically built from source, using a python script called bubble.py
+It allows you to use pure python to generate structured HTML, using chains of calls and with-clauses so that the code and the HTML structure follows each other closely.
+It runs pretty fast too, reading in my blog content and re-generating my entire site in 2 seconds on my MacBook Pro.
 </p>
 <p>
-The static site is hosted on <a href="https://pages.github.com/">Github Pages</a>, using a Namecheap domain.
+The static site is hosted on <a href="https://pages.github.com/">Github Pages</a>, using a <a href="https://www.namecheap.com/">Namecheap</a> domain.
 </p>
 <p>
 All my newer images are hosted on <a href="https://imgur.com">Imgur</a> and <a href="https://artstation.com">Artstation</a>.
@@ -82,34 +88,41 @@ and some of the images I use are still hosted there.
 <p>
 Other content appeared on the <a href="http://www.coolminiornot.com">coolminiornot.com</a> and
 <a href="http://www.papermodelers.com">papermodelers.com</a> forums. I try hard to link posts back to their original occurences.
-If you find any link breakage, please <a href="contact.html">get in touch</a>.
+If you find any link breakage, please <a href="/contact.html">get in touch</a>.
 </p>
-</div>
-		<div class="vertspacer"></div>
-</main>
-<footer>
-<section>
-<p>Content &copy; 2023 Vigilante Sculpting</p>
-<p>
-    <a href="https://www.artstation.com/g0rb">ArtStation</a>
-    <a href="https://www.deviantart.com/gorb">DeviantArt</a>
-    <a href="https://www.reddit.com/user/gorb314">Reddit</a>
-    <a href="https://instagram.com/gorb314">Instagram</a>
-    <a href="https://www.puttyandpaint.com/g0rb">Putty&Paint</a>
-    <a href="http://www.coolminiornot.com/artist/gorb">CMON</a>
-</p>
-</section>
-</footer>
-<div id="radiant-lightbox">
-    <div id="radiant-lightbox-close">&#x274C;</div>
-    <div id="radiant-lightbox-container1">
-        <div id="radiant-lightbox-container">
-            <div id="radiant-lightbox-prev">&#10094;</div>
-            <span id="radiant-lightbox-slot"></span>
-            <div id="radiant-lightbox-next">&#10095;</div>
+</div></main>
+    <footer>
+      <section>
+        <p>Content &copy; 2023 Vigilante Sculpting</p>
+      </section>
+      <ul class='links'>
+        <li>
+          <a href='https://mastodon.social/@gorb314'>Mastodon</a>
+        </li>
+        <li>
+          <a href='https://www.artstation.com/g0rb'>ArtStation</a>
+        </li>
+        <li>
+          <a href='https://www.deviantart.com/gorb'>DeviantArt</a>
+        </li>
+        <li>
+          <a href='https://www.reddit.com/user/gorb314'>Reddit</a>
+        </li>
+        <li>
+          <a href='https://instagram.com/gorb314'>Instagram</a>
+        </li>
+        <li>
+          <a href='https://www.puttyandpaint.com/g0rb'>Putty & Paint</a>
+        </li>
+        <li>
+          <a href='http://www.coolminiornot.com/artist/gorb'>CMON</a>
+        </li>
+      </ul>
+      <a href='/'>
+        <div class='titleimage'>
+          <img id='titleimage' src='/images/logo.png' />
         </div>
-    </div>
-    <div id="radiant-lightbox-text"></div>
-</div>
-</body>
+      </a>
+    </footer>
+  </body>
 </html>
