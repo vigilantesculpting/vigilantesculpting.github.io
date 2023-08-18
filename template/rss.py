@@ -5,7 +5,7 @@ import re
 import datetime
 import pathlib
 
-import airium2 as airium
+from aquarium import Rss
 
 def truncate(text):
 	"""Truncates a piece of html text at the required number of words
@@ -19,19 +19,7 @@ def truncate(text):
 # ---------------------------------------------------------------------
 
 def rsspage(config, content, body):
-	doc = airium.Airium()
-	# modify the airium tag & attributes for RSS (XML)
-	doc.SINGLE_TAGS = [] # all tags are closed
-	doc.TAG_NAME_SUBSTITUTES.update({
-			'_tags__taglist': 'tags:taglist',
-			'_tags__tag': 'tags:tag',		
-		})
-	doc.ATTRIBUTE_NAME_SUBSTITUTES.update({
-			'_xmlns__tags': 'xmlns:tags',
-			'_xmlns__conversation': 'xmlns:conversation',
-		})
-
-	doc("<?xml version='1.0' encoding='UTF-8'?>")
+	doc = Rss()
 	with doc.rss(version="2.0", xmlns="http://backend.userland.com/rss2", 
 			_xmlns__tags="https://vigilantesculpting.github.io/tagsModule/", 
 			_xmlns__conversation="https://vigilantesculpting.github.io/conversationModule/"):
@@ -135,6 +123,10 @@ def create(config, content):
 	sketchesdescr = 'Latest sketches and drawings'
 	sketchesfile  = os.path.join('sketches', 'rss.xml')
 
+	shoptitle = f"{config.title} - Shop"
+	shopdescr = 'Latest stuff in the shop'
+	shopfile  = os.path.join('shop', 'rss.xml')
+
 	# ---------------------------------------------------------------------
 	#  Render the RSS feeds
 	# ---------------------------------------------------------------------
@@ -143,6 +135,7 @@ def create(config, content):
 	output(config, feed(config, content, projectstitle, content.sortedprojects,  'projects', 'projects', projectsdescr), projectsfile)
 	output(config, feed(config, content, sketchestitle, content.sortedsketches,  'sketches', 'blog',     sketchesdescr), sketchesfile)
 	output(config, feed(config, content, articlestitle, content.sortedarticles,  'articles', 'blog',     articlesdescr), articlesfile)
+	output(config, feed(config, content, shoptitle,     content.sortedwares,     'shop',     'shop',     shopdescr), shopfile)
 
 	# ---------------------------------------------------------------------
 	#  Render the comments RSS feeds

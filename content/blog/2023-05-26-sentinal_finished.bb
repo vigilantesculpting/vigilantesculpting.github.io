@@ -12,6 +12,10 @@ tags:
 - scratchbuilt
 thumbnail: https://i.imgur.com/t8qWFea.jpeg
 title: Sentinal finished
+comments:
+    host: mastodon.social
+    username: gorb314
+    id: 110691561678336650
 ---
 Here is the finished sentinel!
 

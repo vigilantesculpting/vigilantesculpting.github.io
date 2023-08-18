@@ -18,11 +18,10 @@ body {
     justify-content: space-between;
     width: 60em; /* the width of the body */
     margin: 0; /* tight fit */
-    padding: 1em; /* leave a border for small screens */
 }
 footer {
     /*flex-grow: 100;*/
     text-align: center;
-    height: 8em;
+    height: 12em;
 }
 

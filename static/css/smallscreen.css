@@ -11,7 +11,9 @@
 	width: 100%;
 }
 */
-
 p.more {
 	text-align: right;
+}
+#titleimage {
+	padding: 1em 0 1em 0;
 }

@@ -1,0 +1,61 @@
+.mastodon-wrapper {
+  display: flex;
+  gap: 3rem;
+  flex-direction: row;
+}
+.comment-level {
+  max-width: 3rem;
+  min-width: 3rem;
+}
+.reply-original {
+  display: none;
+}
+.mastodon-comment {
+  background-color: lightgrey;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  flex-grow: 2;
+}
+.mastodon-comment .comment {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  flex-wrap: true;
+}
+.mastodon-comment .comment-avatar img {
+  width: 4rem;
+}
+.mastodon-comment .content {
+  flex-grow: 2;
+}
+.mastodon-comment .comment-author {
+  display: flex;
+  flex-direction: column;
+}
+.mastodon-comment .comment-author-name {
+  font-weight: bold;
+}
+.mastodon-comment .comment-author-name a {
+  display: flex;
+  align-items: center;
+}
+.mastodon-comment .comment-author-date {
+  margin-left: auto;
+}
+.mastodon-comment .disabled {
+  color: #f8f8f8;
+}
+.mastodon-comment-content p:first-child {
+  margin-top: 0;
+}
+.mastodon {
+  --dlg-bg: #282c37;
+  --dlg-w: 600px;
+  --dlg-color: #9baec8;
+  --dlg-button-p: 0.75em 2em;
+  --dlg-outline-c: #00D9F5;
+}

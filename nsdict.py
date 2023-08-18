@@ -200,17 +200,18 @@ class NSDict(collections.abc.MutableMapping):
 		to one of the branchnames, and return the final value.
 		Raises KeyError if the namespace could not be resolved.
 		"""
-		if len(name) == 0:
-			return self
-		subnames = self._splitname(name)
-		try:
-			if len(subnames) == 1:
-				return self._store[name]
-			else:
-				rootname, rest = subnames
-				return self._store[rootname][rest]
-		except Exception as e:
-			raise KeyError
+		return self._store[name]
+		#if len(name) == 0:
+		#	return self
+		#subnames = self._splitname(name)
+		#try:
+		#	if len(subnames) == 1:
+		#		return self._store[name]
+		#	else:
+		#		rootname, rest = subnames
+		#		return self._store[rootname][rest]
+		#except Exception as e:
+		#	raise KeyError
 
 	def __getattr__(self, name):
 		"""Convenience function to access data

@@ -7,7 +7,7 @@ contentdir       : 'content'
 templatedir      : 'template'
 commentsdir      : 'comments'
 outputdir        : 'docs'
-paginatecount    : 45
-airium/source_minify: False
+paginatecount    : 15 # 3 columns * 5 rows
+html_minify      : False
 debug: True
 #googletag: 'G-RX7VS9VBWV'

@@ -10,6 +10,10 @@ body {
     font-family: helvetica, arial, sans-serif;
 }
 
+main {
+    padding: 0 1em 0 1em; /* leave a border for small screens */
+}
+
 img {
     max-width: 100%;
     height: auto;
@@ -35,22 +39,45 @@ h1 {
     font-size: 2.0em;
 }
 
-a:link, a:visited {
-    text-decoration: none;
-}
-
 a:link {
     color: #999999;
+    text-decoration: underline;
 }
 a:visited {
     color: #aaaaaa;
 }
 a:hover, a:active {
     color: #888888;
-    text-decoration: underline;
+}
+
+.titlesection {
+    background: #31a3d7;
+    border-radius: 0 0 10px 10px;
 }
 
 .sitenavigation {
+}
+
+.sitenavigation a {
+    border-radius: 10px; /*10px 10px 0 0;*/
+    padding: 1em;
+}
+.sitenavigation a:link {
+    color: white;
+}
+.sitenavigation a:visited {
+    color: lightgrey;
+}
+.sitenavigation a:hover {
+    color: darkgrey;
+    background-color: white;
+}
+.sitenavigation a:active {
+    color: white;
+}
+
+ul li {
+  list-style-type: disc;
 }
 
 ul.links {
@@ -60,6 +87,9 @@ ul.links {
 }
 ul.links > li {
     display: inline;
+    /*padding: 1em;*/
+}
+ul.links a {
     padding: 1em;
 }
 
@@ -67,13 +97,25 @@ nav {
     line-height: 2.5em;
 }
 
+li.taglink a:link {
+    color: white;
+}
+li.taglink a:hover, li.taglink a:active {
+    color: white;
+}
+li.taglink a:visited {
+    color: lightgrey;
+}
+
 /* Footer */
 footer {
     color: #ffffff;
-    background: #42617d;
+    background: #31a3d7;
     /*background: linear-gradient(0deg, #fff 0%, #fff 30%, #42617d 100%);*/
     border-top: thin solid #e0e0e0;
     text-align: center;
+    border-radius: 10px 10px 0 0;
+    margin-top: auto; /* the magik that makes it stick to the bottom of the page */
 }
 
 footer section p {
@@ -84,11 +126,10 @@ footer a:link {
     color: white;
 }
 footer a:visited {
-    color: #ddd;
+    color: lightgrey;
 }
 footer a:hover, a:active {
     color: white;
-    text-decoration: underline;
 }
 
 footer a {
@@ -257,6 +298,16 @@ main > section:only-child {
     padding: 0px;
 }
 
+.iconthumbnail {
+    /*object-fit: cover;
+    height: 100%;*/
+    /*width: 100%;*/
+    border-radius: 10px;
+    padding: 0px;
+    /*width: 90px;
+    height: 90px;*/
+}
+
 .nsfw-warning {
     color: #ffffff;
     background-color: #884444;
@@ -335,6 +386,24 @@ ul.posttags > li {
 }
 
 
+
+.tagtable {
+}
+.tagtable td {
+    padding: 5px;
+}
+.tagicon { 
+    width: 90px;
+    aspect-ratio: 1/1;
+}
+.tagdate {
+    text-align: right;
+    font-style: italic;
+}
+.tagtitle {
+    font-size: 100%;
+    font-weight: bold;
+}
 
 .commentsection {
     margin-bottom: 20px;
