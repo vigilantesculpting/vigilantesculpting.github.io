@@ -1,0 +1,35 @@
+Markdown post uploader
+
+So the general idea is that we write our posts in markdown.
+Local image links are just that - local image links.
+This way it is easy to "preview" the markdown, and re-arrange, add to, remove from, etc. the post.
+Once we are finished, we run an import.py script, which will go through the text of the post, and
+check for any local links to images. These get uploaded directly to imgur, and the links replaced
+with the imgur links. The post then gets plonked into the relevant content subdirectory (sketches, blog, projects, etc).
+
+Frontmatter:
+where does the frontmatter go? Do we need it at all at the start?
+Perhaps we add as much as we want / need. This gets parsed (if present) by the import script, and
+filled out with any other default values if needed.
+
+We can use the newpost script to set up the frontmatter, then open the post in a visual editor (such as Joplin),
+and continue editing, then run the import script.
+
+--
+
+We can use MacDown (a mac-based markdown editor, with preview pane - similar to Joplin) to format our blog posts.
+Front matter gets written directly into the blog post (if we want it), all we have to add is a space between the
+last yaml entry and the closing "--": this makes the frontmatter compress into a single line of unobtrusive text.
+
+So the workflow is:
+
+./newpost.py [parameters]
+	[-> creates new post, opens the post with MacDown: open -a /Applications/MacDown.app [newpost]]
+	[... edit the post ...]
+./import.py [newpost]
+	[-> uploads images, replaces links in newpost, adds & commits newpost: git add [newpost] && git commit -m "import post [newpost]"]
+	[... rinse/repeat ...]
+./update.py 
+	[-> git pull --rebase && ./build.py && git add -u :/ && git add docs && git commit -m "rebuild" && git push origin HEAD)
+
+

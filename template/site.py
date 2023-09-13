@@ -342,6 +342,8 @@ class Site:
 		return value4
 
 	def posttags(self, doc, tags):
+		if len(tags) == 0:
+			return
 		"""
 		tags are in a tags frontmatter:
 				tags:
