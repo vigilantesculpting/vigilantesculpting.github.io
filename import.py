@@ -67,17 +67,18 @@ print(f"uploadables: {uploadables}")
 
 ### invoke faeiry to upload the images and collect the uploaded URLs, replace them in the document
 
-def upload(uploadables):
+def upload(uploadables, title):
 	if len(uploadables) == 0:
 		return []
-	faeiry.authenticate()
-	imagedata = faeiry.uploadimages(uploadables)
+	client = faeiry.authenticate()
+	imagedata = faeiry.uploadimages(client, uploadables, title=title)
 	uploadedimages = {}
-	for localpath, data in zip(imagelist, imagedata):
+	for localpath, data in zip(uploadables, imagedata):
 		uploadedimages[localpath] = data['link']
 	return uploadedimages
 
-uploadedimages = upload(uploadables)
+title = metadata["title"] if "title" in metadata else "unnamed"
+uploadedimages = upload(uploadables, title)
 print(f"uploadedimages: {uploadedimages}")
 
 ### replace the local image urls with the uploaded urls in the frontmatter and body

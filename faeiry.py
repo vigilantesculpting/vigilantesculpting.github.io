@@ -29,6 +29,9 @@ credentialsfilepath = '~/.faeiry.json'
 def authenticate(cfilepath = None):
 	if cfilepath is None:
 		cfilepath = credentialsfilepath
+
+	cfilepath = os.path.expanduser(cfilepath)
+
 	try:
 		credentialfile = open(cfilepath, 'r')
 
@@ -51,7 +54,7 @@ def authenticate(cfilepath = None):
 			# ... redirect user to `authorization_url`, obtain pin (or code or token) ...
 			webbrowser.open(authorization_url)
 			print("Please enter the pin:")
-			pin = raw_input()
+			pin = input()
 
 		credentials = client.authorize(pin, 'pin')
 		client.set_user_auth(credentials['access_token'], credentials['refresh_token'])
@@ -65,7 +68,7 @@ def authenticate(cfilepath = None):
 	print("You are now authorized")
 	return client
 
-def uploadimages(imagelist, albumid):
+def uploadimages(client, imagelist, albumid = None, title = None):
 
 	# this requires us to call authenticate first!
 	#client = authenticate(credentialsfilepath)
@@ -74,6 +77,7 @@ def uploadimages(imagelist, albumid):
 	for imagepath in imagelist:
 		result = client.upload_from_path(imagepath, anon=False)
 		imagedata.append(result)
+		print(f"uploaded image {imagepath} to id {result['id']} with url {result['link']}")
 
 	imageids = [data['id'] for data in imagedata]
 	print("imageids:", imageids)
@@ -130,7 +134,7 @@ def main(argv):
 
 	albumid = None
 	query = False
-	title = 'test post'
+	title = None
 	sanity = ''
 	cfilepath = credentialsfilepath
 
@@ -166,7 +170,6 @@ def main(argv):
 		print("doing sanity", sanity)
 
 	imagelist = sum([glob.glob(arg) for arg in args], [])
-	cfilepath = os.path.expanduser(cfilepath)
 
 	if sanity:
 		fail = False
@@ -199,7 +202,7 @@ def main(argv):
 		print(imagelist)
 		sys.exit(0)
 
-	imagedata = uploadimages(imagelist, albumid)
+	imagedata = uploadimages(client, imagelist, albumid, title)
 	for path, data in zip(imagelist, imagedata):
 		print("[img]%s[/img]" % data['link'], path)
 
