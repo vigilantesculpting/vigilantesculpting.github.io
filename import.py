@@ -16,6 +16,7 @@ import yaml
 import subprocess
 
 import faeiry
+from PIL import Image
 
 ### load the given markdown(!!!) file
 
@@ -45,14 +46,14 @@ def splitheader(text):
 
 header, body = splitheader(text)
 
-print(f"header: [{header}]")
-print(f"body: [{body}]")
+#print(f"header: [{header}]")
+#print(f"body: [{body}]")
 
 # is there a thumbnail in the header?
 metadata = yaml.safe_load(header)
 if metadata and "thumbnail" in metadata:
 	thumbnailpath = metadata['thumbnail']
-	print(f"thumbnailpath: [{thumbnailpath}]")
+	#print(f"thumbnailpath: [{thumbnailpath}]")
 	# is the thumbnail a local (non-blog) url?
 	if re.match(r'/Users', thumbnailpath):
 		uploadables.append(thumbnailpath)
@@ -60,10 +61,15 @@ if metadata and "thumbnail" in metadata:
 # now parse the body and detect all local images:
 
 for m in re.finditer(r'\!\[.*?\]\((.*?)\)', body):
-	print("match!")
 	uploadables.append(m.group(1))
 
 print(f"uploadables: {uploadables}")
+
+# sanity check: are these (a) images and (b) not larger than the maximum size
+for imagepath in uploadables:
+	img = Image.open(imagepath)
+	if img.width > 1920 or img.height > 1920:
+		raise Exception(f"Fail: Image {imagepath} is larger than 1920x1920")
 
 ### invoke faeiry to upload the images and collect the uploaded URLs, replace them in the document
 
