@@ -517,7 +517,7 @@ class Site:
 								doc(self.truncate(post.content))
 
 				self.paginatenavigation(doc, pageid, pagecount, f"{tag.name}")
-		return self.page(title = tag, meta = meta, body = body)
+		return self.page(title = f"Posts tagged with '{tag.name}'", meta = meta, body = body)
 
 	def maketagpages(self, tagitem):
 		tagslug, tag = tagitem
