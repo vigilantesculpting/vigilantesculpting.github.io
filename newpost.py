@@ -37,7 +37,6 @@ sketch = False
 article = False
 tags = None
 thumbnail = ""
-outputdir = "content/blog"
 
 try:
 	optlist, args = getopt.gnu_getopt(sys.argv[1:], 'a:p:sAt:h', ['author=', 'project=', 'sketch', 'article', 'tags=', 'help'])
@@ -85,6 +84,8 @@ elif sketch:
 	outputdir = "content/sketches"
 elif article:
 	outputdir = "content/articles"
+else:
+	outputdir = "content/blog"
 
 output = yaml.dump(header)
 template = f"""---
@@ -93,7 +94,7 @@ template = f"""---
 ---
 """
 
-filename = "%s-%s.md" % (currently.strftime("%Y-%m-%d"), safetitle)
+filename = "%s-%s_local.md" % (currently.strftime("%Y-%m-%d"), safetitle)
 filepath = os.path.join(outputdir, filename)
 
 print(f"creating post [{filepath}]")

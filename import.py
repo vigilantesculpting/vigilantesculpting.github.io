@@ -10,15 +10,24 @@ It will then add and commit the modified file to the repo.
 """
 
 import sys
+import os
 import re
 import yaml
 import subprocess
+
+import faeiry
 
 ### load the given markdown(!!!) file
 
 filepath = sys.argv[1]
 with open(filepath, "r") as f:
 	text = f.read()
+
+dirpath, filename = os.path.split(filepath)
+basename, ext = os.path.splitext(filename)
+basename = re.sub(r'_local$', '', basename)
+outputfilepath = os.path.join(dirpath, basename + ext)
+print(f"outputfilepath: {outputfilepath}")
 
 ### troll through the front matter and body & grab any local image references that need uploading to imgur
 
@@ -59,9 +68,13 @@ print(f"uploadables: {uploadables}")
 ### invoke faeiry to upload the images and collect the uploaded URLs, replace them in the document
 
 def upload(uploadables):
+	if len(uploadables) == 0:
+		return []
+	faeiry.authenticate()
+	imagedata = faeiry.uploadimages(uploadables)
 	uploadedimages = {}
-	for uploadable in uploadables:
-		uploadedimages[uploadable] = uploadable + "whatshup!"
+	for localpath, data in zip(imagelist, imagedata):
+		uploadedimages[localpath] = data['link']
 	return uploadedimages
 
 uploadedimages = upload(uploadables)
@@ -91,14 +104,14 @@ newfile = f"""---
 
 print(f"newfile:\n{newfile}")
 
-if 0:
-	with open(filepath, "w") as f:
+if 1:
+	with open(outputfilepath, "w") as f:
 		f.write(newfile)
 
 	print("adding file to git")
-	subprocess.run(["git", "add", filepath], check=True)
+	subprocess.run(["git", "add", outputfilepath], check=True)
 	print("committing file to git")
-	subprocess.run(["git", "commit", "-m", f"modify post {filepath}"], check=True)
+	subprocess.run(["git", "commit", "-m", f"modify post {outputfilepath}"], check=True)
 
 # TODO: optionally, create / update a local database of replacement urls, so that we can always
 # reference the same images again without duplicate uploads
