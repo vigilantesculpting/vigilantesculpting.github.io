@@ -135,7 +135,7 @@ class Site:
 				with doc.nav():
 					with doc.section(klass = "titlesection"):
 						with doc.a(href = os.path.join("/", self.config.tgtsubdir)):
-							doc.div(klass = "titleimage").img(id = "titleimage", src = os.path.join("/", self.config.tgtsubdir, "images", "title.png"))
+							doc.div(klass = "titleimage").img(id = "titleimage", src = os.path.join("/", self.config.tgtsubdir, "images", "header.svg"), width = "900px") #"title.png"))
 						with doc.div(klass = "sitenavigation"):
 							#with doc.span("home").a(os.path.join("/", self.config.tgtsubdir)):
 							#	doc("Home")
@@ -168,7 +168,7 @@ class Site:
 						doc.li().a(href="https://www.puttyandpaint.com/g0rb",	 	_t = "Putty & Paint")
 						doc.li().a(href="http://www.coolminiornot.com/artist/gorb", _t = "CMON")
 					with doc.a(href = os.path.join("/", self.config.tgtsubdir)):
-						doc.div(klass = "titleimage").img(id = "titleimage", src = os.path.join("/", self.config.tgtsubdir, "images", "logo.png"))
+						doc.div(klass = "titleimage").img(id = "titleimage", src = os.path.join("/", self.config.tgtsubdir, "images", "footer.svg")) #"logo.png"))
 				#radiant(doc)
 
 		return doc
@@ -223,20 +223,20 @@ class Site:
 	def postsummary(self, doc, postpath, post):
 		postlink = os.path.join("/", self.config.tgtsubdir, f"{post.slug}.html")
 		# section? div?
-		with doc.h2().a(href = postlink):
+		with doc.h2(klass = "slide-title").a(href = postlink):
 			doc(post.title)
-		with doc.p(klass = "meta"):
+		with doc.p(klass = "slide-meta meta"):
 			doc(f"Published on {datetime.datetime.strftime(post.date, '%Y/%m/%d @%H:%M:%S')} by <b>{post.author}</b>")
 		if "thumbnail" in post:
-			with doc.a(klass = "more", href = postlink):
+			with doc.a(klass = "slide-thumbnail more", href = postlink):
 				with doc.div(klass = "thumbnail-container"):
 					if "nsfw" in post.tags:
 						with doc.p(klass = "nsfw-warning"):
 							doc("NSFW / Mature Content")
 					doc(post.thumbnail)
-		with doc.p(klass = "summary"):
+		with doc.p(klass = "slide-summary summary"):
 			doc(f"{self.truncate(post.content)}&nbsp;")
-		with doc.p(klass = "more").a(klass = "more", href = postlink):
+		with doc.p(klass = "slide-readmore more").a(klass = "more", href = postlink):
 			doc("Read more")
 		return doc
 

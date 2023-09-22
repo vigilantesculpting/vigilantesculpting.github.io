@@ -23,13 +23,17 @@ last yaml entry and the closing "--": this makes the frontmatter compress into a
 
 So the workflow is:
 
-./newpost.py [parameters]
+$ ./newpost.py [parameters]
 	[-> creates new post, opens the post with MacDown: open -a /Applications/MacDown.app [newpost]]
 	[... edit the post ...]
-./import.py [newpost]
+$ ./import.py [newpost]
 	[-> uploads images, replaces links in newpost, adds & commits newpost: git add [newpost] && git commit -m "import post [newpost]"]
 	[... rinse/repeat ...]
-./update.py 
-	[-> git pull --rebase && ./build.py && git add -u :/ && git add docs && git commit -m "rebuild" && git push origin HEAD)
+$ ./update.py 
+	[-> git pull --rebase && ./build.py && git add -u :/ && git add docs && git commit -m "rebuild"]
+
+Finally, when everything is ready
+
+$ git push origin HEAD
 
 

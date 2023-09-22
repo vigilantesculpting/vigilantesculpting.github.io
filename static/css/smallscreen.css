@@ -17,3 +17,40 @@ p.more {
 #titleimage {
 	padding: 1em 0 1em 0;
 }
+
+/* slides are laid out as grids */
+
+.slide {
+	width: 100%;
+	display: grid; 
+	grid-template-columns: 25% 75%; 
+	grid-template-rows: auto auto auto auto; 
+	gap: 0px 0px; 
+	grid-template-areas: 
+		". ."
+		". ."
+		". ."
+		". ."; 
+}
+
+.slide-thumbnail {
+	grid-column-start: 1;
+	grid-row-start: 1;
+	grid-row-end: 4;
+}
+.slide-title {
+	grid-column-start: 2;
+	grid-row-start: 1;
+}
+.slide-meta {
+	grid-column-start: 2;
+	grid-row-start: 2;
+}
+.slide-summary {
+	grid-column-start: 2;
+	grid-row-start: 3;
+}
+.slide-readmore {
+	grid-column-start: 2;
+	grid-row-start: 4;
+}

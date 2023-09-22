@@ -22,6 +22,6 @@ body {
 footer {
     /*flex-grow: 100;*/
     text-align: center;
-    height: 12em;
+    min-height: 12em; /* allow to grow */
 }
 
