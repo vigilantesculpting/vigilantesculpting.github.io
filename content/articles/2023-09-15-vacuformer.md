@@ -11,6 +11,12 @@ I've built myself a vacuum former, in order to make thin-walled parts for my [ga
 
 ![](https://i.imgur.com/xOs3tKR.jpeg)
 
+Here is a short YouTube video showing the vacuum former in action:
+
+[![DIY Vacuum former demonstration](https://i.imgur.com/ty9PN4f.jpg)](http://www.youtube.com/watch?v=JaoNNBOxRog)
+
+https://youtu.be/JaoNNBOxRog
+
 What is vacuum forming?
 --
 
