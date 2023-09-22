@@ -51,8 +51,12 @@ a:hover, a:active {
 }
 
 .titlesection {
-    background: #31a3d7;
+    background: #cfdbe2ff; /*#d6e2e9ff;*/ /*#31a3d7;*/
     border-radius: 0 0 10px 10px;
+}
+
+.titlesection img {
+    padding: 10px;
 }
 
 .sitenavigation {
@@ -62,18 +66,15 @@ a:hover, a:active {
     border-radius: 10px; /*10px 10px 0 0;*/
     padding: 1em;
 }
-.sitenavigation a:link {
-    color: white;
-}
-.sitenavigation a:visited {
-    color: lightgrey;
+.sitenavigation a:link, a:active {
+    color: darkslategray;
 }
 .sitenavigation a:hover {
-    color: darkgrey;
+    color: darkslategray;
     background-color: white;
 }
-.sitenavigation a:active {
-    color: white;
+.sitenavigation a:visited {
+    color: slategray;
 }
 
 ul li {
@@ -110,7 +111,7 @@ li.taglink a:visited {
 /* Footer */
 footer {
     color: #ffffff;
-    background: #31a3d7;
+    background: #cfdbe2ff; /*#d6e2e9ff;*/ /*#31a3d7;*/
     /*background: linear-gradient(0deg, #fff 0%, #fff 30%, #42617d 100%);*/
     border-top: thin solid #e0e0e0;
     text-align: center;
@@ -122,14 +123,11 @@ footer section p {
     font-size: 0.8em;
 }
 
-footer a:link {
-    color: white;
+footer a:link, a:hover, a:active {
+    color: darkslategray;
 }
 footer a:visited {
-    color: lightgrey;
-}
-footer a:hover, a:active {
-    color: white;
+    color: slategray;
 }
 
 footer a {
@@ -138,6 +136,10 @@ footer a {
 
 footer a:last-child {
     margin-right: 0;
+}
+
+footer img {
+    padding: 10px;
 }
 
 
