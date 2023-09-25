@@ -34,7 +34,7 @@ Later I decided to cut out the windows of the cab. This took some effort, since 
 
 ![](https://i.imgur.com/3AwgG7M.jpeg)
 
-![](https://i.imgur.com/kG8ESwp.jpeg)
+![](https://imgur.com/tGQMYq5.jpeg)
 
 As they say, you can't make an omelette without breaking some eggs. More to come...
 
