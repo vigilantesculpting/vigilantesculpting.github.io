@@ -4,6 +4,11 @@ date: 2023-09-15T23:00:37 -0700
 thumbnail: ''
 title: Vacuformer
 thumbnail: https://i.imgur.com/xOs3tKR.jpeg
+tags:
+- vacuumforming
+- diy
+- articles
+- tools
 
 ---
 
