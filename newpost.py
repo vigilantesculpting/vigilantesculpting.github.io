@@ -79,13 +79,13 @@ if tags is not None:
 
 if projecttag is not None:
 	header['project'] = projecttag
-	outputdir = "content/projects"
+	outputdir = "local/projects"
 elif sketch:
-	outputdir = "content/sketches"
+	outputdir = "local/sketches"
 elif article:
-	outputdir = "content/articles"
+	outputdir = "local/articles"
 else:
-	outputdir = "content/blog"
+	outputdir = "local/blog"
 
 output = yaml.dump(header)
 template = f"""---
@@ -94,7 +94,7 @@ template = f"""---
 ---
 """
 
-filename = "%s-%s_local.md" % (currently.strftime("%Y-%m-%d"), safetitle)
+filename = "%s-%s.md" % (currently.strftime("%Y-%m-%d"), safetitle)
 filepath = os.path.join(outputdir, filename)
 
 print(f"creating post [{filepath}]")

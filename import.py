@@ -14,20 +14,48 @@ import os
 import re
 import yaml
 import subprocess
+import getopt
 
 import faeiry
 from PIL import Image
 
+def usage(msg = "", result = 0):
+	if len(msg) > 0:
+		print(msg)
+	print(f"""Imports a local post into the contents. Can upload the images in the post to Imgur
+Usage: {sys.argv[0]} [--dry-run/-n] [--import-only/-i] [--help/-h] INPUTPATH
+Where
+  --dry-run     : Do a dry run. Print out statistics, do not perform any import or uploads
+  --import-only : Only import, do not upload
+  --help        : Show this help
+  INPUTPATH     : The path of the post to import
+""", end='')
+	sys.exit(result)
+
+dryrun = False
+
+opts, args = getopt.gnu_getopt(sys.argv[1:], "nh")
+for opt, arg in opts:
+	match opt:
+		case "-n":
+			dryrun = True
+			print("Note: dry run!")
+		case "-h":
+			usage()
+
+if len(args) != 1:
+	usage("INPUTPATH is required!", 1)
+
 ### load the given markdown(!!!) file
 
-filepath = sys.argv[1]
+filepath = args[0]
 with open(filepath, "r") as f:
 	text = f.read()
 
 dirpath, filename = os.path.split(filepath)
-basename, ext = os.path.splitext(filename)
-basename = re.sub(r'_local$', '', basename)
-outputfilepath = os.path.join(dirpath, basename + ext)
+pathparts = dirpath.split(os.sep)
+outputfilepath = os.path.join("content", *pathparts[1:], filename)
+print(f"inputfilepath:  {filepath}")
 print(f"outputfilepath: {outputfilepath}")
 
 ### troll through the front matter and body & grab any local image references that need uploading to imgur
@@ -61,12 +89,14 @@ if metadata and "thumbnail" in metadata:
 # now parse the body and detect all local images:
 
 for m in re.finditer(r'\!\[.*?\]\((.*?)\)', body):
-	uploadables.append(m.group(1))
+	filepath = m.group(1)
+	uploadables.append(filepath)
 
 print(f"uploadables: {uploadables}")
 
 # sanity check: are these (a) images and (b) not larger than the maximum size
 for imagepath in uploadables:
+	imagepath = imagepath.replace('\\', '')
 	img = Image.open(imagepath)
 	if img.width > 1920 or img.height > 1920:
 		raise Exception(f"Fail: Image {imagepath} is larger than 1920x1920")
@@ -77,20 +107,29 @@ def upload(uploadables, title):
 	if len(uploadables) == 0:
 		return []
 	client = faeiry.authenticate()
-	imagedata = faeiry.uploadimages(client, uploadables, title=title)
+	imagepaths = [imagepath.replace('\\', '') for imagepath in uploadables]
+	imagedata = faeiry.uploadimages(client, imagepaths, title=title)
 	uploadedimages = {}
 	for localpath, data in zip(uploadables, imagedata):
 		uploadedimages[localpath] = data['link']
 	return uploadedimages
 
 title = metadata["title"] if "title" in metadata else "unnamed"
-uploadedimages = upload(uploadables, title)
-print(f"uploadedimages: {uploadedimages}")
+if not dryrun:
+	uploadedimages = upload(uploadables, title)
+else:
+	uploadedimages = {}
+	for localpath in uploadables:
+		uploadedimages[localpath] = localpath.replace('\\', '')
+	print("dry run, images not uploaded!")
+
+print(f"uploadedimages:")
+for local, remote in uploadedimages.items():
+	print(f"\t{local} -> {remote}")
 
 ### replace the local image urls with the uploaded urls in the frontmatter and body
 
 # replace the thumbnail (if any)
-
 if metadata and "thumbnail" in metadata and metadata["thumbnail"] in uploadedimages:
 	metadata["thumbnail"] = uploadedimages[metadata["thumbnail"]]
 
@@ -100,7 +139,8 @@ def substitute_uploadable(m):
 	return f"![{m.group(1)}]({uploadedimages[m.group(2)]})"
 
 newbody, count = re.subn(r'\!\[(.*?)\]\((.*?)\)', substitute_uploadable, body)
-print(f"newbody: {newbody}")
+
+#print(f"newbody: {newbody}")
 
 ### write the file back to disk as md
 
@@ -111,7 +151,7 @@ newfile = f"""---
 
 print(f"newfile:\n{newfile}")
 
-if 1:
+if not dryrun:
 	with open(outputfilepath, "w") as f:
 		f.write(newfile)
 
