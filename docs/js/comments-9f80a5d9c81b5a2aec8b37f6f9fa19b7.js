@@ -32,7 +32,7 @@ function escapeHtml(unsafe)
        .replace(/'/g, "&#039;");
 }
 
-function loadComments(originalpost, id)
+function loadComments(originalpost, id, replylink)
 {
 // 
 fetch(originalpost)
@@ -80,7 +80,7 @@ fetch(originalpost)
       }
       else
       {
-        document.getElementById('mastodon-comments-list').innerHTML = "<p>No comments found</p>";
+        document.getElementById('mastodon-comments-list').innerHTML = "<p>No comments yet. Be the first to comment <a href='replylink'>here.</a></p>";
       }
     });
 }
