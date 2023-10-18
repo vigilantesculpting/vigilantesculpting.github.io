@@ -138,6 +138,14 @@ class Generator:
 		if 'date' in content:
 			content['date'] = dateutil.parser.parse(content['date'])
 
+		# set up comments
+		if 'comments-id' in content:
+			# use the default host/username if not set in the comments:
+			if 'comments-host' not in content:
+				content['comments-host'] = self.config['comments-host']
+			if 'comments-username' not in content:
+				content['comments-username'] = self.config['comments-username']
+
 		# convert the body text into an html snippet, if it is not an html file
 		try:
 			text = self.texttohtml(ext.lower(), filebody)
@@ -242,56 +250,56 @@ class Generator:
 					log("minifying js [%s]" % filename)
 					writefile(filename, minjs)
 
-	def readcomments(self, commentspath):
-		# read comment files from the directory
-		log("loading comments from [%s]" % commentspath)
-
-		# load every comment into a lookup table
-		comments = []
-		commentlookup = {}
-		for dirName, subdirList, fileList in os.walk(commentspath):
-			root = dirName[len(commentspath)+1:]
-			for fileName in fileList:
-				if fileName == ".DS_Store":
-					continue
-				fullpath = os.path.join(dirName, fileName)
-				var = os.path.join("content", root, fileName)
-				log("adding comment ", var)
-				comment = self.readfile(fullpath)
-				commenturi = comment.pageuri + "#comment" + str(comment.commentid)
-				commentlookup[commenturi] = comment
-				comments.append(comment)
-
-		# sort the comments by their date
-		# this means that they will appear in order on the page, no matter when they were added
-		comments = sorted(comments, key=lambda comment: comment.date)
-
-		# use the lookup table to create the trees of comments, attaching the root
-		# of each tree to its page
-		for comment in comments:
-			commenturi = comment.pageuri + "#comment" + str(comment.commentid)
-			if comment.replytoid is not None:
-				# this is a reply
-				replytouri = comment.pageuri + "#comment" + str(comment.replytoid)
-				try:
-					# add this comment to that comment's reply list:
-					parent = commentlookup[replytouri]
-				except KeyError:
-					log("orphan reply comment:", comment.commentid)
-					continue
-				parent['comments'].append(comment)
-				# add the replyingto field (this is used by RSS)
-				comment['replyingto'] = parent.displayname
-			else:
-				# this must be a root comment.
-				# is there a comment with the same pageid/replyto?
-				pageuri, ext = os.path.splitext(comment.pageuri)
-				try:
-					page = self.content[pageuri]
-				except KeyError:
-					log("orphan comment:", comment.commentid)
-					continue
-				page.comments.append(comment)
+#	def readcomments(self, commentspath):
+#		# read comment files from the directory
+#		log("loading comments from [%s]" % commentspath)
+#
+#		# load every comment into a lookup table
+#		comments = []
+#		commentlookup = {}
+#		for dirName, subdirList, fileList in os.walk(commentspath):
+#			root = dirName[len(commentspath)+1:]
+#			for fileName in fileList:
+#				if fileName == ".DS_Store":
+#					continue
+#				fullpath = os.path.join(dirName, fileName)
+#				var = os.path.join("content", root, fileName)
+#				log("adding comment ", var)
+#				comment = self.readfile(fullpath)
+#				commenturi = comment.pageuri + "#comment" + str(comment.commentid)
+#				commentlookup[commenturi] = comment
+#				comments.append(comment)
+#
+#		# sort the comments by their date
+#		# this means that they will appear in order on the page, no matter when they were added
+#		comments = sorted(comments, key=lambda comment: comment.date)
+#
+#		# use the lookup table to create the trees of comments, attaching the root
+#		# of each tree to its page
+#		for comment in comments:
+#			commenturi = comment.pageuri + "#comment" + str(comment.commentid)
+#			if comment.replytoid is not None:
+#				# this is a reply
+#				replytouri = comment.pageuri + "#comment" + str(comment.replytoid)
+#				try:
+#					# add this comment to that comment's reply list:
+#					parent = commentlookup[replytouri]
+#				except KeyError:
+#					log("orphan reply comment:", comment.commentid)
+#					continue
+#				parent['comments'].append(comment)
+#				# add the replyingto field (this is used by RSS)
+#				comment['replyingto'] = parent.displayname
+#			else:
+#				# this must be a root comment.
+#				# is there a comment with the same pageid/replyto?
+#				pageuri, ext = os.path.splitext(comment.pageuri)
+#				try:
+#					page = self.content[pageuri]
+#				except KeyError:
+#					log("orphan comment:", comment.commentid)
+#					continue
+#				page.comments.append(comment)
 
 	def renamefileswithchecksums(self):
 		filepaths = [

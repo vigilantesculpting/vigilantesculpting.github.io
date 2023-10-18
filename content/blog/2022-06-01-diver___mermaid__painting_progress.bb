@@ -9,6 +9,7 @@ tags:
 - bubbles
 thumbnail: https://i.imgur.com/qUK9TMy.jpeg
 title: Diver & mermaid, painting progress
+comments-id: 108404456530762229
 ---
 Some updated photos of the diver & mermaid diorama.
 I had previously gone with a darker and dirtier greenish seawater look, and especially on the background, but decided to clean it all up.

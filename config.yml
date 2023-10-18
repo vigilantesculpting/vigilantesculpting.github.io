@@ -11,3 +11,6 @@ paginatecount    : 15 # 3 columns * 5 rows
 html_minify      : False
 debug: True
 #googletag: 'G-RX7VS9VBWV'
+comments-host    : mastodon.social
+comments-username: '@gorb314'
+

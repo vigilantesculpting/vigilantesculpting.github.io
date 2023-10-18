@@ -14,7 +14,7 @@ tags:
 - wip
 thumbnail: https://i.imgur.com/C7fFWx6.jpeg
 title: Prime time
-
+comments-id: 111252127264610153
 ---
 The warrig construction is finished! Nothing like a good prime to show off the skulls and greeblies, and tie it all together:
 

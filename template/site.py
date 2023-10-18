@@ -44,21 +44,18 @@ class Site:
 				doc("<meta charset='UTF-8'>")
 		return doc
 
-	def comments(self, doc, comments):
-		return # disable all comments for now
-
-		""" requires a 
+	def comments(self, doc, post):
+		""" requires a "comments" section in the frontmatter of the post:
 			comments:
 				host: mastodon.social
 				username: ???
 				id: ???
-		section in the front matter of a post
 		Add a tool which sets the comments for a given post from the commandline,
 		using defaults from the config if not provided.
 		Something like ./addcomments.py <postfilename> <id> [-h <host>] [-u <username>]
 		"""
-		replylink = f"https://{comments['host']}/@{comments['username']}/{comments['id']}"
-		originalpost = f"https://{comments['host']}/api/v1/statuses/{comments['id']}/context"
+		replylink = f"https://{post['comments-host']}/@{post['comments-username']}/{post['comments-id']}"
+		originalpost = f"https://{post['comments-host']}/api/v1/statuses/{post['comments-id']}/context"
 
 		with doc.div(klass = "article-content"):
 			doc.h2(_t = "Comments")
@@ -86,7 +83,7 @@ class Site:
 	#				with doc.button(klass="button", id="cancelButton", onclick="closeCommentsDialog()"):
 	#					doc("Close")
 			with doc.p(id="mastodon-comments-list"):
-				with doc.button(id="load-comment", onclick = f"loadComments('{originalpost}', {comments['id']})"):
+				with doc.button(id="load-comment", onclick = f'loadComments("{originalpost}", {post["comments-id"]}, "{replylink}")'):
 					doc("Load & display comments from Mastdon here")
 			with doc.noscript().p():
 				doc("You need JavaScript to view the comments!")
@@ -392,8 +389,8 @@ class Site:
 				self.posttags(doc, post.tags)
 				#doc.div(klass="vertspacer")
 			self.postnavigation(doc, postid, posts, 'post')
-			if "comments" in post:
-				self.comments(doc, post.comments)
+			if "comments-id" in post:
+				self.comments(doc, post)
 		return self.page(title = post.title, meta = meta, body = body)
 
 	def paginatenavigation(self, doc, pageid, pagecount, basename):
@@ -471,8 +468,8 @@ class Site:
 						self.paginatenavigation(doc, postgroupid, pagecount, project.slug)
 
 				self.postnavigation(doc, projectid, self.content.sortedprojects, "project")
-			if "comments" in project:
-				self.comments(doc, project.comments)
+			if "comments-id" in project:
+				self.comments(doc, project)
 		return self.page(title = project.title, meta = meta, body = body)
 
 	# used for blog/index[].html, articles/index[].html, projects/index[].html and sketches/index[].html
