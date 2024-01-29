@@ -12,6 +12,7 @@ tags:
 - hotwheels
 - painted
 - prime
+comments-id: 111841101008604896 
 thumbnail: https://i.imgur.com/Sfnn3kA.jpeg
 title: Furiosa's WARRIG
 
