@@ -33,13 +33,17 @@ Where
 	sys.exit(result)
 
 dryrun = False
+importonly = False
 
-opts, args = getopt.gnu_getopt(sys.argv[1:], "nh")
+opts, args = getopt.gnu_getopt(sys.argv[1:], "nih")
 for opt, arg in opts:
 	match opt:
 		case "-n":
 			dryrun = True
 			print("Note: dry run!")
+		case "-i":
+			importonly = True
+			print("Note: import only!")
 		case "-h":
 			usage()
 
@@ -104,6 +108,7 @@ for imagepath in uploadables:
 ### invoke faeiry to upload the images and collect the uploaded URLs, replace them in the document
 
 def upload(uploadables, title):
+	#raise RuntimeError("shouldn't get here")
 	if len(uploadables) == 0:
 		return []
 	client = faeiry.authenticate()
@@ -115,13 +120,17 @@ def upload(uploadables, title):
 	return uploadedimages
 
 title = metadata["title"] if "title" in metadata else "unnamed"
-if not dryrun:
-	uploadedimages = upload(uploadables, title)
-else:
+if dryrun or importonly:
 	uploadedimages = {}
 	for localpath in uploadables:
-		uploadedimages[localpath] = localpath.replace('\\', '')
-	print("dry run, images not uploaded!")
+		uploadedimages[localpath] = 'file://' + localpath.replace('\\', '')
+	if dryrun:
+		print("dry run, images not uploaded!")
+	else:
+		print("import only, images not uploaded!")
+else:
+	print("uploading images!")
+	uploadedimages = upload(uploadables, title)
 
 print(f"uploadedimages:")
 for local, remote in uploadedimages.items():

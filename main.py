@@ -75,7 +75,7 @@ class Generator:
 		# convert the body text into an html snippet, if it is not an html file
 		html = text # default
 		if ext == '.md':
-			html = markdown.markdown(text)
+			html = markdown.markdown(text, extensions=['fenced_code'])
 		elif ext == ".bb":
 			# split the text into groups at double-newline delimiters
 			texts = [line.strip() for line in re.split(r"\n\n+", text)]
