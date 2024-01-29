@@ -66,7 +66,7 @@ title = args[0]
 
 # slugify, ie. rather than replace known "bad" characters, have only good characters in the string, ie.
 # replace anything that isn't a narrow subrange of ascii with underscores.
-safetitle = title.lower().replace(" ", "_").replace("&", "_").replace("!", "_").replace(",", "_")
+safetitle = title.lower().replace(" ", "_").replace("&", "_").replace("!", "_").replace(",", "_").replace("'", "_").replace('"', "_")
 
 header = {
 	'author': author,
