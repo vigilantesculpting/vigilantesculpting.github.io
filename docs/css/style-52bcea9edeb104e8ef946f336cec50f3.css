@@ -505,3 +505,13 @@ a.highlightnav {
     color: #42617d;
 }
 
+pre, code {
+    background-color: gray;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+}
+
+code {
+    padding: 3px;
+}

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <title>Vigilante Sculpting - Focus stacking for fun and profit</title>
+    <meta name='viewport' content='width=device-width' />
+    <link href='/favicon.ico' rel='icon' type='image/x-icon' />
+    <link rel='stylesheet' type='text/css' href='/css/structure-cd8ff4be4061294ff342ed34e0b4dfa2.css' />
+    <link rel='stylesheet' type='text/css' href='/css/style-52bcea9edeb104e8ef946f336cec50f3.css' />
+    <link rel='stylesheet' type='text/css' href='/css/widescreen-3d626857362d185ef16fb6d74ac22035.css' media='screen and (min-width: 601px)' />
+    <link rel='stylesheet' type='text/css' href='/css/smallscreen-76e72dbacfb825ee2e71c83bdc1e5e85.css' media='screen and (max-width: 600px)' />
+    <link rel='alternate' type='application/rss+xml' href='/blog/rss.xml' title='Blog RSS Feed' />
+    <link rel='alternate' type='application/rss+xml' href='/projects/rss.xml' title='Projects RSS Feed' />
+    <link rel='alternate' type='application/rss+xml' href='/articles/rss.xml' title='Articles RSS Feed' />
+    <link rel='alternate' type='application/rss+xml' href='/sketches/rss.xml' title='Sketches RSS Feed' />
+    <script type='text/javascript' src='/js/purify-2b2d544d36a8a8bf969d19c6a5dcc8c5.js'></script>
+    <link rel='stylesheet' type='text/css' href='/css/comments-8e549a84949f341221e67e505bbc4ec4.css' />
+  </head>
+  <body>
+    <nav>
+      <section class='titlesection'>
+        <a href='/'>
+          <div class='titleimage'>
+            <img id='titleimage' src='/images/header.svg' width='900px' />
+          </div>
+        </a>
+        <div class='sitenavigation'>
+          <ul class='links'>
+            <li>
+              <a href='/'>Home</a>
+            </li>
+            <li>
+              <a href='/blog'>Blog</a>
+            </li>
+            <li>
+              <a href='/projects'>Projects</a>
+            </li>
+            <li>
+              <a href='/sketches'>Sketches</a>
+            </li>
+            <li>
+              <a href='/articles'>Articles</a>
+            </li>
+            <li>
+              <a href='/contact.html'>Contact</a>
+            </li>
+            <li>
+              <a href='/about.html'>About</a>
+            </li>
+            <li>
+              <a class='highlightnav' href='/shop'>Shop</a>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </nav>
+    <main>
+      <section class='postnav'>
+        <div class='postnav-left'>&nbsp;</div>
+        <div class='postnav-right'>
+          <a href='/articles/2023-09-15-vacuformer.html' rel='prev'>
+            <div class='prevpost'>&#x232a;</div>
+          </a>
+          <a href='/articles/2018-11-16-10-easy-steps-to-dirt-cheap-mold-making.html'>
+            <div class='prevpost'>&#x300B;</div>
+          </a>
+        </div>
+      </section>
+      <article>
+        <h1>Focus stacking for fun and profit</h1>
+        <p class='meta'>Published on 29/01/2024 @12:52:55 by <b>vigilante sculpting</b></p>
+        <section class='mainsection'><div><p>Have you ever taken a photo of one of your larger miniatures, and struggled to keep the whole thing in focus?</p>
+<p><img alt="" src="https://i.imgur.com/0oxo5RWl.jpeg" class="radiant-lightbox-slide" data-src="https://i.imgur.com/0oxo5RW.jpeg"></p>
+<blockquote>
+<p>I recently had this problem, where the front of my 23cm war rig was in focus, but the back not. And if I got the back in focus, the front was not <em>aaaaaarrrrghhh!</em></p>
+</blockquote>
+<p>This is caused by the short focal depth of close-up miniature photography, and it makes your miniatures look <em>even more</em> miniature. Great for when you want that look. And in fact some photographers will use special tilt shift lenses or post-processing <em>in order</em> to give regular objects that miniature-like look. </p>
+<p><img alt="" src="https://i.imgur.com/R69RApSl.jpeg" class="radiant-lightbox-slide" data-src="https://i.imgur.com/R69RApS.jpeg">
+<em>The Merced river valley. Taken from the Mist Trail towards Yosemity Valley, CA in 2023. Post-processed in GIMP for that Miniature Look</em></p>
+<blockquote>
+<p>Ironically, tilt-shift lenses also allow you to tilt the focal plane, in some cases giving you deeper depth of field so you don't need focus stacking in the first place. Light is weird.</p>
+</blockquote>
+<p>But if you want to make that tank look as real as possible, or even just to show off that entire in-focus flyer in one shot...</p>
+<h1>Focus stacking to the rescue</h1>
+<p>This is where focus stacking comes in. If you have the patience, this can give your photos a larger depth of field, making those minis look just a tiny <em>(cough)</em> bit more realistic.</p>
+<p>There are a couple of articles about focus stacking floating around. In this article, I want to show you my way of doing it. I am cheap, so I have some limitations about how I do this:</p>
+<ul>
+<li>I don't have a high-end DSLR. My phone camera has to do.</li>
+<li>The only phone I have is an android phone.</li>
+<li>Paying for Photoshop is out of the question.</li>
+</ul>
+<p>If these limitations apply to you, then this article might be for you.</p>
+<blockquote>
+<p><em>Heads-up</em>: this will mean running commands from the command-line on your PC or Mac. No one said this was easy, but it is as easy as I can make it!</p>
+</blockquote>
+<h1>Lots of photos, really?</h1>
+<p>Typical focus stacking requires lots of photos. That is because focus stacking subjects are typically insanely small insect compound eyes, water droplets, bed bugs or whatever, and the closer zoomed-in we go the less focal depth we get. These subjects need focus-stacking, where as our miniatures just kinda like it.</p>
+<p>So for miniatures, we typically only need a couple of photos. It will depend on your miniature, camera and setup, but 3 or 4 photos will probably cover all the focal depth you will need.</p>
+<p>In fact, taking too many pictures can degrade the quality of the resulting image, making the end result look as if it put on <em>way</em> too much unsharpen mask in the morning.</p>
+<h1>Garbage in, garbage out</h1>
+<p>To get the best results, it is better that you take photos that are as similar as possible, varying only focal length. That means keeping my phone as still as possible between individual photos. The less work we need to do later in the pipeline, the better...</p>
+<p>This can be helped by using a tripod, but it will still be hard to keep the phone motionless while trying to change the focal length between shots.</p>
+<p>The proper phone app can help out tremendously here.</p>
+<h1>There's an app for that</h1>
+<p>Enter <a href="https://opencamera.org.uk/">Open Camera</a>. This is an amazing app that can teach your Android phone camera some new tricks.</p>
+<p>It has a focus stacking mode, which allows you to set the near focal length and the far focal length, and the number of pictures to take. It will then take that many photos as quickly as possible, incrementing between the near and far focal lengths.</p>
+<p>All you have to do is hold the camera as steady as possible, or use a tripod if you have one.</p>
+<blockquote>
+<p>I also have focus-peaking enabled under the Open Camera Preview settings, as well as zoom-to-focus set at 2x. This makes setting up the near &amp; far focal lengths super easy.</p>
+</blockquote>
+<h1>Free Hug(in)s!</h1>
+<p>Ok, so you captured a couple of shots, now how do you go about getting the final image?</p>
+<p>Not so fast! First you have to align your set of images as close as possible. Sure, you took care when you shot the photos, but the very act of varying focal length will slightly alter the image. And we need pixel-perfect alignment to be able to figure out which pixels are in focus.</p>
+<p>To do this, you will need <a href="https://hugin.sourceforge.io">Hugin</a>. It is a very capable desktop application that is typically used for HDR photography.</p>
+<blockquote>
+<p>Quite similar to focus stacking, HDR post processing also needs to align images. And that is what Hugin can do for us.</p>
+</blockquote>
+<p>Best of all, Hugin is free software!</p>
+<p>I have a Mac, so I installed Hugin via <a href="https://brew.sh/">Homebrew</a>. But if you just want to download and install a package, then head over to <a href="https://hugin.sourceforge.io/download/">the Hugin Download page</a> and grab the relevant pre-compiled binary for your system. Easy peasy.</p>
+<h1>Line 'em up!</h1>
+<p>After this, we need to run the <code>align_image_stack</code> from the Hugin installation director on our set of images. This will slightly disort the images that you took previosusly, so that the pixels line up perfectly.</p>
+<p>For my mac, I open a terminal and change to the directory where I downloaded the images from my phone. Then I run</p>
+<pre><code>$ /Applications/Hugin/tools_mac/align_image_stack \
+    -m -e \
+    --use-given-order \
+    -a _huginoutput 
+    *.jpg
+</code></pre>
+<p>where</p>
+<ul>
+<li>The <code>-m</code> option will "Optimize field of view for all images, except for first. Useful for aligning focus stacks with slightly different magnification". Since I know my camera lens changes distortion at different focal lengths, I use this option.</li>
+<li><code>-e</code> assumes the images are "full frame fish eye". I use this because it gives me results. You should too.</li>
+<li><code>--use-given-order</code> lets the software know that I want to align the images from the first to the last.</li>
+<li><code>-a</code> specifies the prefix to use for the processed images.</li>
+</ul>
+<p>This will churn for a bit. Once the program finishes (with no error messages!) we are ready for the next step.</p>
+<p><em>However</em>, if the program complains about not finding any control points, eg.</p>
+<pre><code>After control points pruning reference images has no control
+points Optimizing field of view in this case results in undefined
+behaviour. Increase error distance (-t parameter), tweak cp
+detection parameters or don't optimize HFOV.
+</code></pre>
+<p>there are a number of extra command options we can pass to <code>align_image_stack</code>, to get proper control points &amp; alignment. The most useful ones will be </p>
+<ul>
+<li><code>-i</code> which will try to align the centers of the images. Try this especially if you don't have a tripod.</li>
+<li><code>--corr=0.8</code> which lowers the correlation coefficient threshold to 0.8 (from 0.9). Try this if there is some noise in your images. This lowers the bar for what the program will consider as "matching" points between images.</li>
+<li><code>-c 500</code> This increases the number of control points to try from 8 to 500. The more we use, the better the outcome <em>could be</em>. Not always, but worth a shot.</li>
+<li><code>-g 3</code> The images are usually broken into 5 rows and 5 columns, and control points are found between images within these blocks. If the control points just don't wanna be found, try inreasing the block size, ie. 3 rows and 3 columns in this case.</li>
+</ul>
+<p>If <code>align_image_stack</code> fails with</p>
+<pre><code>No Feature Points
+Bad params
+An error occurred during optimization.
+Try adding "-p debug.pto" and checking output.
+Exiting...
+</code></pre>
+<p>then it probably means that the images are way too dissimilar and they can't be aligned. Go back a step and re-take better pictures...</p>
+<h1>Stitch 'em up!</h1>
+<p>We should now have a bunch of lined-up <code>_huginoutput*.tif</code> images. We now need to find the parts from each image that are in focus, and stitch them together like Frankenstein.</p>
+<p>To do this, we will use another program from Hugin, called <code>enfuse</code>. It is usually used to identify the correctly <em>exposed</em> parts of each image for HDR photography, but the process is so similar that we can abuse it to find the correclty <em>focused</em> parts instead.</p>
+<p>To do this, run this command from the same directory:</p>
+<pre><code>$ /Applications/Hugin/tools_mac/enfuse \
+    --exposure-weight=0 \
+    --saturation-weight=0 \
+    --contrast-weight=1.0 \
+    --hard-mask \
+    --gray-projector=luminance \
+    --contrast-window-size=15 \
+    --output=output.tif  \
+    _huginoutput*.tif
+</code></pre>
+<p>This is quite a mouthful, so I'll break it down:</p>
+<ul>
+<li>Setting <code>contrast-weight</code> to 1.0 and <code>exposure-weight</code> &amp; <code>saturation-weight</code> to 0 is what gets us focus stacking. We are telling <code>enfuse</code> to identify the parts of each image that has high variations in contrast (ie. detail). We don't care about saturation or exposure, because we are not dealing with HDR.</li>
+<li>We want a <code>hard-mask</code>. This means <code>enfuse</code> should use the parts of each image that are the most in focus, and <em>only</em> use that part of that image. We don't want a weighted average over the entire image group, because that will soften the focus - which is not what we want.</li>
+<li>I choose to use <code>luminance</code> to determine the contrast, but there are other options such as <code>anti-value</code>, <code>average</code> and <code>l-star</code>. This is a field to play with, and some alternative choices may give you better results in some circumstances</li>
+<li>I set <code>contrast-window-size</code> to 15, up from the default of 5. This determines the size of the region around each pixel that is used to determine its contrast. For the size images I am getting from my camera (4608 × 2592) this slightly bigger size gives me good results, but YMMV.</li>
+</ul>
+<p><code>enfuse</code> will output the resulting focus-stacked image as <code>output.tif</code>. This should, if everything went correctly, produce a pretty cool all-in-focus photo of your miniature subject. Congrats!</p>
+<h1>The results</h1>
+<p>Here are some input images I took with my phone, after they were aligned with <code>align_image_stack</code>:</p>
+<p><img alt="" src="https://i.imgur.com/4JzPcR2l.jpeg" class="radiant-lightbox-slide" data-src="https://i.imgur.com/4JzPcR2.jpeg">
+<img alt="" src="https://i.imgur.com/lDvoegZl.jpeg" class="radiant-lightbox-slide" data-src="https://i.imgur.com/lDvoegZ.jpeg">
+<img alt="" src="https://i.imgur.com/W5x3zM5l.jpeg" class="radiant-lightbox-slide" data-src="https://i.imgur.com/W5x3zM5.jpeg"></p>
+<p>As you can see, the first image has the cab in focus, the second has the middle section in focus, and the third has the tail-end and the flags in focus.
+Here is the final focus-stacked result, directly from <code>enfuse</code>:</p>
+<p><img alt="" src="https://i.imgur.com/Opz2aQul.jpeg" class="radiant-lightbox-slide" data-src="https://i.imgur.com/Opz2aQu.jpeg"></p></div></section>
+        <section>
+          <p>This post has been tagged with</p>
+          <ul class='posttags'>
+            <li class='taglink'>
+              <a href='/tags/photography.html'>photography</a>
+            </li>
+            <li class='taglink'>
+              <a href='/tags/miniatures.html'>miniatures</a>
+            </li>
+            <li class='taglink'>
+              <a href='/tags/howto.html'>howto</a>
+            </li>
+          </ul>
+        </section>
+      </article>
+      <section class='postnav'>
+        <div class='postnav-left'>&nbsp;</div>
+        <div class='postnav-right'>
+          <a href='/articles/2023-09-15-vacuformer.html' rel='prev'>
+            <div class='prevpost'>&#x232a;</div>
+          </a>
+          <a href='/articles/2018-11-16-10-easy-steps-to-dirt-cheap-mold-making.html'>
+            <div class='prevpost'>&#x300B;</div>
+          </a>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <section>
+        <p>Content &copy; 2024 Vigilante Sculpting</p>
+      </section>
+      <ul class='links'>
+        <li>
+          <a href='https://mastodon.social/@gorb314'>Mastodon</a>
+        </li>
+        <li>
+          <a href='https://www.artstation.com/g0rb'>ArtStation</a>
+        </li>
+        <li>
+          <a href='https://www.deviantart.com/gorb'>DeviantArt</a>
+        </li>
+        <li>
+          <a href='https://www.reddit.com/user/gorb314'>Reddit</a>
+        </li>
+        <li>
+          <a href='https://instagram.com/gorb314'>Instagram</a>
+        </li>
+        <li>
+          <a href='https://www.puttyandpaint.com/g0rb'>Putty & Paint</a>
+        </li>
+        <li>
+          <a href='http://www.coolminiornot.com/artist/gorb'>CMON</a>
+        </li>
+      </ul>
+      <a href='/'>
+        <div class='titleimage'>
+          <img id='titleimage' src='/images/footer.svg' />
+        </div>
+      </a>
+    </footer>
+  </body>
+</html>
