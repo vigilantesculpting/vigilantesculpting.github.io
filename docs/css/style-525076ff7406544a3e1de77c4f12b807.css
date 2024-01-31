@@ -167,7 +167,7 @@ article h1 a:hover, article h1 a:active,
     color: #777777;
 }
 
-p.meta {
+.meta {
     margin-top: 0;
     font-size: 0.8em;
     color: #777777;
@@ -178,7 +178,7 @@ p.summary {
     margin-top: 0.25em;
     margin-bottom: 0.25em;
     line-height: 1.5em;
-    height: 6em; /* 4 lines of text = 4 * 1.5em = 6em*/
+    /*height: 6em; *//* 4 lines of text = 4 * 1.5em = 6em*/
     overflow: hidden;
 
 }
@@ -245,6 +245,9 @@ div.item {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
+    gap: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 /*
 .slides > div, .slides > img {
@@ -324,13 +327,24 @@ main > section:only-child {
     padding: 0.5em;
 }
 
+
+ul.posttags {
+    padding: 0;
+    font-size: 0.8em;
+}
 ul.posttags > li {
     display: inline-block;
     padding: 0.5em;
     margin-bottom: 0.5em;
-    color: #ffffff;
-    background-color: #777777;
+    color: #555;
+    background-color: #555;
     border-radius: 0.5em;
+}
+ul.posttags > li.postflair {
+    background-color: white;
+    border: 1px solid #555;
+    border-radius: 0.5em;
+    color: #555;
 }
 
 .rsslink {
@@ -518,5 +532,5 @@ code {
 }
 
 pre {
-    overflow: scroll;
+    overflow: auto;
 }
