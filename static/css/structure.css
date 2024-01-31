@@ -16,7 +16,7 @@ body {
     flex-direction: column;
     /* option 1: this makes a sticky footer at the bottom */
     justify-content: space-between;
-    width: 60em; /* the width of the body */
+    max-width: 100%; /* The body should never grow beyond the screen size, esp. for mobiles! */
     margin: 0; /* tight fit */
 }
 footer {

@@ -8,6 +8,7 @@ body {
     line-height: 1.5em;
     color: #555555;
     font-family: helvetica, arial, sans-serif;
+    width: 60em; /* our preferred max body width */
 }
 
 main {
@@ -514,4 +515,8 @@ pre, code {
 
 code {
     padding: 3px;
+}
+
+pre {
+    overflow: scroll;
 }
