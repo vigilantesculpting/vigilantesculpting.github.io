@@ -421,6 +421,13 @@ class Generator:
 		# The tag could be the post id, or we generate one on the fly for all posts and then use that id in a tagged post?
 		# Mmmmmm....
 
+		print("sort latest posts")
+		latest = {**self.content.blog, **self.content.sketches, **self.content.articles, **self.content.projects}
+		sortedlatest = sorted(latest.values(), key = lambda values: values['date'], reverse = True)
+		for latest in sortedlatest[:6]:
+			print(f"\tlatest: {latest.slug}")
+		self.content["latestposts"] = sortedlatest
+
 		if repopulate:
 
 			print("repopulate target directory")

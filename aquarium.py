@@ -116,6 +116,9 @@ class Tag:
 	def __call__(self, _t = None, *args, **kwargs):
 		if _t is not None:
 			self.children.append(Text(self.doc, _t))
+		else:
+			for arg in args:
+				self.children.append(Text(self.doc, arg))
 		self._params.update(kwargs)
 		return self
 

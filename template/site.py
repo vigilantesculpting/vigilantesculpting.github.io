@@ -58,11 +58,10 @@ class Site:
 		originalpost = f"https://{post['comments-host']}/api/v1/statuses/{post['comments-id']}/context"
 
 		with doc.div(klass = "article-content"):
-			doc.h2(_t = "Comments")
+			doc.h2("Comments")
 			with doc.p():
 				doc("You can use your Mastodon account to view and reply to this ")
-				with doc.a(href = replylink):
-					doc("post")
+				doc.a("post", href = replylink)
 				doc(".")
 	# TODO: make the following a popup info box or something
 	#		with doc.p():
@@ -96,7 +95,7 @@ class Site:
 		doc = Html(source_minify = self.config.html_minify)
 		with doc.html(lang = "en"):
 			with doc.head():
-				doc.title(_t = f"{self.config.title} - {title}")
+				doc.title(f"{self.config.title} - {title}")
 				if "googletag" in self.config:
 					# google analytics
 					doc("<!-- Global site tag (gtag.js) - Google Analytics -->")
@@ -141,16 +140,16 @@ addEventListener('load', (event) => {
 							#with doc.span("home").a(os.path.join("/", self.config.tgtsubdir)):
 							#	doc("Home")
 							with doc.ul(klass = "links"):
-								doc.li().a(href = os.path.join("/", self.config.tgtsubdir, ""), 								_t = "Home")
-								doc.li().a(href = os.path.join("/", self.config.tgtsubdir, "blog"), 							_t = "Blog")
-								#doc.li().a(href = os.path.join("/", self.config.tgtsubdir, "gallery"), 						_t = "Gallery")
-								doc.li().a(href = os.path.join("/", self.config.tgtsubdir, "projects"), 						_t = "Projects")
-								doc.li().a(href = os.path.join("/", self.config.tgtsubdir, "sketches"), 						_t = "Sketches")
-								#doc.li().a(href = os.path.join("/", self.config.tgtsubdir, "wip"), 							_t = "WIP")
-								doc.li().a(href = os.path.join("/", self.config.tgtsubdir, "articles"), 						_t = "Articles")
-								doc.li().a(href = os.path.join("/", self.config.tgtsubdir, "contact.html"), 					_t = "Contact")
-								doc.li().a(href = os.path.join("/", self.config.tgtsubdir, "about.html"), 					_t = "About")
-								doc.li().a(klass = 'highlightnav', href = os.path.join("/", self.config.tgtsubdir, "shop"),	_t = "Shop")
+								doc.li().a("Home", 			href = os.path.join("/", self.config.tgtsubdir, "") 								)
+								doc.li().a("Blog", 			href = os.path.join("/", self.config.tgtsubdir, "blog") 							)
+								#doc.li().a("Gallery", 		href = os.path.join("/", self.config.tgtsubdir,"gallery") 							)
+								doc.li().a("Projects", 		href = os.path.join("/", self.config.tgtsubdir, "projects")							)
+								doc.li().a("Sketches", 		href = os.path.join("/", self.config.tgtsubdir, "sketches")							)
+								#doc.li().a("WIP", 			href = os.path.join("/", self.config.tgtsubdir, "wip") 								)
+								doc.li().a("Articles", 		href = os.path.join("/", self.config.tgtsubdir, "articles")							)
+								doc.li().a("Contact", 		href = os.path.join("/", self.config.tgtsubdir, "contact.html") 					)
+								doc.li().a("About", 		href = os.path.join("/", self.config.tgtsubdir, "about.html")						)
+								doc.li().a("Shop", 			klass = 'highlightnav', href = os.path.join("/", self.config.tgtsubdir, "shop")		)
 				with doc.main():
 					# embed the body of the document here
 					body(doc)
@@ -159,19 +158,19 @@ addEventListener('load', (event) => {
 				#doc.div(klass = "vertspacer")
 
 				with doc.footer():
-					doc.section().p(_t = f"Content &copy; {self.config.current_year} Vigilante Sculpting")
+					doc.section().p(f"Content &copy; {self.config.current_year} Vigilante Sculpting")
 					with doc.ul(klass = "links"):
-						doc.li().a(href="https://mastodon.social/@gorb314", 			_t = "Mastodon")
-						doc.li().a(href="https://www.artstation.com/g0rb", 				_t = "ArtStation")
-						doc.li().a(href="https://www.deviantart.com/gorb", 				_t = "DeviantArt")
-						doc.li().a(href="https://www.reddit.com/user/gorb314", 			_t = "Reddit")
-						doc.li().a(href="https://instagram.com/gorb314", 				_t = "Instagram")
-						doc.li().a(href="https://www.puttyandpaint.com/g0rb",	 		_t = "Putty & Paint")
-						doc.li().a(href="http://www.coolminiornot.com/artist/gorb", 	_t = "CMON")
-						doc.li().a(href="http://www.github.com/vigilantesculpting",		_t = "GitHub")
-						doc.li().a(href="https://www.thingiverse.com/gorb314/designs", 	_t = "Thingiverse")
-						doc.li().a(href="https://www.etsy.com/shop/VigilanteSculpting", _t = "Etsy")
-						doc.li().a(href="https://www.teepublic.com/user/gorb", 			_t = "Teepublic")
+						doc.li().a("Mastodon",				href = "https://mastodon.social/@gorb314" 											)
+						doc.li().a("ArtStation",				href = "https://www.artstation.com/g0rb" 											)
+						doc.li().a("DeviantArt",				href = "https://www.deviantart.com/gorb"											)
+						doc.li().a("Reddit",					href = "https://www.reddit.com/user/gorb314" 										)
+						doc.li().a("Instagram",				href = "https://instagram.com/gorb314" 												)
+						doc.li().a("Putty & Paint",			href = "https://www.puttyandpaint.com/g0rb"	 										)
+						doc.li().a("CMON",					href = "http://www.coolminiornot.com/artist/gorb"									)
+						doc.li().a("GitHub",					href = "http://www.github.com/vigilantesculpting"									)
+						doc.li().a("Thingiverse",			href = "https://www.thingiverse.com/gorb314/designs"								)
+						doc.li().a("Etsy",					href = "https://www.etsy.com/shop/VigilanteSculpting"								)
+						doc.li().a("Teepublic",				href = "https://www.teepublic.com/user/gorb"										)
 					with doc.a(href = os.path.join("/", self.config.tgtsubdir)):
 						doc.div(klass = "titleimage").img(id = "titleimage", src = os.path.join("/", self.config.tgtsubdir, "images", "footer.svg")) #"logo.png"))
 				#radiant(doc)
@@ -197,8 +196,7 @@ addEventListener('load', (event) => {
 			with doc.ul():
 				for source, name in foundsources:
 					with doc.li():
-						with doc.a(href = post[source], rel="syndication", klass="u-syndication"):
-							doc(f"{name}")
+						doc.a(name, href = post[source], rel="syndication", klass="u-syndication")
 		return doc
 
 	def syndication(self, doc, post):
@@ -221,17 +219,46 @@ addEventListener('load', (event) => {
 			with doc.ul():
 				for place, name in foundplaces:
 					with doc.li():
-						with doc.a(href = post[place], rel="syndication", klass="u-syndication"):
-							doc(f"{name}")
+						doc.a(name, href = post[place], rel="syndication", klass="u-syndication")
 		return doc
 
+	TIMESTAMPFORMAT = '%Y/%m/%d' #@%H:%M:%S'
+
+	def postmeta(self, doc, post):
+		def getposttype(post):
+			# check the slug
+			return os.path.split(post.slug)[0]
+		posttype = getposttype(post)
+		posttypenames = {
+			"blog": "Blog Post",
+			"projects": "Project",
+			"articles": "Article",
+			"sketches": "Sketch",
+		}
+		doc("Published on ")
+		with doc.span(klass = 'posttimestamp'):
+			doc(f"{datetime.datetime.strftime(post.date, self.TIMESTAMPFORMAT)}") #" @%H:%M:%S')}")
+		doc(" by ")
+		with doc.span(klass = 'postauthor'):
+			doc(f"{post.author}")
+		with doc.ul(klass = "posttags"):
+			with doc.li(klass = 'postflair'):
+				doc.a(posttypenames[posttype], href = os.path.join("/", posttype))
+			#with doc.li(klass = "taglink").a(href = os.path.join("/", posttype)):
+			#	doc(posttypenames[posttype])
+			for tag in post.tags:
+				with doc.li(klass = "taglink"):
+					doc.a(tag, href = os.path.join("/", "tags", f"{self.slugify(tag)}.html"))
+
 	def postsummary(self, doc, postpath, post):
+		# we need a canonical way to create the postpath from the post itself, instead of having to be passed a postpath parameter
+		# Is this possible?
 		postlink = os.path.join("/", self.config.tgtsubdir, f"{post.slug}.html")
 		# section? div?
-		with doc.h2(klass = "slide-title").a(href = postlink):
-			doc(post.title)
-		with doc.p(klass = "slide-meta meta"):
-			doc(f"Published on {datetime.datetime.strftime(post.date, '%Y/%m/%d @%H:%M:%S')} by <b>{post.author}</b>")
+		with doc.h2(klass = "slide-title"):
+			doc.a(post.title, href = postlink)
+		with doc.div(klass = "slide-meta meta"):
+			self.postmeta(doc, post)
 		if "thumbnail" in post:
 			with doc.a(klass = "slide-thumbnail more", href = postlink):
 				with doc.div(klass = "thumbnail-container"):
@@ -241,8 +268,6 @@ addEventListener('load', (event) => {
 					doc(post.thumbnail)
 		with doc.p(klass = "slide-summary summary"):
 			doc(f"{self.truncate(post.content)}&nbsp;")
-		with doc.p(klass = "slide-readmore more").a(klass = "more", href = postlink):
-			doc("Read more")
 		return doc
 
 	def makeslides(self, doc, postpath, posts):
@@ -255,38 +280,40 @@ addEventListener('load', (event) => {
 	#  Create the main index.html
 	# ---------------------------------------------------------------------
 
-	def mainindex(self, ):
+	def mainindex(self):
 		def body(doc):
 			with doc.section(klass = "mainsection"):
 				with doc.p():
 					doc("Welcome to Vigilante Sculpting. This is where I post my sculpting, scratchbuilding, drawing and paintig work.")
 
-			def mainslidesection(path, postpath, title, rsstitle, posts, readmoretext):
+			# TODO: for each slide we need a marker (BLOGPOST, PROJECT, ARTICLE, SKETCH) to distinguish these things
+			def mainslidesection(path, postpath, title, rsstitle, posts):
 				with doc.section(klass = "mainsection"):
 					with doc.div(klass = "postnav"):
-						with doc.a(href = path).h1():
+						with doc.h1(): #a(href = path).h1():
 							doc(title)
 						with doc.a(href = os.path.join("/", self.config.tgtsubdir, postpath, "rss.xml")):
 							doc.div(klass = "postnav-right").img(src = os.path.join("/", self.config.tgtsubdir, "images/rss.png"), width = "32px", height = "32px", alt = rsstitle)
 					self.makeslides(doc, postpath, posts)
-					with doc.p().a(href = path):
-						doc(f"{readmoretext} &#x300B;")
-			mainslidesection('blog',	 'blog',	 'Latest News',						'News RSS Feed',	 self.content.sortedblogposts[:3], 'Read latest news on the blog')
-			mainslidesection('projects', 'projects', 'Latest Projects',					'Projects RSS Feed', self.content.sortedprojects[:3],  'See more finished projects')
-			mainslidesection('sketches', 'sketches', 'Latest Sketches &amp; Drawings', 	'Sketches RSS Feed', self.content.sortedsketches[:3],  'See more sketches &amp; drawings')
-			mainslidesection('articles', 'articles', 'Latest Articles',					'Articles RSS Feed', self.content.sortedarticles[:3],  'Read more articles')
+			mainslidesection('latest', 'latest', 'Latest News', 'News RSS Feed',self.content.latestposts[:6])
+
+			with doc.p():
+				doc("... For more content, continue on to ")
+				doc.a("Projects", href="projects")
+				doc(", ")
+				doc.a("Blog posts", href="blog")
+				doc(", ")
+				doc.a("Sketches", href="sketches")
+				doc(" and ")
+				doc.a("Articles", href="articles")
 
 			def maintextsection(path, title, subtitle):
 				with doc.section(klass = "mainsection"):
 					with doc.a(href = path).h2():
 						doc(title)
-					with doc.p().a(href = path):
-						doc(subtitle)
+					doc.p().a(subtitle, href = path)
 
-			maintextsection('contact.html', 'Contact me', 'Get in touch...')
-			maintextsection('about.html', 'About me', 'Read more about this site and myself here...')
-
-		return self.page(title = 'Home', body = body) # base_path = '', meta = ''
+		return self.page(title = 'Home', body = body)
 
 
 	# ---------------------------------------------------------------------
@@ -346,6 +373,12 @@ addEventListener('load', (event) => {
 		#pdb.set_trace()
 		return value4
 
+	def formattags(self, doc, tags):
+		with doc.ul(klass = "posttags"):
+			for tag in tags:
+				with doc.li(klass = "taglink").a(href = os.path.join("/", "tags", f"{self.slugify(tag)}.html")):
+					doc(tag)
+
 	def posttags(self, doc, tags):
 		if len(tags) == 0:
 			return
@@ -364,11 +397,9 @@ addEventListener('load', (event) => {
 		./tags.py <postfile> -m <tags...> newtag		replaces given tag(s) with a newtag in a given postfile
 		"""
 		with doc.section():
-			doc.p(_t = "This post has been tagged with")
+			doc.p("This post has been tagged with")
 			with doc.ul(klass = "posttags"):
-				for tag in tags:
-					with doc.li(klass = "taglink").a(href = os.path.join("/", "tags", f"{self.slugify(tag)}.html")):
-						doc(tag)
+				self.formattags(doc, tags)
 
 	def blogpost(self, postid, post, posts):
 		"""
@@ -388,13 +419,14 @@ addEventListener('load', (event) => {
 		def body(doc):
 			self.postnavigation(doc, postid, posts, 'post')
 			with doc.article():
-				doc.h1(_t=post.title)
+				doc.h1(post.title)
 				with doc.p(klass = "meta"):
-					doc(f"Published on {datetime.datetime.strftime(post.date, '%d/%m/%Y @%H:%M:%S')} by <b>{post.author}</b>")
+					self.postmeta(doc, post)
+					#doc(f"Published on {datetime.datetime.strftime(post.date, self.TIMESTAMPFORMAT)} by <b>{post.author}</b>")
 				with doc.section(klass = "mainsection"):
 					doc(post.content)
 				self.originalpost(doc, post)
-				self.posttags(doc, post.tags)
+				#self.posttags(doc, post.tags)
 				#doc.div(klass="vertspacer")
 			self.postnavigation(doc, postid, posts, 'post')
 			if "comments-id" in post:
@@ -437,21 +469,21 @@ addEventListener('load', (event) => {
 		def body(doc):
 			with doc.div(klass = "postnav"):
 				with doc.div():
-					doc.h1(_t = title)
+					doc.h1(title)
 					if pagecount > 1:
-						doc.h3(_t = f"Page {pageid + 1}/{pagecount}")
+						doc.h3(f"Page {pageid + 1}/{pagecount}")
 				with doc.a(href = os.path.join("/", self.config.tgtsubdir, targetdir, "rss.xml")):
 					doc.div(klass = "postnav-right").img(src = os.path.join("/", self.config.tgtsubdir, "images/rss.png"), width = "32px", height = "32px", alt = f"{title} RSS Feed")
 			self.paginatenavigation(doc, pageid, pagecount, "index")
 			with doc.article():
-				doc.p(_t = description)
+				doc.p(description)
 				self.makeslides(doc, postsdir, postgroup)
 				#doc.div(klass = "vertspacer")
 			self.paginatenavigation(doc, pageid, pagecount, "index")
 		return self.page(title = title, body = body)
 
 
-	def projectpost(self, projectid, pagecount, project, postgroupid, postgroup):
+	def projectpost(self, projectid, pagecount, project, stepxstepfilename):
 		def meta(doc):
 			# doc.link(rel="alternate", type="application/rss+xml", title=f"Comments on '{project.title} - {self.config.title}'", href=commentpath)
 			pass
@@ -459,26 +491,48 @@ addEventListener('load', (event) => {
 			with doc.article():
 				self.postnavigation(doc, projectid, self.content.sortedprojects, "project")
 
-				if postgroupid == 0:
-					doc.h1(_t = project.title)
-					doc.p(klass = "meta", _t = f"Published on {datetime.datetime.strftime(project.date, '%d/%m/%Y @%H:%M:%S')} by <b>{project.author}</b>")
-					with doc.section(klass = "mainsection"):
-						doc(project.content)
-					self.posttags(doc, project.tags)
+				doc.h1(f"{project.title}")
+				with doc.div(klass = 'meta'):
+					self.postmeta(doc, project)
+					#doc.p(klass = "meta", f"Published on {datetime.datetime.strftime(project.date, self.TIMESTAMPFORMAT)} by <b>{project.author}</b>")
+				if stepxstepfilename is not None:
+					with doc.a(href = os.path.join("/", self.config.tgtsubdir, stepxstepfilename)):
+						doc.p("Step by step (blog posts related to this project)", klass = "meta")
 
-				if len(postgroup) > 0:
-					with doc.section(klass = "stepxstep"):
-						if len(postgroup) > 1:
-							doc.h2(_t = f"Step by step (Steps {postgroupid*self.config.paginatecount + 1} thru {postgroupid*self.config.paginatecount + len(postgroup)} of {len(project.posts)})")
-						doc.p(_t = "These are the posts I made during the making of this project, in chronological order")
-						self.paginatenavigation(doc, postgroupid, pagecount, project.slug)
-						self.makeslides(doc, "../blog", postgroup)
-						self.paginatenavigation(doc, postgroupid, pagecount, project.slug)
+				with doc.section(klass = "mainsection"):
+					doc(project.content)
+
+					#self.posttags(doc, project.tags)
 
 				self.postnavigation(doc, projectid, self.content.sortedprojects, "project")
 			if "comments-id" in project:
 				self.comments(doc, project)
 		return self.page(title = project.title, meta = meta, body = body)
+
+	def projectpoststepxstep(self, projectid, pagecount, project, postgroupid, postgroup):
+		def meta(doc):
+			# doc.link(rel="alternate", type="application/rss+xml", title=f"Comments on '{project.title} - {self.config.title}'", href=commentpath)
+			pass
+		def body(doc):
+			with doc.article():
+				self.paginatenavigation(doc, postgroupid, pagecount, os.path.split(project.slug)[1])
+
+				doc.h1(f"{project.title} : Step by Step ")
+				doc.h2(f"{postgroupid*self.config.paginatecount + 1} thru {postgroupid*self.config.paginatecount + len(postgroup)} of {len(project.posts)})")
+				with doc.div(klass = 'meta'):
+					self.postmeta(doc, project)
+					#doc.p(klass = "meta", f"Published on {datetime.datetime.strftime(project.date, self.TIMESTAMPFORMAT)} by <b>{project.author}</b>")
+				with doc.p():
+					doc("These are the posts I made during the making of ")
+					with doc.a(href = os.path.join("/", f"{project.slug}.html")):
+						doc(f"{project.title}")
+					doc(" in chronological order")
+
+				with doc.section(klass = "stepxstep"):
+					self.makeslides(doc, "../blog", postgroup)
+				self.paginatenavigation(doc, postgroupid, pagecount, os.path.split(project.slug)[1])
+		return self.page(title = project.title, meta = meta, body = body)
+
 
 	# used for blog/index[].html, articles/index[].html, projects/index[].html and sketches/index[].html
 	def makeindex(self, title, targetdir, posts, postsdir, description):
@@ -497,12 +551,12 @@ addEventListener('load', (event) => {
 			with doc.article():
 				self.paginatenavigation(doc, pageid, pagecount, f"{tag.name}")
 
-				doc.h1(_t = f"Posts tagged with '{tag.name}'")
+				doc.h1(f"Posts tagged with '{tag.name}'")
 
 				if pagecount > 1:
-					doc.h3(_t = f"Page {pageid + 1} of {pagecount}, with {len(tag.posts)} posts")
+					doc.h3(f"Page {pageid + 1} of {pagecount}, with {len(tag.posts)} posts")
 				else:
-					doc.h3(_t = f"{len(tag.posts)} posts")
+					doc.h3(f"{len(tag.posts)} posts")
 
 				with doc.table(klass = "tagtable"):
 					for post in postgroup:
@@ -513,8 +567,7 @@ addEventListener('load', (event) => {
 									with doc.a(href = postlink):
 										doc.img(src = post.icon, loading = "lazy", klass="iconthumbnail")
 							with doc.td(klass = "tagtitle"):
-								with doc.a(href = postlink):
-									doc(post.title)
+								doc.a(post.title, href = postlink)
 							with doc.td(klass = "tagdate"):
 								doc(post.date)
 						with doc.tr():
@@ -577,8 +630,7 @@ addEventListener('load', (event) => {
 			f.write(f"""
 @import url('{self.content.filekeys.css['structure.css']}');
 @import url('{self.content.filekeys.css['style.css']}');
-@import url('{self.content.filekeys.css['smallscreen.css']}') only screen and (max-width: 600px);
-@import url('{self.content.filekeys.css['widescreen.css']}') only screen and (min-width: 601px);
+@import url('{self.content.filekeys.css['smallscreen.css']}');
 @import url('{self.content.filekeys.css["comments.css"]}');
 @import url('{self.content.filekeys.css['simple-lightbox.css']}');
 """)
@@ -641,8 +693,11 @@ addEventListener('load', (event) => {
 			pagecount = len(postgroups)
 			path = os.path.join("projects", f"{project.slug}.html")
 			commentpath = os.path.join(self.config.site_url, self.config.tgtsubdir, "projects", f"{project.slug}.xml")
+			projectfilename = os.path.join(f"{project.slug}.html")
+			firstpostfilename = os.path.join(f"{project.slug}0.html") if len(postgroups) > 0 else None
+			self.output(self.projectpost(projectid, pagecount, project, firstpostfilename), projectfilename)
 			for postgroupid, postgroup in enumerate(postgroups):
-				pagenum = postgroupid if postgroupid > 0 else ""
-				filename = os.path.join(f"{project.slug}{pagenum}.html")
-				self.output(self.projectpost(projectid, pagecount, project, postgroupid, postgroup), filename)
-			
+				filename = os.path.join(f"{project.slug}{postgroupid}.html")
+				self.output(self.projectpoststepxstep(projectid, pagecount, project, postgroupid, postgroup), filename)
+
+

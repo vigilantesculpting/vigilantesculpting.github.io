@@ -107,8 +107,12 @@ def create(config, content):
 	#  Definitions for the RSS feeds
 	# ---------------------------------------------------------------------
 
+	latesttitle = f"{config.title} - Latest"
+	latestdescr = 'Latest news about projects, sculpting, painting, drawing and model making'
+	latestfile  = os.path.join('latest', 'rss.xml')
+
 	blogtitle = f"{config.title} - Blog"
-	blogdescr = 'Latest posts about sculpting, painting, drawing and model making'
+	blogdescr = 'Latest blog posts about sculpting, painting, drawing and model making'
 	blogfile  = os.path.join('blog', 'rss.xml')
 
 	projectstitle = f"{config.title} - Projects"
@@ -130,6 +134,8 @@ def create(config, content):
 	# ---------------------------------------------------------------------
 	#  Render the RSS feeds
 	# ---------------------------------------------------------------------
+
+	output(config, feed(config, content, latesttitle,   content.latestposts, 	'latest', 	 'latest',     latestdescr), latestfile)
 
 	output(config, feed(config, content, blogtitle,     content.sortedblogposts, 'blog', 	 'blog',     blogdescr), blogfile)
 	output(config, feed(config, content, projectstitle, content.sortedprojects,  'projects', 'projects', projectsdescr), projectsfile)

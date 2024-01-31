@@ -23,14 +23,19 @@ p.more {
 .slide {
 	width: 100%;
 	display: grid; 
-	grid-template-columns: 25% 75%; 
-	grid-template-rows: auto auto auto auto; 
-	gap: 0px 0px; 
+	grid-template-columns: 30% 70%; 
+	grid-template-rows: min-content auto min-content min-content; 
+	gap: 0px 10px; 
 	grid-template-areas: 
 		". ."
 		". ."
 		". ."
 		". ."; 
+}
+
+.thumbnail-container {
+    /*aspect-ratio: 1 / 1;*/
+    /*height: 100%;*/
 }
 
 .slide-thumbnail {
@@ -44,11 +49,11 @@ p.more {
 }
 .slide-meta {
 	grid-column-start: 2;
-	grid-row-start: 2;
+	grid-row-start: 3;
 }
 .slide-summary {
 	grid-column-start: 2;
-	grid-row-start: 3;
+	grid-row-start: 2;
 }
 .slide-readmore {
 	grid-column-start: 2;
