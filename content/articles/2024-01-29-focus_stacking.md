@@ -9,6 +9,8 @@ thumbnail: https://i.imgur.com/Opz2aQu.jpeg
 title: Focus stacking for fun and profit
 
 ---
+[*tl;dr? Jump to the instructions...*](#tldr)
+
 Have you ever taken a photo of one of your larger miniatures, and struggled to keep the whole thing in focus?
 
 ![](https://i.imgur.com/0oxo5RW.jpeg)
@@ -17,7 +19,7 @@ Have you ever taken a photo of one of your larger miniatures, and struggled to k
 
 This is caused by the short focal depth of close-up miniature photography, and it makes your miniatures look *even more* miniature. Great for when you want that look. And in fact some photographers will use special tilt shift lenses or post-processing *in order* to give regular objects that miniature-like look. 
 
-![](https://i.imgur.com/R69RApS.jpeg)
+![](https://i.imgur.com/Sdox43F.jpeg)
 *The Merced river valley. Taken from the Mist Trail towards Yosemity Valley, CA in 2023. Post-processed in GIMP for that Miniature Look*
 
 > Ironically, tilt-shift lenses also allow you to tilt the focal plane, in some cases giving you deeper depth of field so you don't need focus stacking in the first place. Light is weird.
@@ -179,8 +181,39 @@ Here is the final focus-stacked result, directly from `enfuse`:
 
 ![](https://i.imgur.com/Opz2aQu.jpeg)
 
+<a name="tldr">Too long; didn't read</a>
+=
 
+Ok, here it is: the short, *short* version:
 
+- Install [Hugin](https://hugin.sourceforge.io) on your desktop
+- Install [Open Camera](https://opencamera.org.uk/) on your android phone
+- Run Open Camera and set up Focus peaking and Zoom-on-focus
+- Set Open Camera to focus stacking mode, using 5 shots
+- Set up the near and far focal-lengths so that your subject miniature is completely covered
+- Take the shot!
+- Download the photos to a directory of your choice
+- Open a terminal and change to that directory.
+- Run
+
+```
+$ /Applications/Hugin/tools_mac/align_image_stack \
+    -m -e \
+    --use-given-order \
+    -a _huginoutput 
+    *.jpg
+$ /Applications/Hugin/tools_mac/enfuse \
+    --exposure-weight=0 \
+    --saturation-weight=0 \
+    --contrast-weight=1.0 \
+    --hard-mask \
+    --gray-projector=luminance \
+    --contrast-window-size=15 \
+    --output=output.tif  \
+    _huginoutput*.tif
+```
+
+- Profit!
 
 
 
