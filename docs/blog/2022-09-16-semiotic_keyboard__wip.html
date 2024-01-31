@@ -4,16 +4,17 @@
     <title>Vigilante Sculpting - Semiotic keyboard, wip</title>
     <meta name='viewport' content='width=device-width' />
     <link href='/favicon.ico' rel='icon' type='image/x-icon' />
-    <link rel='stylesheet' type='text/css' href='/css/structure-f62cfdc4043be6597fcf3572f9273092.css' />
-    <link rel='stylesheet' type='text/css' href='/css/style-22f89ba84f9354e4856c5bcc4bb528df.css' />
-    <link rel='stylesheet' type='text/css' href='/css/widescreen-3d626857362d185ef16fb6d74ac22035.css' media='screen and (min-width: 601px)' />
-    <link rel='stylesheet' type='text/css' href='/css/smallscreen-76e72dbacfb825ee2e71c83bdc1e5e85.css' media='screen and (max-width: 600px)' />
+    <link rel='stylesheet' type='text/css' href='/css/page.css' />
     <link rel='alternate' type='application/rss+xml' href='/blog/rss.xml' title='Blog RSS Feed' />
     <link rel='alternate' type='application/rss+xml' href='/projects/rss.xml' title='Projects RSS Feed' />
     <link rel='alternate' type='application/rss+xml' href='/articles/rss.xml' title='Articles RSS Feed' />
     <link rel='alternate' type='application/rss+xml' href='/sketches/rss.xml' title='Sketches RSS Feed' />
     <script type='text/javascript' src='/js/purify-2b2d544d36a8a8bf969d19c6a5dcc8c5.js'></script>
-    <link rel='stylesheet' type='text/css' href='/css/comments-8e549a84949f341221e67e505bbc4ec4.css' />
+    <script type='text/javascript' src='/js/simple-lightbox-9fca9bf4a3281d82107107962d8da770.js'></script>
+    <script>addEventListener('load', (event) => {
+	let gallery = new SimpleLightbox('.gallery a');
+});
+</script>
   </head>
   <body>
     <nav>
@@ -78,19 +79,19 @@
         <section class='mainsection'><div><p>I have really started enjoying using my <a rel="nofollow" href="https://www.xp-pen.com/product/461.html">XP-Pen drawing tablet</a> with <a rel="nofollow" href="https://krita.org/">Krita</a> now,but the one thing that bothers me is that I still need the keyboard, even for simple tasks such as canvas navigation, brush size/opacity, etc.(Sure, you can drive all of this with the pen/tablet, but using keyboard shortcuts is an easy way to stay productive).</p>
 <p>To use my keyboard, I have to sit in an awkward position, since the keyboard and tablet don't fit side by side. Especially when I want to tilt the tablet, since then I have to reachbehind the stand in order to access the keyboard. This inconvenience has made me look into getting a 12-key/3-knob macro keyboard. But if you know me, you'll know that I love a good yak shave. Plus I don't like spending money.</p>
 <p>Thus, I started tearing apart an old Microsoft 1558 external keypad that I had lying around. This is a very simple keyboard, and it was easy to solder on a couple of leads.</p>
-<img src="https://i.imgur.com/Toyir79l.jpeg" loading="lazy" class="radiant-lightbox-slide" data-src="https://i.imgur.com/Toyir79.jpeg">
 <p>Then I hooked it up to my Adafruit Feather using a breadboard, and hacked up a bit of code as proof of concept, to see if I could homebrew my own macro keyboard. And guess what, it works.</p>
-<img src="https://i.imgur.com/DdzNPvKl.jpeg" loading="lazy" class="radiant-lightbox-slide" data-src="https://i.imgur.com/DdzNPvK.jpeg">
 <p>The plan is to add 3 rotary encoders on the side, so that I then have a one-handed 17 buttons / 3 knobs macro keyboard with which I can generate whateverkey combinations I want. This should give me enough control over Krita so that the only time I have to dig around for my large keyboard (well, it is a <a rel="nofollow" href="https://www.keychron.com/products/keychron-k6-wireless-mechanical-keyboard">Keychron K6</a>, so it isn't<em>that</em> large) is when I need to type in file names and whatever.</p>
 <p>Then, it has to be given a good housing and some kinf of lettering, because style.</p>
 <p>For the housing, I have this old printer-control panel housing, that I will cut to size and greeblie up. The rotary encoders will get some junk knobs, with a better grip.</p>
-<img src="https://i.imgur.com/DNWyv2il.jpeg" loading="lazy" class="radiant-lightbox-slide" data-src="https://i.imgur.com/DNWyv2i.jpeg">
 <p>For the button labeling, I decided that since it will be a shortcut keypad, there is no use putting dedicated letters or words on the keys, since I should be able to change layout at will, if I manage to get <a rel="nofollow" href="https://qmk.fm/">QMK</a> running on the board.</p>
 <p>And what better set of keyboard symbols than the <em>Semiotic Standard For All Commercial Trans-Stellar Utility Lifter And Heavy Element Transport Spacecraft</em>, courtesy of <a rel="nofollow" href="http://www.roncobb.net">Ron Cobb</a>.</p>
-<img src="https://i.imgur.com/gu1rH1Jl.jpeg" loading="lazy" class="radiant-lightbox-slide" data-src="https://i.imgur.com/gu1rH1J.jpeg"><img src="https://i.imgur.com/ZTEk4EOl.jpeg" loading="lazy" class="radiant-lightbox-slide" data-src="https://i.imgur.com/ZTEk4EO.jpeg">
 <p>Here is the layout I've come up with:</p>
-<img src="https://i.imgur.com/6y2ksgEl.jpeg" loading="lazy" class="radiant-lightbox-slide" data-src="https://i.imgur.com/6y2ksgE.jpeg">
-<p>I plan to properly weather the white housing up, so it looks more like a 90's beige computer case. The keyboard buttons will be sprayed white and weathered in the same way.</p></div></section>
+<p>I plan to properly weather the white housing up, so it looks more like a 90's beige computer case. The keyboard buttons will be sprayed white and weathered in the same way.</p><div class="gallery"><a href="https://i.imgur.com/Toyir79.jpeg"><img src="https://i.imgur.com/Toyir79l.jpeg" loading="lazy" class="radiant-lightbox-slide" data-src="https://i.imgur.com/Toyir79.jpeg">
+</a></div><div class="gallery"><a href="https://i.imgur.com/DdzNPvK.jpeg"><img src="https://i.imgur.com/DdzNPvKl.jpeg" loading="lazy" class="radiant-lightbox-slide" data-src="https://i.imgur.com/DdzNPvK.jpeg">
+</a></div><div class="gallery"><a href="https://i.imgur.com/DNWyv2i.jpeg"><img src="https://i.imgur.com/DNWyv2il.jpeg" loading="lazy" class="radiant-lightbox-slide" data-src="https://i.imgur.com/DNWyv2i.jpeg">
+</a></div><div class="gallery"><a href="https://i.imgur.com/gu1rH1J.jpeg"><img src="https://i.imgur.com/gu1rH1Jl.jpeg" loading="lazy" class="radiant-lightbox-slide" data-src="https://i.imgur.com/gu1rH1J.jpeg"></a></div><div class="gallery"><a href="https://i.imgur.com/ZTEk4EO.jpeg"><img src="https://i.imgur.com/ZTEk4EOl.jpeg" loading="lazy" class="radiant-lightbox-slide" data-src="https://i.imgur.com/ZTEk4EO.jpeg">
+</a></div><div class="gallery"><a href="https://i.imgur.com/6y2ksgE.jpeg"><img src="https://i.imgur.com/6y2ksgEl.jpeg" loading="lazy" class="radiant-lightbox-slide" data-src="https://i.imgur.com/6y2ksgE.jpeg">
+</a></div></div></section>
         <section>
           <p>This post has been tagged with</p>
           <ul class='posttags'>
@@ -162,6 +163,18 @@
         </li>
         <li>
           <a href='http://www.coolminiornot.com/artist/gorb'>CMON</a>
+        </li>
+        <li>
+          <a href='http://www.github.com/vigilantesculpting'>GitHub</a>
+        </li>
+        <li>
+          <a href='https://www.thingiverse.com/gorb314/designs'>Thingiverse</a>
+        </li>
+        <li>
+          <a href='https://www.etsy.com/shop/VigilanteSculpting'>Etsy</a>
+        </li>
+        <li>
+          <a href='https://www.teepublic.com/user/gorb'>Teepublic</a>
         </li>
       </ul>
       <a href='/'>
