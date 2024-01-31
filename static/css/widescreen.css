@@ -1,23 +1,43 @@
-
-/*
-.slides > div, .slides > img {
-	width: 32%;
+p.more {
+	text-align: right;
 }
-*/
+#titleimage {
+	padding: 1em 0 1em 0;
+}
+
+/* slides are laid out as grids */
+
 .slide {
-	width: 32%;
+	width: 100%;
+	display: grid; 
+	grid-template-columns: 30% 70%; 
+	grid-template-rows: min-content auto min-content min-content; 
+	gap: 0px 10px; 
+	grid-template-areas: 
+		". ."
+		". ."
+		". ."
+		". ."; 
 }
 
-.post {
-	width: 32%;
+.slide-thumbnail {
+	grid-column-start: 1;
+	grid-row-start: 1;
+	grid-row-end: 4;
 }
-
-.gallerycell {
-	width: 32%;
+.slide-title {
+	grid-column-start: 2;
+	grid-row-start: 1;
 }
-
-.thumbnail-container {
-    aspect-ratio: 1 / 1;
-    height: 100%;
+.slide-meta {
+	grid-column-start: 2;
+	grid-row-start: 3;
 }
-
+.slide-summary {
+	grid-column-start: 2;
+	grid-row-start: 2;
+}
+.slide-readmore {
+	grid-column-start: 2;
+	grid-row-start: 4;
+}

@@ -630,7 +630,8 @@ addEventListener('load', (event) => {
 			f.write(f"""
 @import url('{self.content.filekeys.css['structure.css']}');
 @import url('{self.content.filekeys.css['style.css']}');
-@import url('{self.content.filekeys.css['smallscreen.css']}');
+@import url('{self.content.filekeys.css['smallscreen.css']}') only screen and (max-width: 600px);
+@import url('{self.content.filekeys.css['widescreen.css']}') only screen and (min-width: 601px);
 @import url('{self.content.filekeys.css["comments.css"]}');
 @import url('{self.content.filekeys.css['simple-lightbox.css']}');
 """)
