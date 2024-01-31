@@ -88,13 +88,14 @@ Published on
             </li>
           </ul>
         </p>
-        <section class='mainsection'><div><p>Have you ever taken a photo of one of your larger miniatures, and struggled to keep the whole thing in focus?</p>
+        <section class='mainsection'><div><p><a href="#tldr"><em>tl;dr? Jump to the instructions...</em></a></p>
+<p>Have you ever taken a photo of one of your larger miniatures, and struggled to keep the whole thing in focus?</p>
 <p><div class="gallery"><a href="https://i.imgur.com/0oxo5RW.jpeg"><img alt="" src="https://i.imgur.com/0oxo5RWl.jpeg" class="radiant-lightbox-slide" data-src="https://i.imgur.com/0oxo5RW.jpeg"></a></div></p>
 <blockquote>
 <p>I recently had this problem, where the front of my 23cm war rig was in focus, but the back not. And if I got the back in focus, the front was not <em>aaaaaarrrrghhh!</em></p>
 </blockquote>
 <p>This is caused by the short focal depth of close-up miniature photography, and it makes your miniatures look <em>even more</em> miniature. Great for when you want that look. And in fact some photographers will use special tilt shift lenses or post-processing <em>in order</em> to give regular objects that miniature-like look. </p>
-<p><em>The Merced river valley. Taken from the Mist Trail towards Yosemity Valley, CA in 2023. Post-processed in GIMP for that Miniature Look</em><div class="gallery"><a href="https://i.imgur.com/R69RApS.jpeg"><img alt="" src="https://i.imgur.com/R69RApSl.jpeg" class="radiant-lightbox-slide" data-src="https://i.imgur.com/R69RApS.jpeg">
+<p><em>The Merced river valley. Taken from the Mist Trail towards Yosemity Valley, CA in 2023. Post-processed in GIMP for that Miniature Look</em><div class="gallery"><a href="https://i.imgur.com/Sdox43F.jpeg"><img alt="" src="https://i.imgur.com/Sdox43Fl.jpeg" class="radiant-lightbox-slide" data-src="https://i.imgur.com/Sdox43F.jpeg">
 </a></div></p>
 <blockquote>
 <p>Ironically, tilt-shift lenses also allow you to tilt the focal plane, in some cases giving you deeper depth of field so you don't need focus stacking in the first place. Light is weird.</p>
@@ -203,7 +204,38 @@ Exiting...
 </a></div><div class="gallery"><a href="https://i.imgur.com/W5x3zM5.jpeg"><img alt="" src="https://i.imgur.com/W5x3zM5l.jpeg" class="radiant-lightbox-slide" data-src="https://i.imgur.com/W5x3zM5.jpeg"></a></div></p>
 <p>As you can see, the first image has the cab in focus, the second has the middle section in focus, and the third has the tail-end and the flags in focus.
 Here is the final focus-stacked result, directly from <code>enfuse</code>:</p>
-<p><div class="gallery"><a href="https://i.imgur.com/Opz2aQu.jpeg"><img alt="" src="https://i.imgur.com/Opz2aQul.jpeg" class="radiant-lightbox-slide" data-src="https://i.imgur.com/Opz2aQu.jpeg"></a></div></p></div></section>
+<p><div class="gallery"><a href="https://i.imgur.com/Opz2aQu.jpeg"><img alt="" src="https://i.imgur.com/Opz2aQul.jpeg" class="radiant-lightbox-slide" data-src="https://i.imgur.com/Opz2aQu.jpeg"></a></div></p>
+<h1><a name="tldr">Too long; didn't read</a></h1>
+<p>Ok, here it is: the short, <em>short</em> version:</p>
+<ul>
+<li>Install <a href="https://hugin.sourceforge.io">Hugin</a> on your desktop</li>
+<li>Install <a href="https://opencamera.org.uk/">Open Camera</a> on your android phone</li>
+<li>Run Open Camera and set up Focus peaking and Zoom-on-focus</li>
+<li>Set Open Camera to focus stacking mode, using 5 shots</li>
+<li>Set up the near and far focal-lengths so that your subject miniature is completely covered</li>
+<li>Take the shot!</li>
+<li>Download the photos to a directory of your choice</li>
+<li>Open a terminal and change to that directory.</li>
+<li>Run</li>
+</ul>
+<pre><code>$ /Applications/Hugin/tools_mac/align_image_stack \
+    -m -e \
+    --use-given-order \
+    -a _huginoutput 
+    *.jpg
+$ /Applications/Hugin/tools_mac/enfuse \
+    --exposure-weight=0 \
+    --saturation-weight=0 \
+    --contrast-weight=1.0 \
+    --hard-mask \
+    --gray-projector=luminance \
+    --contrast-window-size=15 \
+    --output=output.tif  \
+    _huginoutput*.tif
+</code></pre>
+<ul>
+<li>Profit!</li>
+</ul></div></section>
       </article>
       <section class='postnav'>
         <div class='postnav-left'>&nbsp;</div>
