@@ -11,6 +11,7 @@ import datetime
 import dateutil.parser
 import shutil
 import hashlib
+import frontmatter
 
 import nsdict
 
@@ -63,14 +64,6 @@ class Generator:
 		self.bbparser.add_simple_formatter('gallery', '<div class="gallery slides">%(value)s</div>')
 		self.bbparser.add_simple_formatter('youtube', '<iframe width="640" height="390" src="https://www.youtube.com/embed/%(value)s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="True">_</iframe>')
 
-	def splitheader(self, text):
-		header, body = "", text # default is no header
-		parts = re.split("---\n", text)
-		if len(parts) > 1:
-			if len(parts[0]) == 0 and len(parts) == 3:
-				header, body = parts[1:]
-		return header, body
-
 	def texttohtml(self, ext, text):
 		# convert the body text into an html snippet, if it is not an html file
 		html = text # default
@@ -121,14 +114,10 @@ class Generator:
 		})
 
 		# Read file content.
-		with open(filename, "r") as f:
-			#filecontent = unicode(f.read(), encoding="utf-8")
-			filecontent = f.read()
-		# split the yaml frontmatter and body text
-		fileheader, filebody = self.splitheader(filecontent)
-		metadata = yaml.safe_load(fileheader)
-		if metadata is not None:
-			content.update(metadata)
+		with open(filename, "r", encoding="utf-8") as f:
+			filecontents = frontmatter.load(f)
+			filebody = filecontents.content
+			content.update(filecontents.metadata)
 
 		# escape any characters that need to be escaped in the title
 		if 'title' in content:
@@ -200,13 +189,15 @@ class Generator:
 			img.attrib["data-src"] = datasrc
 			img.attrib["src"] = imgsrc
 
-			if 0:
-				# reparent the image to a new hyperlink:
+			if 1:
+				# reparent the image to a simple-lightbox div:
 				parent = img.getparent()
-				newlink = lxml.html.fromstring("<a />")
-				newlink.attrib["href"] = datasrc #self.imgurmodifier(datasrc, "h") # make a Huge Thumbnail, if possible
+				newlink = lxml.html.fromstring(f"<a href='{datasrc}'></a>")
 				newlink.append(img)
-				parent.append(newlink)
+				newdiv = lxml.html.fromstring(f"<div class='gallery'></div>")
+				newdiv.append(newlink)
+				#newlink.attrib["href"] = datasrc #self.imgurmodifier(datasrc, "h") # make a Huge Thumbnail, if possible
+				parent.append(newdiv)
 
 		text = lxml.html.tostring(root, encoding="unicode")
 		# finally add the text
@@ -312,8 +303,11 @@ class Generator:
 			"js/comments.js",
 			"js/purify.js",
 			"css/comments.css",
+			"js/simple-lightbox.js",
+			"css/simple-lightbox.css",
 		]
 		for filepath in filepaths:
+			print(f"renameing file [{filepath}] with checksum")
 			oldfilepath = os.path.join(self.config.outputdir, self.config.tgtsubdir, filepath)
 			checksum = hashlib.md5(open(oldfilepath,'rb').read()).hexdigest()
 			base, ext = os.path.splitext(filepath)

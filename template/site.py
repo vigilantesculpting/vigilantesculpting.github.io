@@ -54,7 +54,7 @@ class Site:
 		using defaults from the config if not provided.
 		Something like ./addcomments.py <postfilename> <id> [-h <host>] [-u <username>]
 		"""
-		replylink = f"https://{post['comments-host']}/@{post['comments-username']}/{post['comments-id']}"
+		replylink = f"https://{post['comments-host']}/{post['comments-username']}/{post['comments-id']}"
 		originalpost = f"https://{post['comments-host']}/api/v1/statuses/{post['comments-id']}/context"
 
 		with doc.div(klass = "article-content"):
@@ -113,18 +113,22 @@ class Site:
 				# favicon
 				doc.link(href = os.path.join("/", self.config.tgtsubdir, "favicon.ico"), rel="icon", type="image/x-icon")
 				# CSS
-				doc.link(rel="stylesheet", type="text/css", href=f"{self.content.filekeys.css['structure.css']}")
-				doc.link(rel="stylesheet", type="text/css", href=f"{self.content.filekeys.css['style.css']}")
-				doc.link(rel="stylesheet", type="text/css", href=f"{self.content.filekeys.css['widescreen.css']}", media="screen and (min-width: 601px)")
-				doc.link(rel="stylesheet", type="text/css", href=f"{self.content.filekeys.css['smallscreen.css']}", media="screen and (max-width: 600px)")
+				doc.link(rel="stylesheet", type="text/css", href="/css/page.css")
 				# RSS links
 				doc.link(rel="alternate", type="application/rss+xml", href=os.path.join("/", self.config.tgtsubdir, "blog",	   "rss.xml"), title="Blog RSS Feed")
 				doc.link(rel="alternate", type="application/rss+xml", href=os.path.join("/", self.config.tgtsubdir, "projects", "rss.xml"), title="Projects RSS Feed")
 				doc.link(rel="alternate", type="application/rss+xml", href=os.path.join("/", self.config.tgtsubdir, "articles", "rss.xml"), title="Articles RSS Feed")
 				doc.link(rel="alternate", type="application/rss+xml", href=os.path.join("/", self.config.tgtsubdir, "sketches", "rss.xml"), title="Sketches RSS Feed")
-				# Comments
+				# Scripts
 				doc.script(type="text/javascript", src=f"{self.content.filekeys.js['purify.js']}")
-				doc.link(rel="stylesheet", type="text/css", href=os.path.join("/", self.config.tgtsubdir, "css", self.content.filekeys.css["comments.css"]))
+				doc.script(type="text/javascript", src=f"{self.content.filekeys.js['simple-lightbox.js']}")
+				with doc.script():
+					# Start the lightbox
+					doc("""\
+addEventListener('load', (event) => {
+	let gallery = new SimpleLightbox('.gallery a');
+});
+""")
 				# evaluate any extra head tags that the caller wants to embed here
 				if meta is not None:
 					meta(doc)
@@ -157,13 +161,17 @@ class Site:
 				with doc.footer():
 					doc.section().p(_t = f"Content &copy; {self.config.current_year} Vigilante Sculpting")
 					with doc.ul(klass = "links"):
-						doc.li().a(href="https://mastodon.social/@gorb314", 		_t = "Mastodon")
-						doc.li().a(href="https://www.artstation.com/g0rb", 			_t = "ArtStation")
-						doc.li().a(href="https://www.deviantart.com/gorb", 			_t = "DeviantArt")
-						doc.li().a(href="https://www.reddit.com/user/gorb314", 		_t = "Reddit")
-						doc.li().a(href="https://instagram.com/gorb314", 			_t = "Instagram")
-						doc.li().a(href="https://www.puttyandpaint.com/g0rb",	 	_t = "Putty & Paint")
-						doc.li().a(href="http://www.coolminiornot.com/artist/gorb", _t = "CMON")
+						doc.li().a(href="https://mastodon.social/@gorb314", 			_t = "Mastodon")
+						doc.li().a(href="https://www.artstation.com/g0rb", 				_t = "ArtStation")
+						doc.li().a(href="https://www.deviantart.com/gorb", 				_t = "DeviantArt")
+						doc.li().a(href="https://www.reddit.com/user/gorb314", 			_t = "Reddit")
+						doc.li().a(href="https://instagram.com/gorb314", 				_t = "Instagram")
+						doc.li().a(href="https://www.puttyandpaint.com/g0rb",	 		_t = "Putty & Paint")
+						doc.li().a(href="http://www.coolminiornot.com/artist/gorb", 	_t = "CMON")
+						doc.li().a(href="http://www.github.com/vigilantesculpting",		_t = "GitHub")
+						doc.li().a(href="https://www.thingiverse.com/gorb314/designs", 	_t = "Thingiverse")
+						doc.li().a(href="https://www.etsy.com/shop/VigilanteSculpting", _t = "Etsy")
+						doc.li().a(href="https://www.teepublic.com/user/gorb", 			_t = "Teepublic")
 					with doc.a(href = os.path.join("/", self.config.tgtsubdir)):
 						doc.div(klass = "titleimage").img(id = "titleimage", src = os.path.join("/", self.config.tgtsubdir, "images", "footer.svg")) #"logo.png"))
 				#radiant(doc)
@@ -562,10 +570,24 @@ class Site:
 	def create(self):
 		print("creating site content")
 
+		# make page css
+		# we do this, because of the changing git-commit-stamped filenames for css that we produce.
+		# This means that only the css files are updated, and each page does not have to be touched.
+		with open(os.path.join(self.config.outputdir, self.config.tgtsubdir, "css", "page.css"), "w") as f:
+			f.write(f"""
+@import url('{self.content.filekeys.css['structure.css']}');
+@import url('{self.content.filekeys.css['style.css']}');
+@import url('{self.content.filekeys.css['smallscreen.css']}') only screen and (max-width: 600px);
+@import url('{self.content.filekeys.css['widescreen.css']}') only screen and (min-width: 601px);
+@import url('{self.content.filekeys.css["comments.css"]}');
+@import url('{self.content.filekeys.css['simple-lightbox.css']}');
+""")
+
 		self.output(self.mainindex(), "index.html")
 		self.output(self.about(), "about.html")
 		self.output(self.contact(), "contact.html")
 
+		print("creating blog posts")
 		self.makeblogposts()
 
 		print("creating sketch posts")
