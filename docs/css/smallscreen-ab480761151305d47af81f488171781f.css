@@ -1,0 +1,33 @@
+p.more {
+	text-align: right;
+}
+#titleimage {
+	padding: 1em 0 1em 0;
+}
+
+/* slides are laid out as grids */
+
+.slide {
+	width: 100%;
+	display: grid; 
+	grid-template-rows: min-content auto min-content min-content; 
+	gap: 0px 10px; 
+	grid-template-areas: 
+		"."
+		"."
+		"."
+		"."; 
+}
+
+.slide-title {
+	grid-row-start: 1;
+}
+.slide-thumbnail {
+	grid-row-start: 2;
+}
+.slide-summary {
+	grid-row-start: 3;
+}
+.slide-meta {
+	grid-row-start: 4;
+}

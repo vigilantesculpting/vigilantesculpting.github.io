@@ -1,16 +1,3 @@
-/*
-.slides > div {
-	width: 100%;
-}
-
-.post {
-	width: 100%;
-}
-
-.gallerycell {
-	width: 100%;
-}
-*/
 p.more {
 	text-align: right;
 }
@@ -31,11 +18,6 @@ p.more {
 		". ."
 		". ."
 		". ."; 
-}
-
-.thumbnail-container {
-    /*aspect-ratio: 1 / 1;*/
-    /*height: 100%;*/
 }
 
 .slide-thumbnail {

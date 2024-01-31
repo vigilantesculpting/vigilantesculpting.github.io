@@ -1,6 +1,7 @@
 
 @import url('/css/structure-f62cfdc4043be6597fcf3572f9273092.css');
 @import url('/css/style-525076ff7406544a3e1de77c4f12b807.css');
-@import url('/css/smallscreen-c588c2b9e014e59177a42e78cb3ee66f.css');
+@import url('/css/smallscreen-ab480761151305d47af81f488171781f.css') only screen and (max-width: 600px);
+@import url('/css/widescreen-5f9964075f8267d614a73c85933f110f.css') only screen and (min-width: 601px);
 @import url('/css/comments-8e549a84949f341221e67e505bbc4ec4.css');
 @import url('/css/simple-lightbox-013c5ae51cf3ece5003bf3158b772413.css');
