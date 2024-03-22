@@ -135,7 +135,7 @@ addEventListener('load', (event) => {
 				with doc.nav():
 					with doc.section(klass = "titlesection"):
 						with doc.a(href = os.path.join("/", self.config.tgtsubdir)):
-							doc.div(klass = "titleimage").img(id = "titleimage", src = os.path.join("/", self.config.tgtsubdir, "images", "header.svg"), width = "900px") #"title.png"))
+							doc.div(klass = "titleimage").img(id = "titleimage", src = os.path.join("/", self.config.tgtsubdir, "images", "header.png"), width = "900px") #"title.png"))
 						with doc.div(klass = "sitenavigation"):
 							#with doc.span("home").a(os.path.join("/", self.config.tgtsubdir)):
 							#	doc("Home")
@@ -463,7 +463,9 @@ addEventListener('load', (event) => {
 					doc("&nbsp;")
 
 	def makegroups(self, items, groupsize):
-		return [items[i*groupsize : i*groupsize + groupsize] for i in range(1 + len(items)//groupsize)]
+		if len(items) > 0:
+			return [items[i*groupsize : i*groupsize + groupsize] for i in range(1 + len(items)//groupsize)]
+		return []
 
 	def indexpage(self, pageid, postgroup, pagecount, title, targetdir, postsdir, description):
 		def body(doc):
