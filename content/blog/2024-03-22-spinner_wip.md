@@ -2,7 +2,7 @@
 author: vigilante sculpting
 date: 2024-03-22T16:13:01 -0700
 tags:
-- spinner
+- project:spinner
 - bladerunner
 - hotwheels
 - scratchbuild

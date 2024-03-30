@@ -5,7 +5,7 @@ tags:
 - gaslands
 - hotwheels
 - conversion
-- knightrider
+- project:knightrider
 - kitt
 thumbnail: https://i.imgur.com/BAYvxii.jpeg
 title: Knight Industries WIP

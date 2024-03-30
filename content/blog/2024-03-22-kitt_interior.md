@@ -5,7 +5,7 @@ tags:
 - gaslands
 - hotwheels
 - conversion
-- knightrider
+- project:knightrider
 - kitt
 - painting
 thumbnail: https://i.imgur.com/4bPU9Wo.jpeg
