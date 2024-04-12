@@ -5,7 +5,7 @@ tags:
 - nsfw
 - pinup
 - retro
-thumbnail: https://i.imgur.com/8pRSFqM.jpeg
+thumbnail: https://i.imgur.com/QV4kdVC.jpeg
 title: bubblegum
 
 ---
