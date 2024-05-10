@@ -424,6 +424,7 @@ class Generator:
 		print("sort latest posts")
 		latest = {**self.content.blog, **self.content.sketches, **self.content.articles, **self.content.projects}
 		sortedlatest = sorted(latest.values(), key = lambda values: values['date'], reverse = True)
+		sortedlatest = [post for post in sortedlatest if "nsfw" not in post.tags]
 		for latest in sortedlatest[:6]:
 			print(f"\tlatest: {latest.slug}")
 		self.content["latestposts"] = sortedlatest
