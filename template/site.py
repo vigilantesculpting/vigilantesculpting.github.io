@@ -298,14 +298,18 @@ addEventListener('load', (event) => {
 			mainslidesection('latest', 'latest', 'Latest News', 'News RSS Feed',self.content.latestposts[:6])
 
 			with doc.p():
-				doc("... For more content, continue on to ")
-				doc.a("Projects", href="projects")
+				doc("For more content, continue on to ")
+				with doc.a(href="projects"):
+					doc("Projects")
 				doc(", ")
-				doc.a("Blog posts", href="blog")
+				with doc.a(href="blog"):
+					doc("Blog posts")
 				doc(", ")
-				doc.a("Sketches", href="sketches")
+				with doc.a(href="sketches"):
+					doc("Sketches")
 				doc(" and ")
-				doc.a("Articles", href="articles")
+				with doc.a(href="articles"):
+					doc("Articles")
 
 			def maintextsection(path, title, subtitle):
 				with doc.section(klass = "mainsection"):
