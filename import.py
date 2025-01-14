@@ -35,7 +35,10 @@ Where
 dryrun = False
 importonly = False
 
-opts, args = getopt.gnu_getopt(sys.argv[1:], "nih")
+try:
+	opts, args = getopt.gnu_getopt(sys.argv[1:], "nih")
+except Exception as e:
+	usage(f"Unknown arguments: {e}", -1)
 for opt, arg in opts:
 	match opt:
 		case "-n":
