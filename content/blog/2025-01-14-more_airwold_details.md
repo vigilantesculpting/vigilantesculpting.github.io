@@ -8,7 +8,7 @@ tags:
 - chopper
 - gaslands
 thumbnail: https://i.imgur.com/okAF66o.jpeg
-title: More airwold details
+title: More Airwolf details
 
 ---
 Adding some more details to the Airwolf conversion:
