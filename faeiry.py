@@ -9,6 +9,7 @@ import webbrowser
 from PIL import Image
 
 from imgurpython import ImgurClient
+from imgurpython.helpers.error import ImgurClientError
 
 # faeirysecrets should define two variables: client_id and client_secret
 from faeirysecrets import *
@@ -84,21 +85,26 @@ def uploadimages(client, imagelist, albumid = None, title = None):
 	imagedeletehashes = [data['deletehash'] for data in imagedata]
 	print("imagedeletehashes:", imagedeletehashes)
 
-	if albumid is None:
-		albumspec = {
-			'privacy': 'hidden',
-			#'ids': imageids,
-			#'deletehashes': imagedeletehashes,
-		}
-		if title is not None:
-			albumspec['title'] = title
+	try: 
+		if albumid is None:
+			albumspec = {
+				'privacy': 'hidden',
+				#'ids': imageids,
+				#'deletehashes': imagedeletehashes,
+			}
+			if title is not None:
+				albumspec['title'] = title
 
-		albumdata = client.create_album(albumspec)
-		print(albumdata)
-		albumid = albumdata['id']
+			albumdata = client.create_album(albumspec)
+			print(albumdata)
+			albumid = albumdata['id']
 
-	print("album url: https://imgur.com/a/%s" % albumid)
-	client.album_add_images(albumid, imageids)
+		print("album url: https://imgur.com/a/%s" % albumid)
+		client.album_add_images(albumid, imageids)
+	except ImgurClientError as e:
+		print("Failed to create / update album!")
+		print(f"e.error_message: {e.error_message}")
+		print(f"e.status_code: {e.status_code}")
 
 	# each data in imagedata has 
 	# - "id": the id of the uploaded image
