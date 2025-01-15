@@ -15,6 +15,7 @@ import re
 import yaml
 import subprocess
 import getopt
+import now
 
 import faeiry
 from PIL import Image
@@ -23,31 +24,36 @@ def usage(msg = "", result = 0):
 	if len(msg) > 0:
 		print(msg)
 	print(f"""Imports a local post into the contents. Can upload the images in the post to Imgur
-Usage: {sys.argv[0]} [--dry-run/-n] [--import-only/-i] [--help/-h] INPUTPATH
+Usage: {sys.argv[0]} [--dry-run/-n] [--import-only/-i] [--update-datetime/-u] [--help/-h] INPUTPATH
 Where
-  --dry-run     : Do a dry run. Print out statistics, do not perform any import or uploads
-  --import-only : Only import, do not upload
-  --help        : Show this help
-  INPUTPATH     : The path of the post to import
+  --dry-run         : Do a dry run. Print out statistics, do not perform any import or uploads
+  --import-only     : Only import, do not upload
+  --update-datetime : Update the date and time of the post to now. This will rename the post's
+                      filename to match the date!
+  --help            : Show this help
+  INPUTPATH         : The path of the post to import
 """, end='')
 	sys.exit(result)
 
 dryrun = False
 importonly = False
+updatedatetime = False
 
 try:
-	opts, args = getopt.gnu_getopt(sys.argv[1:], "nih")
+	opts, args = getopt.gnu_getopt(sys.argv[1:], "niuh", ["dry-run", "import-only", "update-datetime", "help"])
 except Exception as e:
 	usage(f"Unknown arguments: {e}", -1)
 for opt, arg in opts:
 	match opt:
-		case "-n":
+		case "-n" | "--dry-run":
 			dryrun = True
 			print("Note: dry run!")
-		case "-i":
+		case "-i" | "--import-only":
 			importonly = True
 			print("Note: import only!")
-		case "-h":
+		case "-u" | "--update-datetime":
+			updatedatetime = True
+		case "-h" | "--help":
 			usage()
 
 if len(args) != 1:
@@ -61,6 +67,12 @@ with open(filepath, "r") as f:
 
 dirpath, filename = os.path.split(filepath)
 pathparts = dirpath.split(os.sep)
+if updatedatetime:
+	print("updating the output filename with the current datetime")
+	currently = now.now()
+	filename_date, filename_name = filename[:10], filename[11:] # crude, but effective
+	filename_date = currently.strftime("%Y-%m-%d") # grab the current date
+	filename = f"{filename_date}-{filename_name}"
 outputfilepath = os.path.join("content", *pathparts[1:], filename)
 print(f"inputfilepath:  {filepath}")
 print(f"outputfilepath: {outputfilepath}")
@@ -141,9 +153,13 @@ for local, remote in uploadedimages.items():
 
 ### replace the local image urls with the uploaded urls in the frontmatter and body
 
-# replace the thumbnail (if any)
+# replace the thumbnail in the metadata (if any)
 if metadata and "thumbnail" in metadata and metadata["thumbnail"] in uploadedimages:
 	metadata["thumbnail"] = uploadedimages[metadata["thumbnail"]]
+
+# replace the timestamp in the metadata if required
+if updatedatetime and metadata and "date" in metadata:
+	metadata["date"] = currently.strftime("%Y-%m-%dT%H:%M:%S %z")
 
 # replace the images in the body
 
