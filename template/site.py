@@ -118,6 +118,8 @@ class Site:
 				doc.link(rel="alternate", type="application/rss+xml", href=os.path.join("/", self.config.tgtsubdir, "projects", "rss.xml"), title="Projects RSS Feed")
 				doc.link(rel="alternate", type="application/rss+xml", href=os.path.join("/", self.config.tgtsubdir, "articles", "rss.xml"), title="Articles RSS Feed")
 				doc.link(rel="alternate", type="application/rss+xml", href=os.path.join("/", self.config.tgtsubdir, "sketches", "rss.xml"), title="Sketches RSS Feed")
+				doc.link(rel="me", href="https://github.com/vigilantesculpting")
+				#doc.link(rel="webmention", href="https://webmention.io/vigilantesculpting.com/webmention") # when we are ready...
 				# Scripts
 				doc.script(type="text/javascript", src=f"{self.content.filekeys.js['purify.js']}")
 				doc.script(type="text/javascript", src=f"{self.content.filekeys.js['simple-lightbox.js']}")
@@ -170,8 +172,21 @@ addEventListener('load', (event) => {
 						doc.li().a("Thingiverse",			href = "https://www.thingiverse.com/gorb314/designs"								)
 						doc.li().a("Etsy",					href = "https://www.etsy.com/shop/VigilanteSculpting"								)
 						doc.li().a("Teepublic",				href = "https://www.teepublic.com/user/gorb"										)
-					with doc.a(href = os.path.join("/", self.config.tgtsubdir)):
+					with doc.section().p():
+						doc("Website hosted on ")
+						with doc.a(href="http://www.github.com"):
+							doc("Github")
+					#with doc.section().p():
+					#	doc("Images hosted on ")
+					#	with doc.a(href="https://imgbb.com"):
+					#		doc("ImgBB")
+					with doc.a(href = os.path.join("/", self.config.tgtsubdir), klass = "titleimage"):
 						doc.div(klass = "titleimage").img(id = "titleimage", src = os.path.join("/", self.config.tgtsubdir, "images", "footer.svg")) #"logo.png"))
+					with doc.span(klass="h-card"):
+						with doc.a(klass="u-url", rel="me", href="/"):
+							doc("Chris (gorb314)")
+						doc.img(klass="u-photo", src = os.path.join("/", self.config.tgtsubdir, "images", "jd-round.png"))
+						doc.img(klass="u-featured", src = os.path.join("/", self.config.tgtsubdir, "images", "banner.jpg"))
 				#radiant(doc)
 
 		return doc
