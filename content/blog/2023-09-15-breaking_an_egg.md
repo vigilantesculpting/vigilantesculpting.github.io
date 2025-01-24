@@ -33,7 +33,7 @@ The wheels had to go, since they look extremely flimsy. The boxy backside and fi
 Later I decided to cut out the windows of the cab. This took some effort, since the metal is quite thick in places and there is a large bar in middle of the cab, probably to stop the truck from getting squished by ingenious little people.
 
 ![](https://i.imgur.com/3AwgG7M.jpeg)
-![](https://i.imgur.com/x0S3VXw.jpeg)
+![](https://i.ibb.co/qBCZsGn/2023-09-15-breaking-an-egg-007.jpg)
 
 As they say, you can't make an omelette without breaking some eggs. More to come...
 
