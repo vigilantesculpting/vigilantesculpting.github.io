@@ -119,7 +119,7 @@ class Site:
 				doc.link(rel="alternate", type="application/rss+xml", href=os.path.join("/", self.config.tgtsubdir, "articles", "rss.xml"), title="Articles RSS Feed")
 				doc.link(rel="alternate", type="application/rss+xml", href=os.path.join("/", self.config.tgtsubdir, "sketches", "rss.xml"), title="Sketches RSS Feed")
 				doc.link(rel="me", href="https://github.com/vigilantesculpting")
-				#doc.link(rel="webmention", href="https://webmention.io/vigilantesculpting.com/webmention") # when we are ready...
+				doc.link(rel="webmention", href="https://webmention.io/www.vigilantesculpting.com/webmention")
 				# Scripts
 				doc.script(type="text/javascript", src=f"{self.content.filekeys.js['purify.js']}")
 				doc.script(type="text/javascript", src=f"{self.content.filekeys.js['simple-lightbox.js']}")
