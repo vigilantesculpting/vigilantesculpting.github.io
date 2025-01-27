@@ -9,6 +9,7 @@ tags:
 - conversion
 thumbnail: https://i.imgur.com/Tyq6eGq.jpeg
 title: Megalodon begins!
+summary: The shark mobile takes shape!
 
 ---
 My eldest got a [Lego Monster Jam Megalodon](https://www.lego.com/en-us/product/monster-jam-megalodon-42134) for their birthday a while back.

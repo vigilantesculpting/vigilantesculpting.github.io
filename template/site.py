@@ -95,6 +95,7 @@ class Site:
 		doc = Html(source_minify = self.config.html_minify)
 		with doc.html(lang = "en"):
 			with doc.head():
+				doc.meta(charset="utf-8")
 				doc.title(f"{self.config.title} - {title}")
 				if "googletag" in self.config:
 					# google analytics
@@ -250,19 +251,11 @@ addEventListener('load', (event) => {
 			"sketches": "Sketch",
 		}
 		doc("Published on ")
-		with doc.span(klass = 'posttimestamp'):
+		with doc.span(klass = 'dt-published posttimestamp'):
 			doc(f"{datetime.datetime.strftime(post.date, self.TIMESTAMPFORMAT)}") #" @%H:%M:%S')}")
 		doc(" by ")
-		with doc.span(klass = 'postauthor'):
+		with doc.span(klass = 'p-author postauthor'):
 			doc(f"{post.author}")
-		with doc.ul(klass = "posttags"):
-			with doc.li(klass = 'postflair'):
-				doc.a(posttypenames[posttype], href = os.path.join("/", posttype))
-			#with doc.li(klass = "taglink").a(href = os.path.join("/", posttype)):
-			#	doc(posttypenames[posttype])
-			for tag in post.tags:
-				with doc.li(klass = "taglink"):
-					doc.a(tag, href = os.path.join("/", "tags", f"{self.slugify(tag)}.html"))
 
 	def postsummary(self, doc, postpath, post):
 		# we need a canonical way to create the postpath from the post itself, instead of having to be passed a postpath parameter
@@ -273,6 +266,7 @@ addEventListener('load', (event) => {
 			doc.a(post.title, href = postlink)
 		with doc.div(klass = "slide-meta meta"):
 			self.postmeta(doc, post)
+			self.posttags(doc, post)
 		if "thumbnail" in post:
 			with doc.a(klass = "slide-thumbnail more", href = postlink):
 				with doc.div(klass = "thumbnail-container"):
@@ -280,6 +274,7 @@ addEventListener('load', (event) => {
 						with doc.p(klass = "nsfw-warning"):
 							doc("NSFW / Mature Content")
 					doc(post.thumbnail)
+					#doc.img(klass = "u-photo", src=doc(post.thumbnail))
 		with doc.p(klass = "slide-summary summary"):
 			doc(f"{self.truncate(post.content)}&nbsp;")
 		return doc
@@ -391,33 +386,23 @@ addEventListener('load', (event) => {
 		#pdb.set_trace()
 		return value4
 
-	def formattags(self, doc, tags):
+	def posttags(self, doc, post):
+		def getposttype(post):
+			# check the slug
+			return os.path.split(post.slug)[0]
+		posttype = getposttype(post)
+		posttypenames = {
+			"blog": "Blog Post",
+			"projects": "Project",
+			"articles": "Article",
+			"sketches": "Sketch",
+		}
 		with doc.ul(klass = "posttags"):
-			for tag in tags:
-				with doc.li(klass = "taglink").a(href = os.path.join("/", "tags", f"{self.slugify(tag)}.html")):
-					doc(tag)
-
-	def posttags(self, doc, tags):
-		if len(tags) == 0:
-			return
-		"""
-		tags are in a tags frontmatter:
-				tags:
-				- project:sentinel
-				- wh40k
-				- papercraft
-				- resin
-		Add a tool to (a) list (b) add (c) rename or (d) remove tags from a given post:
-		./tags.py <postfile> 							lists tags for given postfile
-		./tags.py <postfile> <tags...>					adds tags for given postfile
-		./tags.py <postfile> -c							removes all tags from given postfile
-		./tags.py <postfile> -r <tags...>				removes given tags from given postfile
-		./tags.py <postfile> -m <tags...> newtag		replaces given tag(s) with a newtag in a given postfile
-		"""
-		with doc.section():
-			doc.p("This post has been tagged with")
-			with doc.ul(klass = "posttags"):
-				self.formattags(doc, tags)
+			with doc.li(klass = 'postflair'):
+				doc.a(posttypenames[posttype], href = os.path.join("/", posttype))
+			for tag in post.tags:
+				with doc.li(klass = "taglink"):
+					doc.a(f"#{tag}", klass = "p-category", href = os.path.join("/", "tags", f"{self.slugify(tag)}.html"))
 
 	def blogpost(self, postid, post, posts):
 		"""
@@ -436,12 +421,16 @@ addEventListener('load', (event) => {
 			pass
 		def body(doc):
 			self.postnavigation(doc, postid, posts, 'post')
-			with doc.article():
-				doc.h1(post.title)
+			with doc.article(klass = "h-entry"):
+				doc.h1(post.title, klass = "p-name")
 				with doc.p(klass = "meta"):
 					self.postmeta(doc, post)
 					#doc(f"Published on {datetime.datetime.strftime(post.date, self.TIMESTAMPFORMAT)} by <b>{post.author}</b>")
-				with doc.section(klass = "mainsection"):
+				if getattr(post, "summary", None):
+					with doc.p(klass = "p-summary"):
+						doc(post.summary)
+				with doc.section(klass = "e-content mainsection"):
+					self.posttags(doc, post)
 					doc(post.content)
 				self.originalpost(doc, post)
 				#self.posttags(doc, post.tags)
@@ -508,10 +497,10 @@ addEventListener('load', (event) => {
 			# doc.link(rel="alternate", type="application/rss+xml", title=f"Comments on '{project.title} - {self.config.title}'", href=commentpath)
 			pass
 		def body(doc):
-			with doc.article():
+			with doc.article(klass = "h-entry"):
 				self.postnavigation(doc, projectid, self.content.sortedprojects, "project")
 
-				doc.h1(f"{project.title}")
+				doc.h1(f"{project.title}", klass = "p-name")
 				with doc.div(klass = 'meta'):
 					self.postmeta(doc, project)
 					#doc.p(klass = "meta", f"Published on {datetime.datetime.strftime(project.date, self.TIMESTAMPFORMAT)} by <b>{project.author}</b>")
@@ -519,7 +508,11 @@ addEventListener('load', (event) => {
 					with doc.a(href = os.path.join("/", self.config.tgtsubdir, stepxstepfilename)):
 						doc.p("Step by step (blog posts related to this project)", klass = "meta")
 
-				with doc.section(klass = "mainsection"):
+				if getattr(project, "summary", None):
+					with doc.p(klass = "p-summary"):
+						doc(project.summary)
+				with doc.section(klass = "e-content mainsection"):
+					self.posttags(doc, project)
 					doc(project.content)
 
 					#self.posttags(doc, project.tags)
