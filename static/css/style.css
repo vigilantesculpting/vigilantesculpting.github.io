@@ -535,11 +535,6 @@ pre {
     overflow: auto;
 }
 
-/* by default, we don't show the h-card */
-.h-card {
-    display: none;
-}
-
 .p-summary {
     font-style: italic;
 }

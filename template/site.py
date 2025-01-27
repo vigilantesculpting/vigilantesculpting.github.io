@@ -183,7 +183,7 @@ addEventListener('load', (event) => {
 					#		doc("ImgBB")
 					with doc.a(href = os.path.join("/", self.config.tgtsubdir), klass = "titleimage"):
 						doc.div(klass = "titleimage").img(id = "titleimage", src = os.path.join("/", self.config.tgtsubdir, "images", "footer.svg")) #"logo.png"))
-					with doc.span(klass="h-card"):
+					with doc.span(klass="h-card", display="none"):
 						with doc.a(klass="u-url", rel="me", href="/"):
 							doc("Chris (gorb314)")
 						doc.img(klass="u-photo", src = os.path.join("/", self.config.tgtsubdir, "images", "jd-round.png"))
@@ -254,8 +254,9 @@ addEventListener('load', (event) => {
 		with doc.span(klass = 'dt-published posttimestamp'):
 			doc(f"{datetime.datetime.strftime(post.date, self.TIMESTAMPFORMAT)}") #" @%H:%M:%S')}")
 		doc(" by ")
-		with doc.span(klass = 'p-author postauthor'):
-			doc(f"{post.author}")
+		with doc.span(klass = 'postauthor'):
+			with doc.a(klass = 'p-author h-card', href=post.author_url):
+				doc(post.author)
 
 	def postsummary(self, doc, postpath, post):
 		# we need a canonical way to create the postpath from the post itself, instead of having to be passed a postpath parameter
@@ -429,8 +430,8 @@ addEventListener('load', (event) => {
 				if getattr(post, "summary", None):
 					with doc.p(klass = "p-summary"):
 						doc(post.summary)
+				self.posttags(doc, post)
 				with doc.section(klass = "e-content mainsection"):
-					self.posttags(doc, post)
 					doc(post.content)
 				self.originalpost(doc, post)
 				#self.posttags(doc, post.tags)
@@ -511,11 +512,9 @@ addEventListener('load', (event) => {
 				if getattr(project, "summary", None):
 					with doc.p(klass = "p-summary"):
 						doc(project.summary)
+				self.posttags(doc, project)
 				with doc.section(klass = "e-content mainsection"):
-					self.posttags(doc, project)
 					doc(project.content)
-
-					#self.posttags(doc, project.tags)
 
 				self.postnavigation(doc, projectid, self.content.sortedprojects, "project")
 			if "comments-id" in project:

@@ -119,6 +119,13 @@ class Generator:
 			filebody = filecontents.content
 			content.update(filecontents.metadata)
 
+		if 'author' not in content:
+			# add the default author:
+			content['author'] = self.config['defaultauthor']
+		if 'authorurl' not in content:
+			# add the site url
+			content['author_url'] = self.config['site_url']
+
 		# escape any characters that need to be escaped in the title
 		if 'title' in content:
 			content['title'] = xml.sax.saxutils.escape(content['title'])

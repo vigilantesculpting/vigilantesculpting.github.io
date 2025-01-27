@@ -13,4 +13,5 @@ debug: True
 #googletag: 'G-RX7VS9VBWV'
 comments-host    : mastodon.social
 comments-username: '@gorb314'
+defaultauthor    : 'vigilante sculpting'
 
