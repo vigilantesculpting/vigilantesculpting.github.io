@@ -2,6 +2,7 @@
 
 import sys
 import os
+import math
 import datetime
 import re
 import pathlib
@@ -183,7 +184,7 @@ addEventListener('load', (event) => {
 					#		doc("ImgBB")
 					with doc.a(href = os.path.join("/", self.config.tgtsubdir), klass = "titleimage"):
 						doc.div(klass = "titleimage").img(id = "titleimage", src = os.path.join("/", self.config.tgtsubdir, "images", "footer.svg")) #"logo.png"))
-					with doc.span(klass="h-card", display="none"):
+					with doc.span(klass="h-card hcard"):
 						with doc.a(klass="u-url", rel="me", href="/"):
 							doc("Chris (gorb314)")
 						doc.img(klass="u-photo", src = os.path.join("/", self.config.tgtsubdir, "images", "jd-round.png"))
@@ -472,7 +473,8 @@ addEventListener('load', (event) => {
 
 	def makegroups(self, items, groupsize):
 		if len(items) > 0:
-			return [items[i*groupsize : i*groupsize + groupsize] for i in range(1 + len(items)//groupsize)]
+			groupnum = math.ceil(len(items)/groupsize)
+			return [items[i*groupsize : i*groupsize + groupsize] for i in range(groupnum)]
 		return []
 
 	def indexpage(self, pageid, postgroup, pagecount, title, targetdir, postsdir, description):
