@@ -539,3 +539,7 @@ pre {
 .h-card {
     display: none;
 }
+
+.p-summary {
+    font-style: italic;
+}

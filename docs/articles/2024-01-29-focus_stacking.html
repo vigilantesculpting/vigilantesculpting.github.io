@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang='en'>
   <head>
+    <meta charset='utf-8' />
     <title>Vigilante Sculpting - Focus stacking for fun and profit</title>
     <meta name='viewport' content='width=device-width' />
     <link href='/favicon.ico' rel='icon' type='image/x-icon' />
@@ -10,8 +11,9 @@
     <link rel='alternate' type='application/rss+xml' href='/articles/rss.xml' title='Articles RSS Feed' />
     <link rel='alternate' type='application/rss+xml' href='/sketches/rss.xml' title='Sketches RSS Feed' />
     <link rel='me' href='https://github.com/vigilantesculpting' />
+    <link rel='webmention' href='https://webmention.io/www.vigilantesculpting.com/webmention' />
     <script type='text/javascript' src='/js/purify-2b2d544d36a8a8bf969d19c6a5dcc8c5.js'></script>
-    <script type='text/javascript' src='/js/simple-lightbox-9fca9bf4a3281d82107107962d8da770.js'></script>
+    <script type='text/javascript' src='/js/simple-lightbox-991b56b306536bc3159ee6a2021db090.js'></script>
     <script>addEventListener('load', (event) => {
 	let gallery = new SimpleLightbox('.gallery a');
 });
@@ -67,36 +69,37 @@
           </a>
         </div>
       </section>
-      <article>
-        <h1>Focus stacking for fun and profit</h1>
+      <article class='h-entry'>
+        <h1 class='p-name'>Focus stacking for fun and profit</h1>
         <p class='meta'>
 Published on 
-          <span class='posttimestamp'>2024/01/29</span>
+          <span class='dt-published posttimestamp'>2024/01/29</span>
  by 
-          <span class='postauthor'>vigilante sculpting</span>
+          <span class='p-author postauthor'>vigilante sculpting</span>
+        </p>
+        <section class='e-content mainsection'>
           <ul class='posttags'>
             <li class='postflair'>
               <a href='/articles'>Article</a>
             </li>
             <li class='taglink'>
-              <a href='/tags/photography.html'>photography</a>
+              <a class='p-category' href='/tags/photography.html'>#photography</a>
             </li>
             <li class='taglink'>
-              <a href='/tags/miniatures.html'>miniatures</a>
+              <a class='p-category' href='/tags/miniatures.html'>#miniatures</a>
             </li>
             <li class='taglink'>
-              <a href='/tags/howto.html'>howto</a>
+              <a class='p-category' href='/tags/howto.html'>#howto</a>
             </li>
           </ul>
-        </p>
-        <section class='mainsection'><div><p><a href="#tldr"><em>tl;dr? Jump to the instructions...</em></a></p>
+<div><p><a href="#tldr"><em>tl;dr? Jump to the instructions...</em></a></p>
 <p>Have you ever taken a photo of one of your larger miniatures, and struggled to keep the whole thing in focus?</p>
-<p><div class="gallery"><a href="https://i.imgur.com/0oxo5RW.jpeg"><img alt="" src="https://i.imgur.com/0oxo5RWl.jpeg" class="radiant-lightbox-slide" data-src="https://i.imgur.com/0oxo5RW.jpeg"></a></div></p>
+<p><div class="gallery"><a href="https://i.imgur.com/0oxo5RW.jpeg"><img alt="" src="https://i.imgur.com/0oxo5RWl.jpeg" class="radiant-lightbox-slide u-photo" data-src="https://i.imgur.com/0oxo5RW.jpeg"></a></div></p>
 <blockquote>
 <p>I recently had this problem, where the front of my 23cm war rig was in focus, but the back not. And if I got the back in focus, the front was not <em>aaaaaarrrrghhh!</em></p>
 </blockquote>
 <p>This is caused by the short focal depth of close-up miniature photography, and it makes your miniatures look <em>even more</em> miniature. Great for when you want that look. And in fact some photographers will use special tilt shift lenses or post-processing <em>in order</em> to give regular objects that miniature-like look. </p>
-<p><em>The Merced river valley. Taken from the Mist Trail towards Yosemity Valley, CA in 2023. Post-processed in GIMP for that Miniature Look</em><div class="gallery"><a href="https://i.imgur.com/Sdox43F.jpeg"><img alt="" src="https://i.imgur.com/Sdox43Fl.jpeg" class="radiant-lightbox-slide" data-src="https://i.imgur.com/Sdox43F.jpeg">
+<p><em>The Merced river valley. Taken from the Mist Trail towards Yosemity Valley, CA in 2023. Post-processed in GIMP for that Miniature Look</em><div class="gallery"><a href="https://i.imgur.com/Sdox43F.jpeg"><img alt="" src="https://i.imgur.com/Sdox43Fl.jpeg" class="radiant-lightbox-slide u-photo" data-src="https://i.imgur.com/Sdox43F.jpeg">
 </a></div></p>
 <blockquote>
 <p>Ironically, tilt-shift lenses also allow you to tilt the focal plane, in some cases giving you deeper depth of field so you don't need focus stacking in the first place. Light is weird.</p>
@@ -200,12 +203,12 @@ Exiting...
 <p><code>enfuse</code> will output the resulting focus-stacked image as <code>output.tif</code>. This should, if everything went correctly, produce a pretty cool all-in-focus photo of your miniature subject. Congrats!</p>
 <h1>The results</h1>
 <p>Here are some input images I took with my phone, after they were aligned with <code>align_image_stack</code>:</p>
-<p><div class="gallery"><a href="https://i.imgur.com/4JzPcR2.jpeg"><img alt="" src="https://i.imgur.com/4JzPcR2l.jpeg" class="radiant-lightbox-slide" data-src="https://i.imgur.com/4JzPcR2.jpeg">
-</a></div><div class="gallery"><a href="https://i.imgur.com/lDvoegZ.jpeg"><img alt="" src="https://i.imgur.com/lDvoegZl.jpeg" class="radiant-lightbox-slide" data-src="https://i.imgur.com/lDvoegZ.jpeg">
-</a></div><div class="gallery"><a href="https://i.imgur.com/W5x3zM5.jpeg"><img alt="" src="https://i.imgur.com/W5x3zM5l.jpeg" class="radiant-lightbox-slide" data-src="https://i.imgur.com/W5x3zM5.jpeg"></a></div></p>
+<p><div class="gallery"><a href="https://i.imgur.com/4JzPcR2.jpeg"><img alt="" src="https://i.imgur.com/4JzPcR2l.jpeg" class="radiant-lightbox-slide u-photo" data-src="https://i.imgur.com/4JzPcR2.jpeg">
+</a></div><div class="gallery"><a href="https://i.imgur.com/lDvoegZ.jpeg"><img alt="" src="https://i.imgur.com/lDvoegZl.jpeg" class="radiant-lightbox-slide u-photo" data-src="https://i.imgur.com/lDvoegZ.jpeg">
+</a></div><div class="gallery"><a href="https://i.imgur.com/W5x3zM5.jpeg"><img alt="" src="https://i.imgur.com/W5x3zM5l.jpeg" class="radiant-lightbox-slide u-photo" data-src="https://i.imgur.com/W5x3zM5.jpeg"></a></div></p>
 <p>As you can see, the first image has the cab in focus, the second has the middle section in focus, and the third has the tail-end and the flags in focus.
 Here is the final focus-stacked result, directly from <code>enfuse</code>:</p>
-<p><div class="gallery"><a href="https://i.imgur.com/Opz2aQu.jpeg"><img alt="" src="https://i.imgur.com/Opz2aQul.jpeg" class="radiant-lightbox-slide" data-src="https://i.imgur.com/Opz2aQu.jpeg"></a></div></p>
+<p><div class="gallery"><a href="https://i.imgur.com/Opz2aQu.jpeg"><img alt="" src="https://i.imgur.com/Opz2aQul.jpeg" class="radiant-lightbox-slide u-photo" data-src="https://i.imgur.com/Opz2aQu.jpeg"></a></div></p>
 <h1><a name="tldr">Too long; didn't read</a></h1>
 <p>Ok, here it is: the short, <em>short</em> version:</p>
 <ul>
@@ -236,7 +239,8 @@ $ /Applications/Hugin/tools_mac/enfuse \
 </code></pre>
 <ul>
 <li>Profit!</li>
-</ul></div></section>
+</ul></div>
+        </section>
       </article>
       <section class='postnav'>
         <div class='postnav-left'>&nbsp;</div>
