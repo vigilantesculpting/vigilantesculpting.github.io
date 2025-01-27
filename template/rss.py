@@ -48,7 +48,7 @@ def item(doc, config, content, path, post):
 			for tag in post.tags:
 				doc._tags__tag(_t=tag)
 		with doc.pubDate():
-			doc(f"{datetime.datetime.strftime(post.date, '%%a, %%d %%b %%Y %%H:%%M:%%S %%z')}")
+			doc(datetime.datetime.strftime(post.date, '%a, %d %b %Y %H:%M:%S %z'))
 	return doc
 
 def feed(config, content, title, posts, rsspath, postpath, description):
