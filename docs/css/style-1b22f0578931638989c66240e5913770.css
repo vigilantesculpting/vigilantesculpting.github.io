@@ -538,3 +538,6 @@ pre {
 .p-summary {
     font-style: italic;
 }
+.hcard {
+    display: none;
+}
